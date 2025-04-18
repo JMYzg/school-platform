@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="63c7403c-d447-4065-ae2f-89c21fb50700" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/HelloController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/MainApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/TODO.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/controllers/ViewController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/controllers/admin/AdminController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/controllers/alerts/AlertController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/controllers/login/LoginViewController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/academic/Degree.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/academic/Group.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/academic/Semester.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/academic/Subject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/academic/enums/Shift.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/academic/tasks/Task.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/academic/tasks/enums/Status.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/users/Admin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/users/Student.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/users/Teacher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/users/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/users/enums/Gender.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/users/enums/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/users/shared/Address.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/models/users/shared/BirthDate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/services/Service.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/services/auth/AuthService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/services/auth/LoginService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/services/users/AdminService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/services/users/StudentService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/services/users/TeacherService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/utils/SharedData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tap/schoolplatform/utils/Validation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/tap/schoolplatform/hello-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Adjuntar blue.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Adjuntar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Homework.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/ImageAthenas.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Left arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Plus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/arrowL.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/confirm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/error.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/image.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/info.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/logOut.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/logo-School-Platform.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/lupa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/roblox.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/warning.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/styles/alerts.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/styles/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin-views/admin-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin-views/degree-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin-views/group-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin-views/login-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/admin-views/loginFT-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/student-views/Button.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/student-views/homework-button-student-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/student-views/student-classes-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/student-views/student-data-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/student-views/student-exam-resolve-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/student-views/student-grades-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/student-views/student-homework-container-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/student-views/student-homework-summit-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/student-views/student-homework-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/student-views/student-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/teacher-views/tab.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/teacher-views/teacher-option-exam-container-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/teacher-views/teacher-option-exam-new-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/teacher-views/teacher-option-exam-result-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/teacher-views/teacher-option-exam-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/teacher-views/teacher-option-grade-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/teacher-views/teacher-option-homework-container-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/teacher-views/teacher-option-homework-grade-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/teacher-views/teacher-option-homework-new-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/teacher-views/teacher-option-homework-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/teacher-views/teacher-option-student-list-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/teacher-views/teacher-option-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/views/teacher-views/teacher-view.fxml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;JMYzg&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/JMYzg/school-platform.git&quot;,
+    &quot;accountId&quot;: &quot;b5283ae3-e26c-4beb-9837-cf6fa463bb54&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2vniudFoVT8adHHZbnnUXFPVORc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HelloApplication.executor": "Run",
+    "Application.MainApplication.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/jmy_z/OneDrive/Documentos/Documentos escolares/Cuarto semestre/Tópicos avanzados de programación/School Platform/school-platform/school-platform",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.general",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jmy_z\OneDrive\Documentos\Documentos escolares\Cuarto semestre\Tópicos avanzados de programación\School Platform\school-platform\school-platfom\src\main" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jmy_z\OneDrive\Documentos\Documentos escolares\Cuarto semestre\Tópicos avanzados de programación\School Platform\school-platform\school-platfom\src\main\resources" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.tap.schoolplatfom.services.users" />
+      <recent name="com.tap.schoolplatfom.models.users" />
+      <recent name="com.tap.schoolplatfom.controllers" />
+      <recent name="com.tap.schoolplatfom.controllers.admin" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="school-platform" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="school-platform" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.189" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.189" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="63c7403c-d447-4065-ae2f-89c21fb50700" name="Changes" comment="" />
+      <created>1744787464704</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744787464704</updated>
+      <workItem from="1744787466185" duration="1378000" />
+      <workItem from="1744789018026" duration="514000" />
+      <workItem from="1744837079264" duration="387000" />
+      <workItem from="1744837488636" duration="7191000" />
+      <workItem from="1744920541712" duration="22038000" />
+      <workItem from="1745003255513" duration="3260000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

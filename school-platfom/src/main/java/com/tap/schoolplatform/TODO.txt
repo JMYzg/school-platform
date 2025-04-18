@@ -1,6 +1,0 @@
-TODO
-1. Recreate models.
-    1.1. Create abstract class User.
-        1.1.1. Keep it simple (no UUID; change Strings for StringProperty's;
-               override toString, equals and hashCode from here).
-2. Recreate SharedData structure.
