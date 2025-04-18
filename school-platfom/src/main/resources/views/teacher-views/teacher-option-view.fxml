@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="borderPane" prefHeight="604.0" prefWidth="861.0" style="-fx-background-radius: 5; -fx-background-color: dedede;" stylesheets="@../../styles/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.teacherControllers.TeacherViewController">
+   <left>
+      <VBox id="optionConainerTeacher" alignment="TOP_CENTER" prefHeight="599.0" prefWidth="217.0" spacing="10.0" style="-fx-background-color: f6f6f6;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="123.0" fitWidth="198.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/ImageAthenas.jpg" />
+               </image>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </ImageView>
+            <Label id="titleOptions" fx:id="subjectName" prefHeight="27.0" prefWidth="177.0" text="Classic art" />
+            <Separator prefWidth="200.0">
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+            </Separator>
+            <Button id="btnOptions" fx:id="studentsButton" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#openStudentTab" prefHeight="31.0" prefWidth="193.0" text="Students" />
+            <Button id="btnOptions" fx:id="examsButton" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#openExamsTab" prefHeight="31.0" prefWidth="193.0" text="Exams" />
+            <Button id="btnOptions" fx:id="homeworkButton" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#openHomeworkTab" prefHeight="31.0" prefWidth="193.0" text="Homework" />
+            <Button id="btnOptions" fx:id="gradesButton" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#openGradesTab" prefHeight="31.0" prefWidth="193.0" text="Grades" />
+         </children>
+      </VBox>
+   </left>
+   <padding>
+      <Insets top="10.0" />
+   </padding>
+</BorderPane>

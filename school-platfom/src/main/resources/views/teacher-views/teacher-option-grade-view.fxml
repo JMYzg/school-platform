@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="604.0" prefWidth="642.0" style="-fx-background-color: dedede;" stylesheets="@../../styles/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.teacherControllers.studentTeacherViewControllers.GradeOptionTeacherViewController">
+   <children>
+      <VBox prefHeight="604.0" prefWidth="642.0" spacing="10.0">
+         <children>
+            <AnchorPane prefHeight="27.0" prefWidth="622.0" style="-fx-background-radius: 5;">
+               <children>
+                  <HBox prefHeight="33.0" prefWidth="622.0" spacing="10.0">
+                     <children>
+                        <AnchorPane prefHeight="33.0" prefWidth="207.0" style="-fx-background-color: #91d414; -fx-background-radius: 5;">
+                           <children>
+                              <Label id="txtboldW" layoutX="14.0" layoutY="8.0" text="Group:" />
+                              <Label id="txtboldW" fx:id="groupNameLabel" layoutX="58.0" layoutY="8.0" text="IT-01M" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: #91d414; -fx-background-radius: 5;">
+                           <children>
+                              <Label id="txtboldW" layoutX="14.0" layoutY="8.0" text="Semester:" />
+                              <Label id="txtboldW" fx:id="groupSemesterLabel" layoutX="76.0" layoutY="8.0" prefHeight="17.0" prefWidth="70.0" text="Forty" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="33.0" prefWidth="237.0" style="-fx-background-color: #91d414; -fx-background-radius: 5;">
+                           <children>
+                              <Label id="txtboldW" layoutX="15.0" layoutY="9.0" text="Shift:" />
+                              <Label id="txtboldW" fx:id="groupShiftLabel" layoutX="53.0" layoutY="8.0" prefHeight="17.0" prefWidth="70.0" text="Morning" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children></AnchorPane>
+            <ScrollPane prefHeight="498.0" prefWidth="622.0">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="620.0" prefWidth="600.0">
+                     <children>
+                        <VBox layoutY="-2.0" prefHeight="498.0" prefWidth="599.0">
+                           <children>
+                              <TableView fx:id="gradesTable" prefHeight="522.0" prefWidth="599.0" style="-fx-background-color: white; -fx-background-radius: 5;">
+                                <columns>
+                                  <TableColumn fx:id="idTableColumn" prefWidth="110.0" text="ID" />
+                                  <TableColumn fx:id="lastNameTableColumn" prefWidth="130.0" text="Last name" />
+                                    <TableColumn fx:id="unit1TableColumn" prefWidth="56.0" text="Unit 1" />
+                                    <TableColumn fx:id="unit2TableColumn" prefWidth="55.0" text="Unit 2" />
+                                    <TableColumn fx:id="unit3TableColumn" prefWidth="50.0" text="Unit 3" />
+                                    <TableColumn fx:id="unit4TableColumn" prefWidth="47.0" text="Unit 4" />
+                                    <TableColumn fx:id="unit5TableColumn" prefWidth="52.0" text="Unit 5" />
+                                    <TableColumn fx:id="unit6TableColumn" prefWidth="46.0" text="Unit 6" />
+                                    <TableColumn fx:id="unit7TableColumn" minWidth="0.0" prefWidth="49.0" text="Unit 7" />
+                                    <TableColumn minWidth="0.0" prefWidth="155.0" text="Column X" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+            <HBox prefHeight="63.0" prefWidth="622.0" spacing="10.0">
+               <children>
+                  <Button id="btnM" mnemonicParsing="false" text="Cancel">
+                     <HBox.margin>
+                        <Insets left="450.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" text="Modified" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" top="5.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

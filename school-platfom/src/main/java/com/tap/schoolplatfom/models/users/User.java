@@ -1,5 +1,6 @@
 package com.tap.schoolplatfom.models.users;
 
+import com.tap.schoolplatfom.models.users.enums.Role;
 import com.tap.schoolplatfom.models.users.shared.Address;
 import com.tap.schoolplatfom.models.users.enums.Gender;
 import javafx.beans.property.SimpleStringProperty;

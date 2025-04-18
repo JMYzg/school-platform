@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="604.0" prefWidth="642.0" style="-fx-background-color: dedede;" stylesheets="@../../styles/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.teacherControllers.studentTeacherViewControllers.StudentOptionTeacherViewController">
+   <children>
+      <VBox prefHeight="604.0" prefWidth="642.0" spacing="10.0">
+         <children>
+            <AnchorPane prefHeight="27.0" prefWidth="622.0" style="-fx-background-radius: 5;">
+               <children>
+                  <HBox prefHeight="33.0" prefWidth="622.0" spacing="10.0">
+                     <children>
+                        <AnchorPane prefHeight="33.0" prefWidth="207.0" style="-fx-background-color: #91d414; -fx-background-radius: 5;">
+                           <children>
+                              <Label id="txtboldW" layoutX="14.0" layoutY="8.0" text="Group:" />
+                              <Label id="txtboldW" fx:id="groupName" layoutX="58.0" layoutY="8.0" text="IT-01M" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="33.0" prefWidth="183.0" style="-fx-background-color: #91d414; -fx-background-radius: 5;">
+                           <children>
+                              <Label id="txtboldW" layoutX="14.0" layoutY="8.0" text="Semester:" />
+                              <Label id="txtboldW" fx:id="semesterGroup" layoutX="76.0" layoutY="8.0" prefHeight="17.0" prefWidth="70.0" text="Forty" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="33.0" prefWidth="237.0" style="-fx-background-color: #91d414; -fx-background-radius: 5;">
+                           <children>
+                              <Label id="txtboldW" layoutX="15.0" layoutY="9.0" text="Shift:" />
+                              <Label id="txtboldW" fx:id="groupShift" layoutX="53.0" layoutY="8.0" prefHeight="17.0" prefWidth="70.0" text="Morning" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children></AnchorPane>
+            <ScrollPane prefHeight="532.0" prefWidth="622.0" style="-fx-background-radius: 5;">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="531.0" prefWidth="601.0" style="-fx-background-radius: 5;">
+                     <children>
+                        <TableView fx:id="table" prefHeight="532.0" prefWidth="604.0" style="-fx-background-color: f6f6f6; -fx-background-radius: 5;">
+                          <columns>
+                            <TableColumn prefWidth="48.0" />
+                            <TableColumn fx:id="idTableColumn" prefWidth="111.0" text="ID" />
+                              <TableColumn fx:id="lastNameTableColumn" prefWidth="118.0" text="Last name" />
+                              <TableColumn fx:id="nameTableColumn" prefWidth="106.0" text="Name" />
+                              <TableColumn fx:id="emailTableColumn" minWidth="0.0" prefWidth="219.0" text="Email" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" top="5.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
