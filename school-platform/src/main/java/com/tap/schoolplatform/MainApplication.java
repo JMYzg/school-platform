@@ -1,4 +1,4 @@
-package com.tap.schoolplatfom;
+package com.tap.schoolplatform;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +10,7 @@ import java.io.IOException;
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("/views/admin-views/login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Log in");
         stage.setScene(scene);
