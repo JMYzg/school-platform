@@ -25,8 +25,8 @@
 
 <VBox prefHeight="654.0" prefWidth="877.0" stylesheets="@../../styles/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.admin.AdminViewController">
     <AnchorPane prefHeight="30.0" prefWidth="655.0" style="-fx-background-color: #003b46;">
-        <Label layoutX="676.0" layoutY="8.0" text="Jeremy de Jesús Zarate Garcia" />
-      <Button id="btnLogout" fx:id="logOutButton" layoutX="10.0" layoutY="1.0" mnemonicParsing="false" onAction="#logOut" style="-fx-background-color: #003b46;" text="Log out">
+        <Label fx:id="adminNameLabel" layoutX="676.0" layoutY="8.0" text="Jeremy de Jesús Zarate Garcia" />
+      <Button id="btnLogout" fx:id="logoutButton" layoutX="10.0" layoutY="1.0" mnemonicParsing="false" onAction="#onLogoutClick" style="-fx-background-color: #003b46;" text="Log out">
          <graphic>
             <ImageView fitHeight="15" fitWidth="15">
                <image>
@@ -43,20 +43,20 @@
                     <VBox prefHeight="583.0" prefWidth="377.0" spacing="10.0">
                   <FlowPane prefHeight="377.0" prefWidth="422.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                      <children>
-                        <Label id="TitleRegister" prefHeight="32.0" prefWidth="214.0" text="Alumn Register" />
-                        <Button id="StudentNewButton" fx:id="studentNewButton" mnemonicParsing="false" onAction="#studentClearAllAttributes" prefHeight="29.0" prefWidth="136.0" text="New" />
+                        <Label id="TitleRegister" prefHeight="32.0" prefWidth="214.0" text="Student Register" />
+                        <Button id="btnM" fx:id="studentNewButton" mnemonicParsing="false" onAction="#studentNewButtonHandler" prefHeight="29.0" prefWidth="136.0" text="New" />
                         <Label prefHeight="17.0" prefWidth="59.0" text="Name: ">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <TextField id="StudentNameField" fx:id="studentNameTF" prefHeight="40.0" prefWidth="289.0" promptText="Name">
+                        <TextField id="StudentNameField" fx:id="studentNameField" prefHeight="40.0" prefWidth="289.0" promptText="Name">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
                         </TextField>
                         <Label prefHeight="17.0" prefWidth="59.0" text="          " />
-                        <TextField id="StudentLastNameField" fx:id="studentLastNameTF" prefHeight="40.0" prefWidth="289.0" promptText="Last Name">
+                        <TextField id="StudentLastNameField" fx:id="studentLastNameField" prefHeight="40.0" prefWidth="289.0" promptText="Last Name">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
@@ -66,7 +66,7 @@
                               <Insets top="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <TextField id="studentPhoneField" fx:id="studentPhoneTF" prefHeight="40.0" prefWidth="289.0" promptText="123 4567">
+                        <TextField id="studentPhoneField" fx:id="studentPhoneField" prefHeight="40.0" prefWidth="289.0" promptText="123 4567">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
@@ -76,7 +76,7 @@
                               <Insets top="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <TextField id="studentEmailField" fx:id="studentEmailTF" prefHeight="40.0" prefWidth="289.0" promptText="Example@anything.com">
+                        <TextField id="studentEmailField" fx:id="studentEmailField" prefHeight="40.0" prefWidth="289.0" promptText="Example@anything.com">
                            <FlowPane.margin>
                               <Insets bottom="5.0" top="10.0" />
                            </FlowPane.margin>
@@ -94,24 +94,24 @@
                           </rowConstraints>
                            <children>
                               <Label prefHeight="17.0" prefWidth="62.0" text="Address:" />
-                              <TextField id="studentStreetField" fx:id="studentStreetTF" prefHeight="40.0" prefWidth="146.0" promptText="Street or Avenue" GridPane.columnIndex="1">
+                              <TextField id="studentStreetField" fx:id="studentStreetField" prefHeight="40.0" prefWidth="146.0" promptText="Street or Avenue" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField id="studentPCField" fx:id="studentPCTF" prefHeight="40.0" prefWidth="135.0" promptText="P. C." GridPane.columnIndex="2" />
-                              <TextField id="studentColonyField" fx:id="studentColonyTF" prefHeight="40.0" prefWidth="136.0" promptText="Colony" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <TextField id="studentPCField" fx:id="studentPCField" prefHeight="40.0" prefWidth="135.0" promptText="P. C." GridPane.columnIndex="2" />
+                              <TextField id="studentColonyField" fx:id="studentColonyField" prefHeight="40.0" prefWidth="136.0" promptText="Colony" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField id="studentCityField" fx:id="studentCityTF" prefHeight="40.0" prefWidth="135.0" promptText="City" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <TextField id="studentStateField" fx:id="studentStateTF" prefHeight="40.0" prefWidth="136.0" promptText="State" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <TextField id="studentCityField" fx:id="studentCityField" prefHeight="40.0" prefWidth="135.0" promptText="City" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <TextField id="studentStateField" fx:id="studentStateField" prefHeight="40.0" prefWidth="136.0" promptText="State" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField id="studentCountryField" fx:id="studentCountryTF" prefHeight="40.0" prefWidth="136.0" promptText="Country" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <TextField id="studentCountryField" fx:id="studentCountryField" prefHeight="40.0" prefWidth="136.0" promptText="Country" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                         <Label prefHeight="17.0" prefWidth="59.0" text="Gender:">
@@ -143,15 +143,15 @@
                      </padding>
                   </FlowPane>
                         <AnchorPane prefHeight="197.0" prefWidth="372.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
-                     <Button id="studentUploadImageButton" fx:id="studentUploadImageButton" layoutX="271.0" layoutY="149.0" mnemonicParsing="false" onAction="#studentUploadImage" prefHeight="29.0" prefWidth="70.0" text="Upload" />
+                     <Button id="btnM" fx:id="studentUploadImageButton" layoutX="271.0" layoutY="149.0" mnemonicParsing="false" onAction="#onStudentUploadImageClick" prefHeight="29.0" prefWidth="70.0" text="Upload" />
                      <VBox layoutX="14.0" layoutY="8.0" prefHeight="166.0" prefWidth="219.0" spacing="5.0">
                         <children>
                                   <Label prefHeight="17.0" prefWidth="58.0" text="Degree:" />
                                   <ComboBox id="studentDegreeComboBox" fx:id="studentDegreeComboBox" editable="true" onMouseClicked="#refreshCBStudentDegree" prefHeight="28.0" prefWidth="227.0" />
-                                  <Button id="studentManageDegreeComboBox" fx:id="studentManageDegreeButton" mnemonicParsing="false" onAction="#manageDegreesAdmin" prefHeight="29.0" prefWidth="222.0" text="Manage" />
+                                  <Button id="btnA" fx:id="studentManageDegreeButton" mnemonicParsing="false" onAction="#onStudentManageDegreeClick" prefHeight="29.0" prefWidth="222.0" text="Manage" />
                                   <Label prefHeight="17.0" prefWidth="45.0" text="Group:" />
                                   <ComboBox id="studentGroupComboBox" fx:id="studentGroupComboBox" editable="true" onMouseClicked="#refreshCBStudentGroup" prefHeight="29.0" prefWidth="226.0" />
-                                  <Button id="studentManageGroupComboBox" fx:id="studentManageGroupsButton" mnemonicParsing="false" onAction="#manageGroupAdmin" prefHeight="29.0" prefWidth="223.0" text="Manage" />
+                                  <Button id="btnA" fx:id="studentManageGroupButton" mnemonicParsing="false" onAction="#onStudentManageGroupClick" prefHeight="29.0" prefWidth="223.0" text="Manage" />
                         </children>
                      </VBox>
                      <StackPane layoutX="253.0" layoutY="31.0" prefHeight="107.0" prefWidth="107.0" style="-fx-background-color: dedede; -fx-background-radius: 5;">
@@ -168,32 +168,32 @@
                         <VBox prefHeight="555.0" prefWidth="472.0">
                             <HBox prefHeight="118.0" prefWidth="471.0" spacing="10.0">
                                 <AnchorPane prefHeight="116.0" prefWidth="136.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
-                                    <Button id="studentEditButton" fx:id="studentEditButton" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#studentEditUser" prefHeight="29.0" prefWidth="109.0" text="Edit" />
-                                    <Button id="studentAcceptButton" fx:id="studentAcceptButton" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#addStudent" prefHeight="29.0" prefWidth="109.0" text="Accept" />
-                                    <Button id="studentCancelButton" fx:id="studentCancelButton" layoutX="14.0" layoutY="80.0" mnemonicParsing="false" onAction="#cancelCreateEditStudent" prefHeight="29.0" prefWidth="109.0" text="Cancel" />
+                                    <Button id="btnH" fx:id="studentEditButton" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#studentEditButtonHandler" prefHeight="29.0" prefWidth="109.0" text="Edit" />
+                                    <Button id="btnN" fx:id="studentAcceptButton" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#studentAcceptButtonHandler" prefHeight="29.0" prefWidth="109.0" text="Accept" />
+                                    <Button id="btnM" fx:id="studentCancelButton" layoutX="14.0" layoutY="80.0" mnemonicParsing="false" onAction="#studentCancelButtonHandler" prefHeight="29.0" prefWidth="109.0" text="Cancel" />
                                 </AnchorPane>
                         <AnchorPane prefHeight="118.0" prefWidth="327.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
                            <children>
-                              <TextField id="studentSearchField" fx:id="studentSearchTF" layoutX="14.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" />
-                              <Button id="studentFilterButton" fx:id="studentFilterButton" layoutX="249.0" layoutY="38.0" mnemonicParsing="false" onAction="#searchStudent" prefHeight="61.0" prefWidth="64.0" style="-fx-pref-height: 64;" text="Filter" />
+                              <TextField id="studentSearchField" fx:id="studentSearchField" layoutX="14.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" />
+                              <Button id="btnN" fx:id="studentFilterButton" layoutX="249.0" layoutY="38.0" mnemonicParsing="false" onAction="#onStudentFilterClick" prefHeight="61.0" prefWidth="64.0" style="-fx-pref-height: 64;" text="Filter" />
                               <Label id="TitleRegister" layoutX="14.0" layoutY="5.0" text="Search" />
                               <ImageView fitHeight="29.0" fitWidth="32.0" layoutX="80.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../images/lupa.png" />
                                  </image>
                               </ImageView>
-                              <Label id="txtbold" layoutX="14.0" layoutY="42.0" text="Please ingrese an atribute to search:" />
+                              <Label id="txtbold" layoutX="14.0" layoutY="42.0" text="please enter any word" />
                            </children>
                         </AnchorPane>
                             </HBox>
                             <Region prefHeight="10.0" prefWidth="471.0" />
                             <ScrollPane prefHeight="457.0" prefWidth="471.0">
                         <content>
-                           <TableView id="studentTableView" fx:id="studentList" onMouseClicked="#studentSelectUser" prefHeight="460.0" prefWidth="1376.0" style="-fx-background-color: white; -fx-background-radius: 5;">
+                           <TableView id="studentTableView" fx:id="studentTableView" onMouseClicked="#studentSelectUser" prefHeight="460.0" prefWidth="1376.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                               <columns>
-                                 <TableColumn id="studentIDTableColumn" fx:id="studentIdTableColumn" text="ID" />
+                                 <TableColumn id="studentIDTableColumn" fx:id="studentIDTableColumn" text="ID" />
                                  <TableColumn id="studentNameTableColumn" fx:id="studentNameTableColumn" prefWidth="100.0" text="Name" />
-                                 <TableColumn id="studentLastNameTableColumn" fx:id="studentLNTableColumn" prefWidth="96.0" text="Last Name" />
+                                 <TableColumn id="studentLastNameTableColumn" fx:id="studentLastNameTableColumn" prefWidth="96.0" text="Last Name" />
                                  <TableColumn id="studentDegreeTableColumn" fx:id="studentDegreeTableColumn" prefWidth="102.0" text="Degree" />
                                  <TableColumn id="studentGroupTableColumn" fx:id="studentGroupTableColumn" prefWidth="79.0" text="Group" />
                                  <TableColumn id="studentEmailTableColumn" fx:id="studentEmailTableColumn" prefWidth="117.0" text="E-mail" />
@@ -225,18 +225,18 @@
                   <FlowPane prefHeight="374.0" prefWidth="365.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                      <children>
                         <Label id="TitleRegister" prefHeight="32.0" prefWidth="214.0" text="Teacher Register" />
-                        <Button id="btnH" fx:id="teacherNewButton" mnemonicParsing="false" onAction="#teacherClearAllAttributes" prefHeight="29.0" prefWidth="136.0" text="New" />
+                        <Button id="btnM" fx:id="teacherNewButton" mnemonicParsing="false" onAction="#teacherNewButtonHandler" prefHeight="29.0" prefWidth="136.0" text="New" />
                         <Label prefHeight="17.0" prefWidth="59.0" text="Name: ">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <TextField fx:id="teacherNameTF" prefHeight="40.0" prefWidth="133.0" promptText="Name">
+                        <TextField id="teacherNameField" fx:id="teacherNameField" prefHeight="40.0" prefWidth="133.0" promptText="Name">
                            <FlowPane.margin>
                               <Insets right="5.0" top="10.0" />
                            </FlowPane.margin>
                         </TextField>
-                        <TextField fx:id="teacherLastNameTF" prefHeight="40.0" prefWidth="150.0" promptText="Last Name">
+                        <TextField id="teacherLastNameField" fx:id="teacherLastNameField" prefHeight="40.0" prefWidth="150.0" promptText="Last Name">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
@@ -246,12 +246,12 @@
                               <Insets top="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <TextField fx:id="teacherLicenseTF" prefHeight="40.0" prefWidth="135.0" promptText="License">
+                        <TextField id="teacherLicenseField" fx:id="teacherLicenseField" prefHeight="40.0" prefWidth="135.0" promptText="License">
                            <FlowPane.margin>
                               <Insets right="5.0" top="10.0" />
                            </FlowPane.margin>
                         </TextField>
-                        <TextField fx:id="teacherSpecializationTF" prefHeight="40.0" prefWidth="148.0" promptText="Specialization">
+                        <TextField id="teacherSpecializationField" fx:id="teacherSpecializationField" prefHeight="40.0" prefWidth="148.0" promptText="Specialization">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
@@ -261,7 +261,7 @@
                               <Insets top="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <TextField fx:id="teacherPhoneTF" prefHeight="40.0" prefWidth="289.0" promptText="123 4567">
+                        <TextField id="teacherPhoneField" fx:id="teacherPhoneField" prefHeight="40.0" prefWidth="289.0" promptText="123 4567">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
@@ -271,7 +271,7 @@
                               <Insets top="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <TextField fx:id="teacherEmailTF" prefHeight="40.0" prefWidth="289.0" promptText="Example@anything.com">
+                        <TextField id="teacherEmailField" fx:id="teacherEmailField" prefHeight="40.0" prefWidth="289.0" promptText="Example@anything.com">
                            <FlowPane.margin>
                               <Insets bottom="5.0" top="10.0" />
                            </FlowPane.margin>
@@ -289,24 +289,24 @@
                            </rowConstraints>
                            <children>
                               <Label prefHeight="17.0" prefWidth="62.0" text="Address:" />
-                              <TextField fx:id="teacherStreetTF" prefHeight="40.0" prefWidth="146.0" promptText="Street or Avenue" GridPane.columnIndex="1">
+                              <TextField id="teacherStreetField" fx:id="teacherStreetField" prefHeight="40.0" prefWidth="146.0" promptText="Street or Avenue" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField fx:id="teacherPCTF" prefHeight="40.0" prefWidth="135.0" promptText="P. C." GridPane.columnIndex="2" />
-                              <TextField fx:id="teacherColonyTF" prefHeight="40.0" prefWidth="136.0" promptText="Colony" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <TextField id="teacherPCField" fx:id="teacherPCField" prefHeight="40.0" prefWidth="135.0" promptText="P. C." GridPane.columnIndex="2" />
+                              <TextField id="teacherColonyField" fx:id="teacherColonyField" prefHeight="40.0" prefWidth="136.0" promptText="Colony" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField fx:id="teacherCityTF" prefHeight="40.0" prefWidth="135.0" promptText="City" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <TextField fx:id="teacherStateTF" prefHeight="40.0" prefWidth="136.0" promptText="State" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <TextField id="teacherCityField" fx:id="teacherCityField" prefHeight="40.0" prefWidth="135.0" promptText="City" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <TextField id="teacherStateField" fx:id="teacherStateField" prefHeight="40.0" prefWidth="136.0" promptText="State" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField fx:id="teacherCountryTF" prefHeight="40.0" prefWidth="136.0" promptText="Country" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <TextField id="teacherCountryField" fx:id="teacherCountryField" prefHeight="40.0" prefWidth="136.0" promptText="Country" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                         <Label prefHeight="17.0" prefWidth="59.0" text="Gender:">
@@ -314,7 +314,7 @@
                               <Insets top="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <ComboBox fx:id="teacherGenderComboBox" editable="true" prefHeight="82.0" prefWidth="118.0" promptText="Male / Female">
+                        <ComboBox id="teacherGenderComboBox" fx:id="teacherGenderComboBox" editable="true" prefHeight="82.0" prefWidth="118.0" promptText="Male / Female">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
@@ -324,7 +324,7 @@
                               <Insets left="5.0" top="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <DatePicker fx:id="teacherDatePicker" prefHeight="29.0" prefWidth="105.0">
+                        <DatePicker id="teacherDatePicker" fx:id="teacherDatePicker" prefHeight="29.0" prefWidth="105.0">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
@@ -337,18 +337,18 @@
                   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="371.0" style="-fx-background-color: White; -fx-background-radius: 5;">
                      <children>
                         <Label layoutX="8.0" layoutY="15.0" prefHeight="17.0" prefWidth="59.0" text="Degree:" />
-                        <ComboBox fx:id="teacherDegreeComboBox" editable="true" layoutX="61.0" layoutY="8.0" onMouseClicked="#updateDegreeComboBox" prefHeight="17.0" prefWidth="215.0" />
-                        <Button id="btnN" fx:id="teacherManageDegreeButton" layoutX="287.0" layoutY="11.0" mnemonicParsing="false" onAction="#manageDegreesAdmin" prefHeight="29.0" prefWidth="72.0" text="Manage" />
-                        <TextField fx:id="teacherSubjectTF" layoutX="90.0" layoutY="73.0" prefHeight="40.0" prefWidth="185.0" />
-                        <Button id="btnH" fx:id="teacherCreateSubjectButton" layoutX="287.0" layoutY="76.0" mnemonicParsing="false" onAction="#createSubject" prefHeight="29.0" prefWidth="72.0" text="Create" />
-                        <ComboBox fx:id="teacherAssignSubjectComboBox" editable="true" layoutX="90.0" layoutY="116.0" prefHeight="17.0" prefWidth="185.0" />
-                        <ComboBox fx:id="teacherUnassignSubjectComboBox" editable="true" layoutX="90.0" layoutY="156.0" prefHeight="17.0" prefWidth="185.0" />
-                        <Button id="btnM" fx:id="teacherUnassignSubjectButton" layoutX="287.0" layoutY="159.0" mnemonicParsing="false" onAction="#unassignSubject" prefHeight="29.0" prefWidth="72.0" text="Unassign" />
-                        <Button id="btnA" fx:id="teacherAssignSubjectButton" layoutX="287.0" layoutY="119.0" mnemonicParsing="false" onAction="#assignSubject" prefWidth="72.0" text="Assign" />
+                        <ComboBox id="teacherDegreeComboBox" fx:id="teacherDegreeComboBox" editable="true" layoutX="61.0" layoutY="8.0" onMouseClicked="#updateDegreeComboBox" prefHeight="17.0" prefWidth="215.0" />
+                        <Button id="btnA" fx:id="teacherManageDegreeButton" layoutX="287.0" layoutY="11.0" mnemonicParsing="false" onAction="#onTeacherManageDegreeClick" prefHeight="29.0" prefWidth="72.0" text="Manage" />
+                        <TextField id="teacherSubjectField" fx:id="teacherSubjectField" layoutX="90.0" layoutY="73.0" prefHeight="40.0" prefWidth="185.0" />
+                        <Button id="btnA" fx:id="teacherCreateSubjectButton" layoutX="287.0" layoutY="76.0" mnemonicParsing="false" onAction="#onTeacherCreateSubjectClick" prefHeight="29.0" prefWidth="72.0" text="Create" />
+                        <ComboBox id="teacherAssignSubjectComboBox" fx:id="teacherAssignSubjectComboBox" editable="true" layoutX="90.0" layoutY="116.0" prefHeight="17.0" prefWidth="185.0" />
+                        <ComboBox id="teacherUnassignSubjectComboBox" fx:id="teacherUnassignSubjectComboBox" editable="true" layoutX="90.0" layoutY="156.0" prefHeight="17.0" prefWidth="185.0" />
+                        <Button id="btnN" fx:id="teacherUnassignSubjectButton" layoutX="287.0" layoutY="159.0" mnemonicParsing="false" onAction="#onTeacherUnassignSubjectClick" prefHeight="29.0" prefWidth="72.0" text="Unassign" />
+                        <Button id="btnM" fx:id="teacherAssignSubjectButton" layoutX="287.0" layoutY="119.0" mnemonicParsing="false" onAction="#onTeacherAssignSubjectClick" prefWidth="72.0" text="Assign" />
                         <Label id="txtbold" layoutX="9.0" layoutY="46.0" prefHeight="17.0" prefWidth="142.0" style="-fx-text-fill: #014B58;" text="Subject management" />
-                        <ComboBox fx:id="teacherAssignSubjectSemesterComboBox" editable="true" layoutX="14.0" layoutY="116.0" prefHeight="17.0" prefWidth="68.0" />
-                        <ComboBox fx:id="teacherUnassignSubjectSemesterComboBox" editable="true" layoutX="14.0" layoutY="156.0" prefHeight="17.0" prefWidth="68.0" />
-                        <ComboBox fx:id="teacherSemesterSubjectComboBox" editable="true" layoutX="14.0" layoutY="74.0" prefHeight="17.0" prefWidth="68.0" />
+                        <ComboBox id="teacherAssignSubjectSemesterComboBox" fx:id="teacherAssignSubjectSemesterComboBox" editable="true" layoutX="14.0" layoutY="116.0" prefHeight="17.0" prefWidth="68.0" />
+                        <ComboBox id="teacherUnassignSubjectSemesterComboBox" fx:id="teacherUnassignSubjectSemesterComboBox" editable="true" layoutX="14.0" layoutY="156.0" prefHeight="17.0" prefWidth="68.0" />
+                        <ComboBox id="teacherSubjectSemesterComboBox" fx:id="teacherSubjectSemesterComboBox" editable="true" layoutX="14.0" layoutY="74.0" prefHeight="17.0" prefWidth="68.0" />
                      </children>
                   </AnchorPane>
                     </VBox>
@@ -356,44 +356,44 @@
                         <VBox prefHeight="555.0" prefWidth="472.0">
                             <HBox prefHeight="118.0" prefWidth="471.0" spacing="10.0">
                                 <AnchorPane prefHeight="116.0" prefWidth="136.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
-                                    <Button id="btnH" fx:id="teacherEditButton" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#teacherEditUser" prefHeight="29.0" prefWidth="109.0" text="Edit" />
-                                    <Button id="btnM" fx:id="teacherAcceptButton" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#createTeacher" prefHeight="29.0" prefWidth="109.0" text="Accept" />
-                                    <Button id="btnN" fx:id="teacherCancelButton" layoutX="14.0" layoutY="80.0" mnemonicParsing="false" onAction="#cancelCreateEditTeacher" prefHeight="29.0" prefWidth="109.0" text="Cancel" />
+                                    <Button id="btnH" fx:id="teacherEditButton" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#teacherEditButtonHandler" prefHeight="29.0" prefWidth="109.0" text="Edit" />
+                                    <Button id="btnN" fx:id="teacherAcceptButton" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#teacherAcceptButtonHandler" prefHeight="29.0" prefWidth="109.0" text="Accept" />
+                                    <Button id="btnM" fx:id="teacherCancelButton" layoutX="14.0" layoutY="80.0" mnemonicParsing="false" onAction="#teacherCancelButtonHandler" prefHeight="29.0" prefWidth="109.0" text="Cancel" />
                                 </AnchorPane>
                         <AnchorPane prefHeight="118.0" prefWidth="327.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
                            <children>
-                              <TextField fx:id="teacherSearchTF" layoutX="14.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" />
-                              <Button id="btnM" fx:id="teacherFilterButton" layoutX="249.0" layoutY="38.0" mnemonicParsing="false" onAction="#searchTeacher" prefHeight="61.0" prefWidth="64.0" style="-fx-pref-height: 64;" text="Filter" />
+                              <TextField id="teacherSearchField" fx:id="teacherSearchField" layoutX="14.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" />
+                              <Button id="btnN" fx:id="teacherFilterButton" layoutX="249.0" layoutY="38.0" mnemonicParsing="false" onAction="#onTeacherFilterClick" prefHeight="61.0" prefWidth="64.0" style="-fx-pref-height: 64;" text="Filter" />
                               <Label id="TitleRegister" layoutX="14.0" layoutY="5.0" text="Search" />
                               <ImageView fitHeight="29.0" fitWidth="32.0" layoutX="80.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../images/lupa.png" />
                                  </image>
                               </ImageView>
-                              <Label id="txtbold" layoutX="14.0" layoutY="42.0" text="Please ingrese an atribute to search:" />
+                              <Label id="txtbold" layoutX="14.0" layoutY="42.0" text="please enter any word" />
                            </children>
                         </AnchorPane>
                             </HBox>
                             <Region prefHeight="10.0" prefWidth="471.0" />
                             <ScrollPane prefHeight="457.0" prefWidth="470.0">
                         <content>
-                           <TableView fx:id="teacherList" onMouseClicked="#teacherSelectUser" prefHeight="460.0" prefWidth="1376.0" style="-fx-background-color: white; -fx-background-radius: 5;">
+                           <TableView id="teacherTableView" fx:id="teacherTableView" onMouseClicked="#teacherSelectUser" prefHeight="460.0" prefWidth="1376.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                               <columns>
-                                 <TableColumn fx:id="teacherLicenseTableColumn" text="License" />
-                                 <TableColumn fx:id="teacherNameTableColumn" prefWidth="100.0" text="Name" />
-                                 <TableColumn fx:id="teacherLNTableColumn" prefWidth="96.0" text="Last Name" />
-                                 <TableColumn fx:id="teacherSpecializationTableColumn" prefWidth="102.0" text="Especialitation" />
-                                 <TableColumn fx:id="teacherDegreeTableColumn" prefWidth="79.0" text="Degree" />
-                                 <TableColumn fx:id="teacherEmailTableColumn" prefWidth="117.0" text="E-mail" />
-                                 <TableColumn fx:id="teacherPhoneTableColumn" minWidth="3.0" prefWidth="104.0" text="Phone" />
-                                 <TableColumn fx:id="teacherStreetTableColumn" prefWidth="102.0" text="Street" />
-                                 <TableColumn fx:id="teacherPCTableColumn" minWidth="0.0" prefWidth="82.0" text="P.C" />
-                                 <TableColumn fx:id="teacherColonyTableColumn" prefWidth="99.0" text="Colony" />
-                                 <TableColumn fx:id="teacherCityTableColumn" prefWidth="100.0" text="City" />
-                                 <TableColumn fx:id="teacherStateTableColumn" prefWidth="90.0" text="State" />
-                                 <TableColumn fx:id="teacherCountryTableColumn" prefWidth="98.0" text="Country" />
-                                 <TableColumn fx:id="teacherGenderTableColumn" prefWidth="86.0" text="Gender" />
-                                 <TableColumn fx:id="teacherAgeTableColumn" prefWidth="40.0" text="Age" />
+                                 <TableColumn id="teacherLicenseTableColumn" fx:id="teacherLicenseTableColumn" text="License" />
+                                 <TableColumn id="teacherNameTableColumn" fx:id="teacherNameTableColumn" prefWidth="100.0" text="Name" />
+                                 <TableColumn id="teacherLastNameTableColumn" fx:id="teacherLastNameTableColumn" prefWidth="96.0" text="Last Name" />
+                                 <TableColumn id="teacherSpecializationTableColumn" fx:id="teacherSpecializationTableColumn" prefWidth="102.0" text="Specialization" />
+                                 <TableColumn id="teacherDegreeTableColumn" fx:id="teacherDegreeTableColumn" prefWidth="79.0" text="Degree" />
+                                 <TableColumn id="teacherEmailTableColumn" fx:id="teacherEmailTableColumn" prefWidth="117.0" text="E-mail" />
+                                 <TableColumn id="teacherPhoneTableColumn" fx:id="teacherPhoneTableColumn" minWidth="3.0" prefWidth="104.0" text="Phone" />
+                                 <TableColumn id="teacherStreetTableColumn" fx:id="teacherStreetTableColumn" prefWidth="102.0" text="Street" />
+                                 <TableColumn id="teacherPCTableColumn" fx:id="teacherPCTableColumn" minWidth="0.0" prefWidth="82.0" text="P.C" />
+                                 <TableColumn id="teacherColonyTableColumn" fx:id="teacherColonyTableColumn" prefWidth="99.0" text="Colony" />
+                                 <TableColumn id="teacherCityTableColumn" fx:id="teacherCityTableColumn" prefWidth="100.0" text="City" />
+                                 <TableColumn id="teacherStateTableColumn" fx:id="teacherStateTableColumn" prefWidth="90.0" text="State" />
+                                 <TableColumn id="teacherCountryTableColumn" fx:id="teacherCountryTableColumn" prefWidth="98.0" text="Country" />
+                                 <TableColumn id="teacherGenderTableColumn" fx:id="teacherGenderTableColumn" prefWidth="86.0" text="Gender" />
+                                 <TableColumn id="teacherAgeTableColumn" fx:id="teacherAgeTableColumn" prefWidth="40.0" text="Age" />
                               </columns>
                               <padding>
                                  <Insets left="5.0" />

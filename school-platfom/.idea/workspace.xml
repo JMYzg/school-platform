@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63c7403c-d447-4065-ae2f-89c21fb50700" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../school-platform/src/main/java/com/tap/schoolplatform/controllers/login/LoginViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../school-platform/src/main/java/com/tap/schoolplatform/controllers/login/LoginViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../school-platform/src/main/java/com/tap/schoolplatform/controllers/admin/AdminViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../school-platform/src/main/java/com/tap/schoolplatform/controllers/admin/AdminViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../school-platform/src/main/resources/views/admin-views/admin-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/../school-platform/src/main/resources/views/admin-views/admin-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,19 +84,6 @@
       <recent name="com.tap.schoolplatfom.controllers.admin" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="school-platform" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="school-platform" />
-      <option name="filePath" />
-      <method v="2" />
-    </configuration>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -119,6 +106,7 @@
       <workItem from="1744837488636" duration="7191000" />
       <workItem from="1744920541712" duration="22038000" />
       <workItem from="1745003255513" duration="3437000" />
+      <workItem from="1745044235090" duration="7000" />
     </task>
     <servers />
   </component>
