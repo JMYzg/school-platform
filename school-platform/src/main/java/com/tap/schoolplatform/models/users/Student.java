@@ -11,19 +11,12 @@ import java.time.LocalDate;
 
 public class Student extends User {
 
-    private final Role role;
     private StringProperty ID;
     private Image profilePicture;
     private Group group;
 
     public Student(String name, String lastName, String email, String password, String phone, Address address, LocalDate birthDate, Gender gender) {
-        super(name, lastName, email, password, phone, address, birthDate, gender);
-        this.role = Role.STUDENT;
-
-    }
-
-    public Role getRole() {
-        return role;
+        super(name, lastName, email, password, phone, address, birthDate, gender, Role.STUDENT);
     }
 
     public String getID() {

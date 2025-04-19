@@ -7,7 +7,7 @@ import javafx.beans.property.StringProperty;
 public class Subject {
 
     private Semester semester;
-    private StringProperty name;
+    private final StringProperty name;
     private Teacher teacher;
 
     public Subject(Semester semester, String name) {

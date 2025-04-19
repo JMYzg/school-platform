@@ -1,5 +1,7 @@
 package com.tap.schoolplatform.utils;
 
+import com.tap.schoolplatform.utils.exceptions.NotValidFormatException;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,6 +20,11 @@ public class Validation {
     public static boolean ofPhone(String phone) {
         String regex = "^(\\+\\d{1,2}\\s?)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$";
         return isMatch(regex, phone);
+    }
+
+    public static boolean ofPassword(String password) {
+        String regex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
+        return isMatch(regex, password);
     }
 
     private static boolean isMatch(String regex, String input) {

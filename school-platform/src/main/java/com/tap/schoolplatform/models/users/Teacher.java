@@ -10,18 +10,12 @@ import java.time.LocalDate;
 
 public class Teacher extends User {
 
-    private final Role role;
     private StringProperty license;
     private StringProperty specialization;
     private Degree degree;
 
     public Teacher(String name, String lastName, String email, String password, String phone, Address address, LocalDate birthDate, Gender gender) {
-        super(name, lastName, email, password, phone, address, birthDate, gender);
-        role = Role.TEACHER;
-    }
-
-    public Role getRole() {
-        return role;
+        super(name, lastName, email, password, phone, address, birthDate, gender, Role.TEACHER);
     }
 
     public String getLicense() {

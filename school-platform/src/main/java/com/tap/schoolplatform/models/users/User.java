@@ -1,5 +1,6 @@
 package com.tap.schoolplatform.models.users;
 
+import com.tap.schoolplatform.models.users.enums.Role;
 import com.tap.schoolplatform.models.users.shared.Address;
 import com.tap.schoolplatform.models.users.enums.Gender;
 import javafx.beans.property.SimpleStringProperty;
@@ -17,8 +18,9 @@ public abstract class User {
     private Address address;
     private LocalDate birthDate;
     private Gender gender;
+    protected final Role role;
 
-    public User(String name, String lastName, String email, String password, String phone, Address address, LocalDate birthDate, Gender gender) {
+    public User(String name, String lastName, String email, String password, String phone, Address address, LocalDate birthDate, Gender gender, Role role) {
         this.name = new SimpleStringProperty(name);
         this.lastName = new SimpleStringProperty(lastName);
         this.email = new SimpleStringProperty(email);
@@ -27,6 +29,11 @@ public abstract class User {
         this.address = address;
         this.birthDate = birthDate;
         this.gender = gender;
+        this.role = role;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public String getName() {

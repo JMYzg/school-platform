@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="654.0" prefWidth="877.0" stylesheets="@../../styles/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.adminControllers.AdminViewController">
+<VBox prefHeight="654.0" prefWidth="877.0" stylesheets="@../../styles/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.admin.AdminViewController">
     <AnchorPane prefHeight="30.0" prefWidth="655.0" style="-fx-background-color: #003b46;">
         <Label layoutX="676.0" layoutY="8.0" text="Jeremy de Jesús Zarate Garcia" />
       <Button id="btnLogout" fx:id="logOutButton" layoutX="10.0" layoutY="1.0" mnemonicParsing="false" onAction="#logOut" style="-fx-background-color: #003b46;" text="Log out">
@@ -44,19 +44,19 @@
                   <FlowPane prefHeight="377.0" prefWidth="422.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                      <children>
                         <Label id="TitleRegister" prefHeight="32.0" prefWidth="214.0" text="Alumn Register" />
-                        <Button id="btnH" fx:id="studentNewButton" mnemonicParsing="false" onAction="#studentClearAllAttributes" prefHeight="29.0" prefWidth="136.0" text="New" />
+                        <Button id="StudentNewButton" fx:id="studentNewButton" mnemonicParsing="false" onAction="#studentClearAllAttributes" prefHeight="29.0" prefWidth="136.0" text="New" />
                         <Label prefHeight="17.0" prefWidth="59.0" text="Name: ">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <TextField fx:id="studentNameTF" prefHeight="40.0" prefWidth="289.0" promptText="Name">
+                        <TextField id="StudentNameField" fx:id="studentNameTF" prefHeight="40.0" prefWidth="289.0" promptText="Name">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
                         </TextField>
                         <Label prefHeight="17.0" prefWidth="59.0" text="          " />
-                        <TextField fx:id="studentLastNameTF" prefHeight="40.0" prefWidth="289.0" promptText="Last Name">
+                        <TextField id="StudentLastNameField" fx:id="studentLastNameTF" prefHeight="40.0" prefWidth="289.0" promptText="Last Name">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
@@ -66,7 +66,7 @@
                               <Insets top="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <TextField fx:id="studentPhoneTF" prefHeight="40.0" prefWidth="289.0" promptText="123 4567">
+                        <TextField id="studentPhoneField" fx:id="studentPhoneTF" prefHeight="40.0" prefWidth="289.0" promptText="123 4567">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
@@ -76,7 +76,7 @@
                               <Insets top="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <TextField fx:id="studentEmailTF" prefHeight="40.0" prefWidth="289.0" promptText="Example@anything.com">
+                        <TextField id="studentEmailField" fx:id="studentEmailTF" prefHeight="40.0" prefWidth="289.0" promptText="Example@anything.com">
                            <FlowPane.margin>
                               <Insets bottom="5.0" top="10.0" />
                            </FlowPane.margin>
@@ -94,24 +94,24 @@
                           </rowConstraints>
                            <children>
                               <Label prefHeight="17.0" prefWidth="62.0" text="Address:" />
-                              <TextField fx:id="studentStreetTF" prefHeight="40.0" prefWidth="146.0" promptText="Street or Avenue" GridPane.columnIndex="1">
+                              <TextField id="studentStreetField" fx:id="studentStreetTF" prefHeight="40.0" prefWidth="146.0" promptText="Street or Avenue" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField fx:id="studentPCTF" prefHeight="40.0" prefWidth="135.0" promptText="P. C." GridPane.columnIndex="2" />
-                              <TextField fx:id="studentColonyTF" prefHeight="40.0" prefWidth="136.0" promptText="Colony" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <TextField id="studentPCField" fx:id="studentPCTF" prefHeight="40.0" prefWidth="135.0" promptText="P. C." GridPane.columnIndex="2" />
+                              <TextField id="studentColonyField" fx:id="studentColonyTF" prefHeight="40.0" prefWidth="136.0" promptText="Colony" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField fx:id="studentCityTF" prefHeight="40.0" prefWidth="135.0" promptText="City" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <TextField fx:id="studentStateTF" prefHeight="40.0" prefWidth="136.0" promptText="State" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <TextField id="studentCityField" fx:id="studentCityTF" prefHeight="40.0" prefWidth="135.0" promptText="City" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <TextField id="studentStateField" fx:id="studentStateTF" prefHeight="40.0" prefWidth="136.0" promptText="State" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <GridPane.margin>
                                     <Insets right="5.0" />
                                  </GridPane.margin>
                               </TextField>
-                              <TextField fx:id="studentCountryTF" prefHeight="40.0" prefWidth="136.0" promptText="Country" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <TextField id="studentCountryField" fx:id="studentCountryTF" prefHeight="40.0" prefWidth="136.0" promptText="Country" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                         <Label prefHeight="17.0" prefWidth="59.0" text="Gender:">
@@ -119,7 +119,7 @@
                               <Insets top="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <ComboBox fx:id="studentGenderComboBox" editable="true" prefHeight="82.0" prefWidth="118.0" promptText="Male / Female">
+                        <ComboBox id="studentGenderComboBox" fx:id="studentGenderComboBox" editable="true" prefHeight="82.0" prefWidth="118.0" promptText="Male / Female">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
@@ -129,7 +129,7 @@
                               <Insets left="5.0" top="10.0" />
                            </FlowPane.margin>
                         </Label>
-                        <DatePicker fx:id="studentDatePicker" prefHeight="29.0" prefWidth="105.0">
+                        <DatePicker id="studentDatePicker" fx:id="studentDatePicker" prefHeight="29.0" prefWidth="105.0">
                            <FlowPane.margin>
                               <Insets top="10.0" />
                            </FlowPane.margin>
@@ -143,20 +143,20 @@
                      </padding>
                   </FlowPane>
                         <AnchorPane prefHeight="197.0" prefWidth="372.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
-                     <Button id="btnA" fx:id="studentUploadImageButton" layoutX="271.0" layoutY="149.0" mnemonicParsing="false" onAction="#studentUploadImage" prefHeight="29.0" prefWidth="70.0" text="Upload" />
+                     <Button id="studentUploadImageButton" fx:id="studentUploadImageButton" layoutX="271.0" layoutY="149.0" mnemonicParsing="false" onAction="#studentUploadImage" prefHeight="29.0" prefWidth="70.0" text="Upload" />
                      <VBox layoutX="14.0" layoutY="8.0" prefHeight="166.0" prefWidth="219.0" spacing="5.0">
                         <children>
                                   <Label prefHeight="17.0" prefWidth="58.0" text="Degree:" />
-                                  <ComboBox fx:id="studentDegreeComboBox" editable="true" onMouseClicked="#refreshCBStudentDegree" prefHeight="28.0" prefWidth="227.0" />
-                                  <Button id="btnA" fx:id="studentManageDegreeButton" mnemonicParsing="false" onAction="#manageDegreesAdmin" prefHeight="29.0" prefWidth="222.0" text="Manage" />
+                                  <ComboBox id="studentDegreeComboBox" fx:id="studentDegreeComboBox" editable="true" onMouseClicked="#refreshCBStudentDegree" prefHeight="28.0" prefWidth="227.0" />
+                                  <Button id="studentManageDegreeComboBox" fx:id="studentManageDegreeButton" mnemonicParsing="false" onAction="#manageDegreesAdmin" prefHeight="29.0" prefWidth="222.0" text="Manage" />
                                   <Label prefHeight="17.0" prefWidth="45.0" text="Group:" />
-                                  <ComboBox fx:id="studentGroupComboBox" editable="true" onMouseClicked="#refreshCBStudentGroup" prefHeight="29.0" prefWidth="226.0" />
-                                  <Button id="btnA" fx:id="studentManageGroupsButton" mnemonicParsing="false" onAction="#manageGroupAdmin" prefHeight="29.0" prefWidth="223.0" text="Manage" />
+                                  <ComboBox id="studentGroupComboBox" fx:id="studentGroupComboBox" editable="true" onMouseClicked="#refreshCBStudentGroup" prefHeight="29.0" prefWidth="226.0" />
+                                  <Button id="studentManageGroupComboBox" fx:id="studentManageGroupsButton" mnemonicParsing="false" onAction="#manageGroupAdmin" prefHeight="29.0" prefWidth="223.0" text="Manage" />
                         </children>
                      </VBox>
                      <StackPane layoutX="253.0" layoutY="31.0" prefHeight="107.0" prefWidth="107.0" style="-fx-background-color: dedede; -fx-background-radius: 5;">
                         <children>
-                           <ImageView fx:id="studentImageView" fitHeight="107.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
+                           <ImageView id="studentImageView" fx:id="studentImageView" fitHeight="107.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                  <Image url="@../../images/roblox.png" />
                               </image></ImageView>
@@ -168,14 +168,14 @@
                         <VBox prefHeight="555.0" prefWidth="472.0">
                             <HBox prefHeight="118.0" prefWidth="471.0" spacing="10.0">
                                 <AnchorPane prefHeight="116.0" prefWidth="136.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
-                                    <Button id="btnH" fx:id="studentEditButton" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#studentEditUser" prefHeight="29.0" prefWidth="109.0" text="Edit" />
-                                    <Button id="btnM" fx:id="studentAcceptButton" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#addStudent" prefHeight="29.0" prefWidth="109.0" text="Accept" />
-                                    <Button id="btnN" fx:id="studentCancelButton" layoutX="14.0" layoutY="80.0" mnemonicParsing="false" onAction="#cancelCreateEditStudent" prefHeight="29.0" prefWidth="109.0" text="Cancel" />
+                                    <Button id="studentEditButton" fx:id="studentEditButton" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#studentEditUser" prefHeight="29.0" prefWidth="109.0" text="Edit" />
+                                    <Button id="studentAcceptButton" fx:id="studentAcceptButton" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#addStudent" prefHeight="29.0" prefWidth="109.0" text="Accept" />
+                                    <Button id="studentCancelButton" fx:id="studentCancelButton" layoutX="14.0" layoutY="80.0" mnemonicParsing="false" onAction="#cancelCreateEditStudent" prefHeight="29.0" prefWidth="109.0" text="Cancel" />
                                 </AnchorPane>
                         <AnchorPane prefHeight="118.0" prefWidth="327.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5;">
                            <children>
-                              <TextField fx:id="studentSearchTF" layoutX="14.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" />
-                              <Button id="btnM" fx:id="studentFilterButton" layoutX="249.0" layoutY="38.0" mnemonicParsing="false" onAction="#searchStudent" prefHeight="61.0" prefWidth="64.0" style="-fx-pref-height: 64;" text="Filter" />
+                              <TextField id="studentSearchField" fx:id="studentSearchTF" layoutX="14.0" layoutY="70.0" prefHeight="25.0" prefWidth="220.0" />
+                              <Button id="studentFilterButton" fx:id="studentFilterButton" layoutX="249.0" layoutY="38.0" mnemonicParsing="false" onAction="#searchStudent" prefHeight="61.0" prefWidth="64.0" style="-fx-pref-height: 64;" text="Filter" />
                               <Label id="TitleRegister" layoutX="14.0" layoutY="5.0" text="Search" />
                               <ImageView fitHeight="29.0" fitWidth="32.0" layoutX="80.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -189,23 +189,23 @@
                             <Region prefHeight="10.0" prefWidth="471.0" />
                             <ScrollPane prefHeight="457.0" prefWidth="471.0">
                         <content>
-                           <TableView fx:id="studentList" onMouseClicked="#studentSelectUser" prefHeight="460.0" prefWidth="1376.0" style="-fx-background-color: white; -fx-background-radius: 5;">
+                           <TableView id="studentTableView" fx:id="studentList" onMouseClicked="#studentSelectUser" prefHeight="460.0" prefWidth="1376.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                               <columns>
-                                 <TableColumn fx:id="studentIdTableColumn" text="ID" />
-                                 <TableColumn fx:id="studentNameTableColumn" prefWidth="100.0" text="Name" />
-                                 <TableColumn fx:id="studentLNTableColumn" prefWidth="96.0" text="Last Name" />
-                                 <TableColumn fx:id="studentDegreeTableColumn" prefWidth="102.0" text="Degree" />
-                                 <TableColumn fx:id="studentGroupTableColumn" prefWidth="79.0" text="Group" />
-                                 <TableColumn fx:id="studentEmailTableColumn" prefWidth="117.0" text="E-mail" />
-                                 <TableColumn fx:id="studentPhoneTableColumn" minWidth="3.0" prefWidth="104.0" text="Phone" />
-                                 <TableColumn fx:id="studentStreetTableColumn" prefWidth="102.0" text="Street" />
-                                 <TableColumn fx:id="studentPCTableColumn" minWidth="0.0" prefWidth="82.0" text="P.C" />
-                                 <TableColumn fx:id="studentColonyTableColumn" prefWidth="99.0" text="Colony" />
-                                 <TableColumn fx:id="studentCityTableColumn" prefWidth="100.0" text="City" />
-                                 <TableColumn fx:id="studentStateTableColumn" prefWidth="90.0" text="State" />
-                                 <TableColumn fx:id="studentCountryTableColumn" prefWidth="98.0" text="Country" />
-                                 <TableColumn fx:id="studentGenderTableColumn" prefWidth="86.0" text="Gender" />
-                                 <TableColumn fx:id="studentAgeTableColumn" prefWidth="40.0" text="Age" />
+                                 <TableColumn id="studentIDTableColumn" fx:id="studentIdTableColumn" text="ID" />
+                                 <TableColumn id="studentNameTableColumn" fx:id="studentNameTableColumn" prefWidth="100.0" text="Name" />
+                                 <TableColumn id="studentLastNameTableColumn" fx:id="studentLNTableColumn" prefWidth="96.0" text="Last Name" />
+                                 <TableColumn id="studentDegreeTableColumn" fx:id="studentDegreeTableColumn" prefWidth="102.0" text="Degree" />
+                                 <TableColumn id="studentGroupTableColumn" fx:id="studentGroupTableColumn" prefWidth="79.0" text="Group" />
+                                 <TableColumn id="studentEmailTableColumn" fx:id="studentEmailTableColumn" prefWidth="117.0" text="E-mail" />
+                                 <TableColumn id="studentPhoneTableColumn" fx:id="studentPhoneTableColumn" minWidth="3.0" prefWidth="104.0" text="Phone" />
+                                 <TableColumn id="studentStreetTableColumn" fx:id="studentStreetTableColumn" prefWidth="102.0" text="Street" />
+                                 <TableColumn id="studentPCTableColumn" fx:id="studentPCTableColumn" minWidth="0.0" prefWidth="82.0" text="P.C" />
+                                 <TableColumn id="studentColonyTableColumn" fx:id="studentColonyTableColumn" prefWidth="99.0" text="Colony" />
+                                 <TableColumn id="studentCityTableColumn" fx:id="studentCityTableColumn" prefWidth="100.0" text="City" />
+                                 <TableColumn id="studentStateTableColumn" fx:id="studentStateTableColumn" prefWidth="90.0" text="State" />
+                                 <TableColumn id="studentCountryTableColumn" fx:id="studentCountryTableColumn" prefWidth="98.0" text="Country" />
+                                 <TableColumn id="studentGenderTableColumn" fx:id="studentGenderTableColumn" prefWidth="86.0" text="Gender" />
+                                 <TableColumn id="studentAgeTableColumn" fx:id="studentAgeTableColumn" prefWidth="40.0" text="Age" />
                               </columns>
                               <padding>
                                  <Insets left="5.0" />

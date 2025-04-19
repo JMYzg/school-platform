@@ -14,8 +14,8 @@ import javafx.collections.ObservableList;
 public class Degree {
 
     private final StringProperty name;
-    private ObservableList<Semester> semesters;
-    private ObservableList<Teacher> teachers;
+    private final ObservableList<Semester> semesters = FXCollections.observableArrayList();
+    private final ObservableList<Teacher> teachers = FXCollections.observableArrayList();
 
     public Degree(String name) {
         this.name = new SimpleStringProperty(name);

@@ -11,7 +11,7 @@ public class Group {
     private StringProperty ID;
     private Semester semester;
     private Shift shift;
-    private ObservableList<Student> students;
+    private final ObservableList<Student> students = FXCollections.observableArrayList();
 
     public Group(Semester semester, Shift shift) {
         this.semester = semester;

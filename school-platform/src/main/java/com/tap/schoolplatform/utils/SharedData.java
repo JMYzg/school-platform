@@ -37,7 +37,7 @@ public class SharedData {
         degrees = FXCollections.observableArrayList();
     }
 
-    private void initialize() {
+    public void initialize() {
         Admin admin =
                 new Admin(
                         "Jeremy",
@@ -115,12 +115,12 @@ public class SharedData {
         return instance;
     }
 
-    public void addUser(Role role, User user) {
-        users.put(role, FXCollections.observableArrayList(user));
+    public void addUser(User user) {
+        users.put(user.getRole(), FXCollections.observableArrayList(user));
     }
 
-    public void removeUser(Role role, User user) {
-        users.get(role).remove(user);
+    public void removeUser(User user) {
+        users.get(user.getRole()).remove(user);
     }
 
     public ObservableList<User> getUsers(Role role) {
