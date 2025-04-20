@@ -147,10 +147,10 @@
                      <VBox layoutX="14.0" layoutY="8.0" prefHeight="166.0" prefWidth="219.0" spacing="5.0">
                         <children>
                                   <Label prefHeight="17.0" prefWidth="58.0" text="Degree:" />
-                                  <ComboBox id="studentDegreeComboBox" fx:id="studentDegreeComboBox" editable="true" onMouseClicked="#refreshCBStudentDegree" prefHeight="28.0" prefWidth="227.0" />
+                                  <ComboBox id="studentDegreeComboBox" fx:id="studentDegreeComboBox" editable="true" prefHeight="28.0" prefWidth="227.0" />
                                   <Button id="btnA" fx:id="studentManageDegreeButton" mnemonicParsing="false" onAction="#onStudentManageDegreeClick" prefHeight="29.0" prefWidth="222.0" text="Manage" />
                                   <Label prefHeight="17.0" prefWidth="45.0" text="Group:" />
-                                  <ComboBox id="studentGroupComboBox" fx:id="studentGroupComboBox" editable="true" onMouseClicked="#refreshCBStudentGroup" prefHeight="29.0" prefWidth="226.0" />
+                                  <ComboBox id="studentGroupComboBox" fx:id="studentGroupComboBox" editable="true" prefHeight="29.0" prefWidth="226.0" />
                                   <Button id="btnA" fx:id="studentManageGroupButton" mnemonicParsing="false" onAction="#onStudentManageGroupClick" prefHeight="29.0" prefWidth="223.0" text="Manage" />
                         </children>
                      </VBox>
@@ -189,7 +189,7 @@
                             <Region prefHeight="10.0" prefWidth="471.0" />
                             <ScrollPane prefHeight="457.0" prefWidth="471.0">
                         <content>
-                           <TableView id="studentTableView" fx:id="studentTableView" onMouseClicked="#studentSelectUser" prefHeight="460.0" prefWidth="1376.0" style="-fx-background-color: white; -fx-background-radius: 5;">
+                           <TableView id="studentTableView" fx:id="studentTableView" onMouseClicked="#studentSelectionHandler" prefHeight="460.0" prefWidth="1376.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                               <columns>
                                  <TableColumn id="studentIDTableColumn" fx:id="studentIDTableColumn" text="ID" />
                                  <TableColumn id="studentNameTableColumn" fx:id="studentNameTableColumn" prefWidth="100.0" text="Name" />
@@ -337,7 +337,7 @@
                   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="371.0" style="-fx-background-color: White; -fx-background-radius: 5;">
                      <children>
                         <Label layoutX="8.0" layoutY="15.0" prefHeight="17.0" prefWidth="59.0" text="Degree:" />
-                        <ComboBox id="teacherDegreeComboBox" fx:id="teacherDegreeComboBox" editable="true" layoutX="61.0" layoutY="8.0" onMouseClicked="#updateDegreeComboBox" prefHeight="17.0" prefWidth="215.0" />
+                        <ComboBox id="teacherDegreeComboBox" fx:id="teacherDegreeComboBox" editable="true" layoutX="61.0" layoutY="8.0" prefHeight="17.0" prefWidth="215.0" />
                         <Button id="btnA" fx:id="teacherManageDegreeButton" layoutX="287.0" layoutY="11.0" mnemonicParsing="false" onAction="#onTeacherManageDegreeClick" prefHeight="29.0" prefWidth="72.0" text="Manage" />
                         <TextField id="teacherSubjectField" fx:id="teacherSubjectField" layoutX="90.0" layoutY="73.0" prefHeight="40.0" prefWidth="185.0" />
                         <Button id="btnA" fx:id="teacherCreateSubjectButton" layoutX="287.0" layoutY="76.0" mnemonicParsing="false" onAction="#onTeacherCreateSubjectClick" prefHeight="29.0" prefWidth="72.0" text="Create" />
@@ -377,7 +377,7 @@
                             <Region prefHeight="10.0" prefWidth="471.0" />
                             <ScrollPane prefHeight="457.0" prefWidth="470.0">
                         <content>
-                           <TableView id="teacherTableView" fx:id="teacherTableView" onMouseClicked="#teacherSelectUser" prefHeight="460.0" prefWidth="1376.0" style="-fx-background-color: white; -fx-background-radius: 5;">
+                           <TableView id="teacherTableView" fx:id="teacherTableView" onMouseClicked="#teacherSelectionHandler" prefHeight="460.0" prefWidth="1376.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                               <columns>
                                  <TableColumn id="teacherLicenseTableColumn" fx:id="teacherLicenseTableColumn" text="License" />
                                  <TableColumn id="teacherNameTableColumn" fx:id="teacherNameTableColumn" prefWidth="100.0" text="Name" />

@@ -24,6 +24,10 @@ public class LoginViewController extends ViewController {
     @FXML
     private Button loginButton;
 
+    @FXML private void initialize() {
+        LoginService.logout();
+    }
+
     @FXML
     private void onLoginClick() {
         String email = emailField.getText().trim();

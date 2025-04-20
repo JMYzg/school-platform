@@ -1,5 +1,7 @@
 package com.tap.schoolplatform.controllers;
 
+import com.tap.schoolplatform.services.auth.LoginService;
+import com.tap.schoolplatform.utils.SharedData;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,6 +13,8 @@ import java.io.IOException;
 import java.util.Objects;
 
 public abstract class ViewController {
+
+    protected final SharedData data = SharedData.getInstance();
 
     protected static final String LOGIN_VIEW = "/views/admin-views/login-view.fxml";
     protected static final String ADMIN_VIEW = "/views/admin-views/admin-view.fxml";

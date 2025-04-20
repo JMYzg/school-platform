@@ -1,9 +1,11 @@
 package com.tap.schoolplatform.controllers.alerts;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class AlertHandler {
 
@@ -20,7 +22,7 @@ public class AlertHandler {
             new ImageView(Objects.requireNonNull(AlertHandler.class
                     .getResource("/images/confirm.png")).toExternalForm());
 
-    public static void showAlert(Alert.AlertType type, String title, String header, String content) {
+    public static Optional<ButtonType> showAlert(Alert.AlertType type, String title, String header, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(header);
@@ -35,6 +37,6 @@ public class AlertHandler {
                     default -> CONFIRM_IMAGE;
                 }
         );
-        alert.showAndWait();
+        return alert.showAndWait();
     }
 }

@@ -17,6 +17,6 @@ public class AuthService extends Service {
                 return match.get();
             }
         }
-        throw new UserNotFoundException("Check your credentials");
+        throw new UserNotFoundException("Check out your credentials");
     }
 }

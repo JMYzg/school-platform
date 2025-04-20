@@ -29,11 +29,14 @@ public class SharedData {
 
     private static SharedData instance;
 
-    private final Map<Role, ObservableList<User>> users;
+    private final Map<Role, ObservableList<? extends User>> users;
     private final ObservableList<Degree> degrees;
 
     private SharedData() {
         users = new HashMap<>();
+        users.put(Role.ADMIN, FXCollections.<Admin>observableArrayList());
+        users.put(Role.TEACHER, FXCollections.<Teacher>observableArrayList());
+        users.put(Role.STUDENT, FXCollections.<Student>observableArrayList());
         degrees = FXCollections.observableArrayList();
     }
 
@@ -56,7 +59,7 @@ public class SharedData {
                         LocalDate.of(2004, 2, 23),
                         Gender.MALE
                 );
-        users.put(Role.ADMIN, FXCollections.observableArrayList(admin));
+        addUser(admin);
 
         Degree SE = new Degree("Software Engineering");
         Semester first = new Semester(SE, 1);
@@ -86,7 +89,7 @@ public class SharedData {
                         Gender.MALE
                 );
         SE.addTeacher(teacher);
-        users.put(Role.TEACHER, FXCollections.observableArrayList(teacher));
+        addUser(teacher);
 
         Student student =
                 new Student(
@@ -107,7 +110,7 @@ public class SharedData {
                         Gender.FEMALE
                 );
         G1M.addStudent(student);
-        users.put(Role.STUDENT, FXCollections.observableArrayList(student));
+        addUser(student);
     }
 
     public static SharedData getInstance() {
@@ -115,16 +118,33 @@ public class SharedData {
         return instance;
     }
 
+    @SuppressWarnings("unchecked")
     public void addUser(User user) {
-        users.put(user.getRole(), FXCollections.observableArrayList(user));
+        Role role = user.getRole();
+        Class<? extends User> expectedType = role.getUserClass();
+
+        if (expectedType.isInstance(user)) {
+            ObservableList<? extends User> list = users.get(role);
+            if (list != null) {
+                ((ObservableList<User>) list).add(user);
+            }
+        }
     }
 
     public void removeUser(User user) {
-        users.get(user.getRole()).remove(user);
+        Role role = user.getRole();
+        Class<? extends User> expectedType = role.getUserClass();
+        if (expectedType.isInstance(user)) {
+            ObservableList<? extends User> list = users.get(role);
+            if (list != null) {
+                list.remove(user);
+            }
+        }
     }
 
-    public ObservableList<User> getUsers(Role role) {
-        return FXCollections.unmodifiableObservableList(users.get(role));
+    @SuppressWarnings("unchecked")
+    public <T extends User> ObservableList<T> getUsers(Role role) {
+        return FXCollections.unmodifiableObservableList((ObservableList<T>) users.get(role));
     }
 
     public ObservableList<Degree> getDegrees() {
