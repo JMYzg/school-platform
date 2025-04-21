@@ -4,21 +4,29 @@
     -fx-table-cell-border-color: transparent; /* Remove cell borders */
     -fx-fit-to-width: true; /* Auto-adjust column width */
     -fx-fit-to-height: true; /* Optional vertical adjustment */
+
+    -fx-selection-bar: transparent;
 }
 
 /* Column header style (no side borders) */
+.table-view .column-header .label {
+    -fx-font-family: "Inter Semi Bold";
+    -fx-font-weight: bold;
+    -fx-font-size: 10px;
+    -fx-text-fill: #000000;
+}
+
 .table-view .column-header,
 .table-view .column-header-background .filler {
     -fx-border-width: 0 0 2px 0; /* Bottom border only */
     -fx-border-color: #dedede; /* Light gray color */
     -fx-background-color: white; /* Header background */
 }
-
-.table-view .column-header .label {
-    -fx-font-family: "Inter Semi Bold";
-    -fx-font-weight: bold;
-    -fx-font-size: 10px;
-    -fx-text-fill: #000000;
+.table-row-cell,
+.table-row-cell:filled {
+    -fx-border-width: 0 0 1px 0; /* Solo línea inferior */
+    -fx-border-color: #f0f0f0; /* Color de la línea */
+    -fx-background-insets: 0;
 }
 
 /* Row bottom borders */
@@ -33,6 +41,10 @@
     -fx-font-size: 9px;
     -fx-font-family: "Inter 24pt";
     -fx-text-fill: black; /* Text color */
+    -fx-alignment: center;
+
+    -fx-border-width: 0;
+    -fx-padding: 4px; /* Espaciado interno uniforme */
 }
 
 /* Even rows */
@@ -43,4 +55,22 @@
 /* Odd rows */
 .table-row-cell:odd {
     -fx-background-color: white;        /* White */
+}
+.table-row-cell:filled:selected {
+    -fx-background-color: #014b58; /* Gris oscuro */
+    -fx-text-background-color: white; /* Letras blancas */
+    -fx-background-insets: 0; /* Elimina márgenes internos */
+    -fx-table-cell-border-color: transparent; /* Sin bordes */
+}
+
+/* Quitar efecto de foco (líneas azules) */
+.table-row-cell:filled:focused {
+    -fx-background-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/* Estilo cuando el mouse está sobre la fila */
+.table-row-cell:filled:hover {
+    -fx-background-color: #fca621; /* Gris claro al pasar el mouse */
 }
