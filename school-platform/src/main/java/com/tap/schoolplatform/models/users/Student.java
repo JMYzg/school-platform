@@ -46,7 +46,7 @@ public class Student extends User {
     }
     public void setGroup(Group group) { // Only used by Group in addStudent and removeStudent
         this.group = group;
-        ID.set(Integer.toString(SharedData.getInstance().getUsers(this.role).indexOf(this)));
+        ID.set(Integer.toString(SharedData.getInstance().getUsers(this.role).indexOf(this) + 1));
     }
 
     public Semester getSemester() {

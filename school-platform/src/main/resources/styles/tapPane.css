@@ -1,0 +1,40 @@
+.tab-pane {
+    -fx-background-color: #dedede; /* Background color */
+    -fx-border-color: transparent; /* No borders */
+}
+
+/* Unselected tabs style */
+.tab {
+    -fx-background-color: #dedede; /* Background color */
+    -fx-border-radius: 5px 5px 0 0; /* Top rounded corners */
+    -fx-background-radius: 5px 5px 0 0;
+    -fx-padding: 1px 15px; /* Internal padding */
+    -fx-font-family: "Nirmala UI";
+    -fx-pref-height: bold;
+    -fx-cursor: hand;
+}
+
+.tab:selected {
+    -fx-background-color: #709a98; /* Highlight color */
+    -fx-text-fill: white; /* White text */
+}
+
+/* Tab text */
+.tab-label {
+    -fx-text-fill: black; /* Unselected text color */
+}
+
+/* Tab container (header) */
+.tab-header-area {
+    -fx-background-color: transparent; /* Transparent background */
+}
+
+/* Header bottom line (optional) */
+.tab-header-background {
+    -fx-background-color: transparent;
+}
+
+/* Tab hover effect */
+.tab:hover {
+    -fx-background-color: #bdbdbd; /* Hover color */
+}

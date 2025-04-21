@@ -152,6 +152,8 @@ public class AdminViewController extends ViewController {
     @FXML private void initialize() {
         adminNameLabel.setText("Welcome " + LoginService.getCurrentUser().toString() + "!");
         bindTableViews();
+        disableStudentForm(true);
+        disableTeacherForm(true);
         bindStudentTableColumns();
         bindTeacherTableColumns();
     }
@@ -347,4 +349,83 @@ public class AdminViewController extends ViewController {
         countryTableColumn.setCellValueFactory(cell -> cell.getValue().getAddress().countryProperty());
     }
 
+    private void disableStudentForm(boolean toggle) {
+        disableTextFields(toggle,
+                studentNameField,
+                studentLastNameField,
+                studentPhoneField,
+                studentEmailField,
+                studentStreetField,
+                studentPCField,
+                studentColonyField,
+                studentCityField,
+                studentStateField,
+                studentCountryField
+        );
+        disableComboBoxes(toggle,
+                studentGenderComboBox,
+                studentDegreeComboBox,
+                studentGroupComboBox
+        );
+        disableButtons(toggle,
+                studentManageDegreeButton,
+                studentManageGroupButton,
+                studentUploadImageButton
+        );
+        studentDatePicker.setDisable(toggle);
+        studentImageView.setDisable(toggle);
+    }
+
+    private void disableTeacherForm(boolean toggle) {
+        disableTextFields(toggle,
+                teacherNameField,
+                teacherLastNameField,
+                teacherLicenseField,
+                teacherSpecializationField,
+                teacherPhoneField,
+                teacherEmailField,
+                teacherStreetField,
+                teacherPCField,
+                teacherColonyField,
+                teacherCityField,
+                teacherStateField,
+                teacherCountryField
+        );
+        disableComboBoxes(toggle,
+                teacherGenderComboBox,
+                teacherDegreeComboBox,
+
+                teacherAssignSubjectComboBox,
+                teacherUnassignSubjectComboBox,
+
+                teacherSubjectSemesterComboBox,
+                teacherAssignSubjectSemesterComboBox,
+                teacherUnassignSubjectSemesterComboBox
+        );
+        disableButtons(toggle,
+                teacherManageDegreeButton,
+                teacherCreateSubjectButton,
+                teacherAssignSubjectButton,
+                teacherUnassignSubjectButton
+        );
+        teacherDatePicker.setDisable(toggle);
+    }
+
+    private void disableTextFields(boolean value, TextField... textFields) {
+        for (TextField textField : textFields) {
+            textField.setDisable(value);
+        }
+    }
+
+    private void disableComboBoxes(boolean value, ComboBox<?>... comboBoxes) {
+        for (ComboBox<?> comboBox : comboBoxes) {
+            comboBox.setDisable(value);
+        }
+    }
+
+    private void disableButtons(boolean value, Button... buttons) {
+        for (Button button : buttons) {
+            button.setDisable(value);
+        }
+    }
 }

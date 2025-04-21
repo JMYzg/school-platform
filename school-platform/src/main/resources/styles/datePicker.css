@@ -1,0 +1,48 @@
+.date-picker {
+    -fx-background-color: #d5dbdb;
+    -fx-border-color: transparent;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-font-family: "Inter Semi Bold";
+    -fx-font-size: 12px;
+}
+
+/* Inner text field style */
+.date-picker .text-field {
+    -fx-background-color: transparent; /* Transparent background (inherits from DatePicker) */
+    -fx-prompt-text-fill: #666666;     /* Placeholder color */
+}
+
+/* DatePicker arrow (similar to ComboBox) */
+.date-picker .arrow-button {
+    -fx-border-color: #9d9f9f;         /* Subtle border */
+    -fx-border-width: 0 0 0 2px;
+    -fx-background-color: transparent;
+}
+
+/* Calendar popup */
+.date-picker-popup {
+    -fx-background-color: #ffffff;      /* Calendar background */
+    -fx-border-color: #eeeeee;
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+/* Calendar cells */
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #f0f0f0;      /* Header background (month/year) */
+}
+
+.date-picker-popup .day-cell {
+    -fx-background-color: #ffffff;      /* Day cells background */
+    -fx-text-fill: #333333;
+}
+
+.date-picker-popup .day-cell:hover {
+    -fx-background-color: #709a98;      /* Hover state */
+}
+
+.date-picker-popup .day-cell:selected {
+    -fx-background-color:  #014b58;      /* Selected day */
+    -fx-text-fill: white;
+}

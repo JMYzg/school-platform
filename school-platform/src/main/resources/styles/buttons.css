@@ -1,0 +1,111 @@
+.button {
+    -fx-font-family: "Inter Semi Bold";
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-font-size: 12px;
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-pref-height: 25px; /* Preferred height */
+    -fx-cursor: hand;
+
+    /* Smooth transition for animations */
+    -fx-transition: all 0.2s;
+}
+
+/* Button press animation */
+.button:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+#btnLogin {
+    -fx-background-color: #fca621;
+    -fx-pref-width: 300px;
+    -fx-font-size: 14px;
+}
+
+#btnsubject {
+    -fx-pref-height: 60px; /* Preferred height */
+    -fx-background-radius: 0 0 0 0;
+}
+
+#btninfo {
+    -fx-pref-height: 80px; /* Preferred height */
+    -fx-background-color: #f6f6f6;
+    -fx-background-insets: 0; /* No internal margins */
+    -fx-border-width: 0; /* No borders */
+    -fx-padding: 0px 0px; /* Remove internal spacing */
+}
+
+#btninfo:hover {
+    -fx-effect: dropshadow(gaussian, rgba(128, 128, 128, 0.5), 10, 0, 0, 0);
+    -fx-background-color: #ffffff; /* HBox background (optional) */
+}
+
+#btnOptions {
+    -fx-font-family: "Inter";
+    -fx-text-fill: black;
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+#btnOptions:hover {
+    -fx-background-color: rgba(211, 211, 211, 0.5); /* Light gray with transparency */
+}
+
+#btnQuestion {
+    -fx-font-family: "Inter";
+    -fx-pref-height: 30px; /* Preferred height */
+    -fx-text-fill: black;
+    -fx-background-color: white;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(128, 128, 128, 0.5), 10, 0, 0, 0);
+}
+
+#btnplus {
+    -fx-pref-height: 30px; /* Preferred height */
+    -fx-background-color: #9d9f9f;
+}
+
+#btnLogout {
+    -fx-background-color: #b9b9b9;
+}
+
+#btnA {
+    -fx-background-color: #20b1aa;
+}
+
+#btnH {
+    -fx-background-color: #458c88;
+}
+
+#btnM {
+    -fx-background-color: #00696d;
+}
+
+#btnN {
+    -fx-background-color: #476a6f;
+}
+
+#BtnclassColor {
+    -fx-background-radius: 5 0 0 5; /* Corners: top-left, top-right, bottom-right, bottom-left */
+    -fx-border-radius: 5 0 0 5;
+}
+
+#btnhomeworkcolor {
+    -fx-background-radius: 0 5 5 0;
+}
+
+/* Style for HBox with blurred border */
+#Difuminado {
+    -fx-effect: dropshadow(gaussian, rgba(128, 128, 128, 0.5), 10, 0, 0, 0);
+    -fx-background-color: #ffffff; /* HBox background (optional) */
+}
+
+#BtnTest {
+    -fx-pref-height: 100px; /* Preferred height */
+    -fx-background-insets: 0; /* No internal margins */
+    -fx-border-width: 0; /* No borders */
+    -fx-padding: 0px 0px; /* Remove internal spacing */
+    -fx-cursor: hand; /* Optional: hand cursor */
+}

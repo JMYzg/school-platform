@@ -1,0 +1,49 @@
+.combo-box {
+    -fx-background-color: #d5dbdb; /* Background */
+    -fx-border-color: #cccccc;     /* Border color */
+    -fx-border-radius: 5px;        /* Rounded corners */
+    -fx-border-width: 1px;
+    -fx-font-family: "inter";   /* Font */
+    -fx-font-size: 12px;
+    -fx-pref-height: 30px;
+}
+
+/* ComboBox arrow */
+.combo-box .arrow-button {
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-padding: 0 5px 0 5px;           /* Right padding */
+    -fx-border-color: #9d9f9f;         /* Subtle border */
+    -fx-border-width: 0 0 0 2px;
+}
+
+.combo-box .arrow {
+    -fx-shape: "M 0 3 L 5 8 L 10 3";
+    -fx-background-color: #333333;
+    -fx-stroke-width: 1px;
+}
+
+/* Popup style (dropdown list) */
+.combo-box-popup .list-view {
+    -fx-background-color: #ffffff;      /* List background */
+    -fx-border-color: #eeeeee;          /* List border */
+    -fx-border-radius: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2); /* Soft shadow */
+}
+
+/* Dropdown list cells */
+.combo-box-popup .list-cell {
+    -fx-background-color: #ffffff;      /* Cell background */
+    -fx-text-fill: #333333;             /* Text color */
+    -fx-padding: 3px 3px;
+}
+
+/* Hover effect on cells */
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #f5f5f5;       /* Hover color */
+}
+
+/* Selected cell */
+.combo-box-popup .list-cell:selected {
+    -fx-background-color: #39c2cc;       /* Selection color */
+    -fx-text-fill: #000000;
+}
