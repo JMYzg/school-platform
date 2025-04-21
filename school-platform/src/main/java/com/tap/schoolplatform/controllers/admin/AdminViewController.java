@@ -11,18 +11,13 @@ import com.tap.schoolplatform.models.users.Teacher;
 import com.tap.schoolplatform.models.users.User;
 import com.tap.schoolplatform.models.users.enums.Gender;
 import com.tap.schoolplatform.models.users.enums.Role;
-import com.tap.schoolplatform.models.users.shared.Address;
 import com.tap.schoolplatform.services.auth.LoginService;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Optional;
 
 public class AdminViewController extends ViewController {
@@ -79,7 +74,7 @@ public class AdminViewController extends ViewController {
     @FXML private TableColumn<Student, Degree> studentDegreeTableColumn;
     @FXML private TableColumn<Student, Group> studentGroupTableColumn;
     @FXML private TableColumn<Student, Gender> studentGenderTableColumn;
-    @FXML private TableColumn<Address, String>
+    @FXML private TableColumn<Student, String>
             studentStreetTableColumn,
             studentPCTableColumn,
             studentColonyTableColumn,
@@ -144,7 +139,7 @@ public class AdminViewController extends ViewController {
             teacherPhoneTableColumn;
     @FXML private TableColumn<Teacher, Degree> teacherDegreeTableColumn;
     @FXML private TableColumn<Teacher, Gender> teacherGenderTableColumn;
-    @FXML private TableColumn<Address, String>
+    @FXML private TableColumn<Teacher, String>
             teacherStreetTableColumn,
             teacherPCTableColumn,
             teacherColonyTableColumn,
@@ -156,6 +151,9 @@ public class AdminViewController extends ViewController {
     // Methods
     @FXML private void initialize() {
         adminNameLabel.setText("Welcome " + LoginService.getCurrentUser().toString() + "!");
+        bindTableViews();
+        bindStudentTableColumns();
+        bindTeacherTableColumns();
     }
 
     @FXML private void onLogoutClick() {
@@ -266,33 +264,30 @@ public class AdminViewController extends ViewController {
                 studentDegreeTableColumn,
                 studentGroupTableColumn,
                 studentGenderTableColumn,
-                studentStreetTableColumn,
-                studentPCTableColumn,
-                studentColonyTableColumn,
-                studentCityTableColumn,
-                studentStateTableColumn,
-                studentCountryTableColumn,
                 studentAgeTableColumn
         };
 
         String[] properties = {
                 "ID",
-                "Name",
-                "LastName",
-                "Email",
-                "Phone",
-                "Degree",
-                "Group",
-                "Gender",
-                "Street",
-                "PC",
-                "Colony",
-                "City",
-                "State",
-                "Country",
-                "Age"
+                "name",
+                "lastName",
+                "email",
+                "phone",
+                "degree",
+                "group",
+                "gender",
+                "age"
         };
         injectCellValues(studentTableColumns, properties);
+
+        bindAddressTableColumns(
+                studentStreetTableColumn,
+                studentPCTableColumn,
+                studentColonyTableColumn,
+                studentCityTableColumn,
+                studentStateTableColumn,
+                studentCountryTableColumn
+        );
     }
 
     private void bindTeacherTableColumns() {
@@ -305,38 +300,51 @@ public class AdminViewController extends ViewController {
                 teacherPhoneTableColumn,
                 teacherDegreeTableColumn,
                 teacherGenderTableColumn,
+                teacherAgeTableColumn
+        };
+
+        String[] properties = {
+                "license",
+                "name",
+                "lastName",
+                "specialization",
+                "email",
+                "phone",
+                "degree",
+                "gender",
+                "age"
+        };
+        injectCellValues(TeacherTableColumns, properties);
+        bindAddressTableColumns(
                 teacherStreetTableColumn,
                 teacherPCTableColumn,
                 teacherColonyTableColumn,
                 teacherCityTableColumn,
                 teacherStateTableColumn,
-                teacherCountryTableColumn,
-                teacherAgeTableColumn
-        };
-
-        String[] properties = {
-                "License",
-                "Name",
-                "LastName",
-                "Specialization",
-                "Email",
-                "Phone",
-                "Degree",
-                "Gender",
-                "Street",
-                "PC",
-                "Colony",
-                "City",
-                "State",
-                "Country",
-                "Age"
-        };
-        injectCellValues(TeacherTableColumns, properties);
-    }
+                teacherCountryTableColumn
+        );
+}
 
     private void injectCellValues(TableColumn<?, ?>[] columns, String[] properties) {
         for (int i = 0; i < columns.length; i++) {
             columns[i].setCellValueFactory(new PropertyValueFactory<>(properties[i]));
         }
     }
+
+    private <T extends User> void bindAddressTableColumns(
+            TableColumn<T, String> streetTableColumn,
+            TableColumn<T, String> PCTableColumn,
+            TableColumn<T, String> colonyTableColumn,
+            TableColumn<T, String> cityTableColumn,
+            TableColumn<T, String> stateTableColumn,
+            TableColumn<T, String> countryTableColumn) {
+
+        streetTableColumn.setCellValueFactory(cell -> cell.getValue().getAddress().streetProperty());
+        PCTableColumn.setCellValueFactory(cell -> cell.getValue().getAddress().postalCodeProperty());
+        colonyTableColumn.setCellValueFactory(cell -> cell.getValue().getAddress().colonyProperty());
+        cityTableColumn.setCellValueFactory(cell -> cell.getValue().getAddress().cityProperty());
+        stateTableColumn.setCellValueFactory(cell -> cell.getValue().getAddress().stateProperty());
+        countryTableColumn.setCellValueFactory(cell -> cell.getValue().getAddress().countryProperty());
+    }
+
 }

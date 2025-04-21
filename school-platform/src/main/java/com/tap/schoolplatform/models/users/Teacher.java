@@ -1,21 +1,29 @@
 package com.tap.schoolplatform.models.users;
 
 import com.tap.schoolplatform.models.academic.Degree;
+import com.tap.schoolplatform.models.academic.Subject;
 import com.tap.schoolplatform.models.users.enums.Gender;
 import com.tap.schoolplatform.models.users.enums.Role;
 import com.tap.schoolplatform.models.users.shared.Address;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDate;
 
 public class Teacher extends User {
 
-    private StringProperty license;
-    private StringProperty specialization;
+    private final StringProperty license;
+    private final StringProperty specialization;
     private Degree degree;
+
+    private final ObservableList<Subject> subjects = FXCollections.observableArrayList();
 
     public Teacher(String name, String lastName, String email, String password, String phone, Address address, LocalDate birthDate, Gender gender) {
         super(name, lastName, email, password, phone, address, birthDate, gender, Role.TEACHER);
+        license = new SimpleStringProperty();
+        specialization = new SimpleStringProperty();
     }
 
     public String getLicense() {
@@ -36,5 +44,25 @@ public class Teacher extends User {
     }
     public void setSpecialization(String specialization) {
         this.specialization.set(specialization);
+    }
+
+    public Degree getDegree() {
+        return degree;
+    }
+    public void setDegree(Degree degree) { // Only used by Degree in addTeacher() and removeTeacher()
+        this.degree = degree;
+    }
+
+    public void addSubject(Subject subject) {
+        subjects.add(subject);
+        subject.setTeacher(this);
+    }
+    public void removeSubject(Subject subject) {
+        subjects.remove(subject);
+        subject.setTeacher(null);
+    }
+
+    public ObservableList<Subject> getSubjects() {
+        return FXCollections.unmodifiableObservableList(subjects);
     }
 }

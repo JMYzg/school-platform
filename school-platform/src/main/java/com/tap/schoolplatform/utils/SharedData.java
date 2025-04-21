@@ -61,35 +61,15 @@ public class SharedData {
                 );
         addUser(admin);
 
-        Degree SE = new Degree("Software Engineering");
-        Semester first = new Semester(SE, 1);
+        Degree SE = new Degree("Software Engineering", 9);
+        Semester first = SE.getSemester(1);
         Group G1M = new Group(first, Shift.MORNINGS);
         Subject IC = new Subject(first, "Integral Calculus");
-        first.addGroup(G1M);
-        first.addSubject(IC);
-        SE.addSemester(first);
         degrees.add(SE);
 
-        Teacher teacher =
-                new Teacher(
-                        "Gary",
-                        "Juarez",
-                        "gry_jp@gmail.com",
-                        "456",
-                        "624-243-8558",
-                        new Address(
-                                "Dolomite",
-                                "23477",
-                                "Saint Bernard",
-                                "S.J.D.",
-                                "B.C.S.",
-                                "Mexico"
-                        ),
-                        LocalDate.of(2005, 9, 5),
-                        Gender.MALE
-                );
+        Teacher teacher = getTeacher();
+        teacher.addSubject(IC);
         SE.addTeacher(teacher);
-        addUser(teacher);
 
         Student student =
                 new Student(
@@ -110,7 +90,30 @@ public class SharedData {
                         Gender.FEMALE
                 );
         G1M.addStudent(student);
-        addUser(student);
+    }
+
+    private static Teacher getTeacher() {
+        Teacher teacher =
+                new Teacher(
+                        "Gary",
+                        "Juarez",
+                        "gry_jp@gmail.com",
+                        "456",
+                        "624-243-8558",
+                        new Address(
+                                "Dolomite",
+                                "23477",
+                                "Saint Bernard",
+                                "S.J.D.",
+                                "B.C.S.",
+                                "Mexico"
+                        ),
+                        LocalDate.of(2005, 9, 5),
+                        Gender.MALE
+                );
+        teacher.setLicense("123-LICENSE-456");
+        teacher.setSpecialization("Mathematics");
+        return teacher;
     }
 
     public static SharedData getInstance() {
@@ -125,7 +128,7 @@ public class SharedData {
 
         if (expectedType.isInstance(user)) {
             ObservableList<? extends User> list = users.get(role);
-            if (list != null) {
+            if (list != null && !list.contains(user)) {
                 ((ObservableList<User>) list).add(user);
             }
         }
@@ -134,6 +137,7 @@ public class SharedData {
     public void removeUser(User user) {
         Role role = user.getRole();
         Class<? extends User> expectedType = role.getUserClass();
+
         if (expectedType.isInstance(user)) {
             ObservableList<? extends User> list = users.get(role);
             if (list != null) {
@@ -145,6 +149,14 @@ public class SharedData {
     @SuppressWarnings("unchecked")
     public <T extends User> ObservableList<T> getUsers(Role role) {
         return FXCollections.unmodifiableObservableList((ObservableList<T>) users.get(role));
+    }
+
+    public void addDegree(Degree degree) {
+        degrees.add(degree);
+    }
+
+    public void removeDegree(Degree degree) {
+        degrees.remove(degree);
     }
 
     public ObservableList<Degree> getDegrees() {
