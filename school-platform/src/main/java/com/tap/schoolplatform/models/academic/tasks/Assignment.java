@@ -6,4 +6,5 @@ public class Assignment extends Task {
     public Assignment(String title, String description, LocalDateTime deadline) {
         super(title, description, deadline);
     }
+
 }
