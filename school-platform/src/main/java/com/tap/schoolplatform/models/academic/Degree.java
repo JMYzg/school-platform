@@ -58,7 +58,7 @@ public class Degree {
         this.semesters.remove(semester);
     }
     public Semester getSemester(int number) {
-        return semesters.get(number);
+        return semesters.get(number - 1);
     }
     public ObservableList<Semester> getSemesters() {
         return FXCollections.unmodifiableObservableList(semesters);

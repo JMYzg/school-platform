@@ -12,6 +12,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,6 +53,10 @@ public class Semester {
         return FXCollections.unmodifiableObservableList(groups.get(shift));
     }
 
+    public Map<Shift, ObservableList<Group>> getGroups() {
+        return Collections.unmodifiableMap(groups);
+    }
+
     protected void addSubject(Subject subject) { // Only used by Subject in Constructor
         subjects.add(subject);
     }
@@ -65,7 +70,7 @@ public class Semester {
 
     @Override
     public String toString() {
-        return number.toString();
+        return String.valueOf(number.get());
     }
 
     @Override
