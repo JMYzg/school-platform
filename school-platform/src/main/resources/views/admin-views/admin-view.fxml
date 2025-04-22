@@ -32,9 +32,7 @@
       <Button id="btnLogout" fx:id="logoutButton" layoutX="10.0" layoutY="1.0" mnemonicParsing="false" onAction="#onLogoutClick" style="-fx-background-color: #003b46;" text="Log out">
          <graphic>
             <ImageView fitHeight="15" fitWidth="15">
-               <image>
-                  <Image url="https://static-00.iconduck.com/assets.00/logout-icon-2048x2046-yqonjwjv.png" />
-               </image>
+               <Image url="https://static-00.iconduck.com/assets.00/logout-icon-2048x2046-yqonjwjv.png"/>
             </ImageView>
          </graphic>
       </Button>
@@ -156,7 +154,7 @@
                            <HBox prefHeight="49.0" prefWidth="219.0" spacing="5.0">
                               <children>
                                  <ComboBox id="studentGroupComboBox" editable="true" prefHeight="29.0" prefWidth="40.0" />
-                                 <ComboBox id="studentGroupComboBox" fx:id="studentGroupComboBox1" editable="true" prefHeight="24.0" prefWidth="164.0" />
+                                 <ComboBox id="studentGroupComboBox" fx:id="studentGroupComboBox" editable="true" prefHeight="24.0" prefWidth="164.0" />
                               </children>
                            </HBox>
                                   <Button id="btnA" fx:id="studentManageGroupButton" mnemonicParsing="false" onAction="#onStudentManageGroupClick" prefHeight="35.0" prefWidth="167.0" text="Manage">
