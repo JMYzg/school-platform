@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -427,5 +428,24 @@ public class AdminViewController extends ViewController {
         for (Button button : buttons) {
             button.setDisable(value);
         }
+    }
+
+    private void bindComboBoxes(ComboBox<Degree> independent, ComboBox<Semester> dependent) {
+        independent.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                dependent.setItems(newValue.getSemesters());
+                dependent.setConverter(new StringConverter<>() {
+                    @Override
+                    public String toString(Semester semester) {
+                        return (semester == null) ? "" : semester.toString();
+                    }
+                    @Override
+                    public Semester fromString(String string) {return null;}
+                });
+            } else {
+                dependent.getItems().clear();
+                dependent.setDisable(Boolean.TRUE);
+            }
+        });
     }
 }
