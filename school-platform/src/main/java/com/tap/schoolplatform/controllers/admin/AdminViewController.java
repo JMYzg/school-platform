@@ -6,6 +6,7 @@ import com.tap.schoolplatform.models.academic.Degree;
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.academic.Semester;
 import com.tap.schoolplatform.models.academic.Subject;
+import com.tap.schoolplatform.models.academic.enums.Shift;
 import com.tap.schoolplatform.models.users.Student;
 import com.tap.schoolplatform.models.users.Teacher;
 import com.tap.schoolplatform.models.users.User;
@@ -58,6 +59,7 @@ public class AdminViewController extends ViewController {
 
     @FXML private ComboBox<Gender> studentGenderComboBox;
     @FXML private ComboBox<Degree> studentDegreeComboBox;
+    @FXML private ComboBox<Semester> studentSemesterComboBox;
     @FXML private ComboBox<Group> studentGroupComboBox;
 
     @FXML private DatePicker studentDatePicker;
@@ -153,10 +155,71 @@ public class AdminViewController extends ViewController {
     @FXML private void initialize() {
         adminNameLabel.setText("Welcome " + LoginService.getCurrentUser().toString() + "!");
         bindTableViews();
-        disableStudentForm(true);
-        disableTeacherForm(true);
         bindStudentTableColumns();
         bindTeacherTableColumns();
+        disableComboBoxes(true,
+                studentSemesterComboBox,
+                studentGroupComboBox
+                // ...
+        );
+        notEditableComboBoxes();
+        bindComboBoxes();
+        studentDegreeComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+            if (newValue != null) {
+                studentSemesterComboBox.getItems().clear();
+                studentSemesterComboBox.getSelectionModel().clearSelection();
+                studentSemesterComboBox.setDisable(false);
+                studentSemesterComboBox.setItems(newValue.getSemesters());
+                studentSemesterComboBox.setConverter(new StringConverter<>() {
+                    @Override
+                    public String toString(Semester semester) {
+                        return (semester == null) ? "" : semester.toString();
+                    }
+                    @Override
+                    public Semester fromString(String string) {
+                        return null;
+                    }
+                });
+            } else {
+                studentSemesterComboBox.getSelectionModel().clearSelection();
+                studentSemesterComboBox.setDisable(true);
+            }
+        });
+
+        studentSemesterComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+            if (newValue != null) {
+                studentGroupComboBox.getItems().clear();
+                studentGroupComboBox.getSelectionModel().clearSelection();
+                studentGroupComboBox.setDisable(false);
+                for (Shift shift : newValue.getGroups().keySet()) {
+                    studentGroupComboBox.getItems().setAll(newValue.getGroups(shift));
+                    studentGroupComboBox.setConverter(new StringConverter<>() {
+                        @Override
+                        public String toString(Group group) {
+                            return (group == null) ? "" : group.toString();
+                        }
+                        @Override
+                        public Group fromString(String string) {
+                            return null;
+                        }
+                    });
+                }
+                if (studentGroupComboBox.getItems().isEmpty()) studentGroupComboBox.setDisable(true);
+            } else {
+                studentGroupComboBox.getSelectionModel().clearSelection();
+                studentGroupComboBox.setDisable(true);
+            }
+        });
+
+        disableButtons(Boolean.TRUE,
+                studentEditButton,
+                studentCancelButton,
+
+                teacherEditButton,
+                teacherCancelButton
+        );
+        studentAcceptButton.setText("Create");
+        teacherAcceptButton.setText("Create");
     }
 
     @FXML private void onLogoutClick() {
@@ -182,7 +245,7 @@ public class AdminViewController extends ViewController {
 
     // StudentTab
     @FXML private void studentNewButtonHandler() {
-
+        disableStudentForm(false);
     }
 
     @FXML private void onStudentUploadImageClick() {
@@ -430,22 +493,90 @@ public class AdminViewController extends ViewController {
         }
     }
 
-    private void bindComboBoxes(ComboBox<Degree> independent, ComboBox<Semester> dependent) {
-        independent.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                dependent.setItems(newValue.getSemesters());
-                dependent.setConverter(new StringConverter<>() {
-                    @Override
-                    public String toString(Semester semester) {
-                        return (semester == null) ? "" : semester.toString();
-                    }
-                    @Override
-                    public Semester fromString(String string) {return null;}
-                });
-            } else {
-                dependent.getItems().clear();
-                dependent.setDisable(Boolean.TRUE);
-            }
-        });
+    private void notEditableComboBoxes() {
+        ComboBox<?>[] comboBoxes = {
+                studentGenderComboBox,
+                studentDegreeComboBox,
+                studentSemesterComboBox,
+                studentGroupComboBox,
+
+                teacherGenderComboBox,
+                teacherDegreeComboBox,
+
+                teacherAssignSubjectComboBox,
+                teacherUnassignSubjectComboBox,
+
+                teacherSubjectSemesterComboBox,
+                teacherAssignSubjectSemesterComboBox,
+                teacherUnassignSubjectSemesterComboBox
+        };
+        for (ComboBox<?> comboBox : comboBoxes) {
+            comboBox.setEditable(Boolean.FALSE);
+        }
+    }
+
+//    private void bindComboBoxes() {
+//        studentDegreeComboBox.setItems(data.getDegrees());
+//        bindComboBoxes(studentDegreeComboBox, studentSemesterComboBox);
+//
+//        studentDegreeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+//            studentSemesterComboBox.setDisable(newValue == null);
+//            studentSemesterComboBox.getSelectionModel().clearSelection();
+//            studentGroupComboBox.setDisable(true);
+//        });
+//
+//        studentSemesterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+//            if (newValue != null) {
+//                studentGroupComboBox.setDisable(false);
+//                for (Shift shift : newValue.getGroups().keySet()) {
+//                    studentGroupComboBox.getItems().setAll(newValue.getGroups(shift));
+//                    studentGroupComboBox.setConverter(new StringConverter<>() {
+//                        @Override
+//                        public String toString(Group group) {
+//                            return (group == null) ? "" : group.toString();
+//                        }
+//
+//                        @Override
+//                        public Group fromString(String string) {
+//                            return null;
+//                        }
+//                    });
+//                }
+//            } else {
+//                studentGroupComboBox.getItems().clear();
+//                studentGroupComboBox.setDisable(true);
+//            }
+//        });
+//        teacherDegreeComboBox.setItems(data.getDegrees());
+//        bindComboBoxes(teacherDegreeComboBox, teacherSubjectSemesterComboBox);
+//    }
+//
+//    private void bindComboBoxes(ComboBox<Degree> degreeComboBox, ComboBox<Semester> semesterComboBox) {
+//        degreeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+//            if (newValue != null) {
+//                semesterComboBox.setItems(newValue.getSemesters());
+//                semesterComboBox.setConverter(new StringConverter<>() {
+//                    @Override
+//                    public String toString(Semester semester) {
+//                        return (semester == null) ? "" : semester.toString();
+//                    }
+//
+//                    @Override
+//                    public Semester fromString(String string) {
+//                        return null;
+//                    }
+//                });
+//            } else {
+//                semesterComboBox.getItems().clear();
+//                semesterComboBox.setDisable(Boolean.TRUE);
+//            }
+//        });
+//    }
+
+    private void bindComboBoxes() {
+        studentDegreeComboBox.setItems(data.getDegrees());
+        studentGenderComboBox.getItems().setAll(Gender.values());
+        teacherDegreeComboBox.setItems(data.getDegrees());
+        teacherGenderComboBox.getItems().setAll(Gender.values());
     }
 }

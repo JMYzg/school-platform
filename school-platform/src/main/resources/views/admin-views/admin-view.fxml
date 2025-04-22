@@ -2,31 +2,13 @@
 
 <!-- Hi -->
 
-<?import java.net.URL?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox prefHeight="654.0" prefWidth="877.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.admin.AdminViewController">
+<VBox prefHeight="654.0" prefWidth="877.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.admin.AdminViewController">
     <AnchorPane prefHeight="30.0" prefWidth="655.0" style="-fx-background-color: #003b46;">
         <Label fx:id="adminNameLabel" layoutX="676.0" layoutY="8.0" text="Jeremy de Jesús Zarate Garcia" />
       <Button id="btnLogout" fx:id="logoutButton" layoutX="10.0" layoutY="1.0" mnemonicParsing="false" onAction="#onLogoutClick" style="-fx-background-color: #003b46;" text="Log out">
@@ -155,8 +137,8 @@
                                   <Label prefHeight="17.0" prefWidth="219.0" text="Semester:    Group:" />
                            <HBox prefHeight="49.0" prefWidth="219.0" spacing="5.0">
                               <children>
-                                 <ComboBox id="studentGroupComboBox" editable="true" prefHeight="29.0" prefWidth="40.0" />
-                                 <ComboBox id="studentGroupComboBox" fx:id="studentGroupComboBox1" editable="true" prefHeight="24.0" prefWidth="164.0" />
+                                 <ComboBox id="studentGroupComboBox" fx:id="studentSemesterComboBox" editable="true" prefHeight="29.0" prefWidth="40.0" />
+                                 <ComboBox id="studentGroupComboBox" fx:id="studentGroupComboBox" editable="true" prefHeight="24.0" prefWidth="164.0" />
                               </children>
                            </HBox>
                                   <Button id="btnA" fx:id="studentManageGroupButton" mnemonicParsing="false" onAction="#onStudentManageGroupClick" prefHeight="35.0" prefWidth="167.0" text="Manage">
