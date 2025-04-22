@@ -16,11 +16,17 @@ import com.tap.schoolplatform.services.auth.LoginService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.util.StringConverter;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
+
+import static java.util.Map.entry;
 
 public class AdminViewController extends ViewController {
 
@@ -211,9 +217,13 @@ public class AdminViewController extends ViewController {
             }
         });
 
-        disableButtons(Boolean.TRUE,
+        disableButtons(true,
+                studentNewButton,
+
                 studentEditButton,
                 studentCancelButton,
+
+                teacherNewButton,
 
                 teacherEditButton,
                 teacherCancelButton
@@ -245,11 +255,35 @@ public class AdminViewController extends ViewController {
 
     // StudentTab
     @FXML private void studentNewButtonHandler() {
+        clearStudentForm();
         disableStudentForm(false);
     }
 
-    @FXML private void onStudentUploadImageClick() {
-
+    @FXML private Image onStudentUploadImageClick() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose the image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png"),
+                new FileChooser.ExtensionFilter("JPEG", "*.jpg", "*.jpeg")
+        );
+        File image = fileChooser.showOpenDialog(studentUploadImageButton.getScene().getWindow());
+        if (image != null) {
+            try {
+                String imagePath = image.toURI().toString();
+                Image pfp = new Image(imagePath);
+                studentImageView.setImage(pfp);
+                return pfp;
+            } catch (IllegalArgumentException e) {
+                AlertHandler.showAlert(
+                  Alert.AlertType.ERROR,
+                  "Error",
+                  "Error loading image",
+                  "Could not load image, please try again.\n" + e.getMessage()
+                );
+            }
+        }
+        return null;
     }
     @FXML private void onStudentManageDegreeClick() {
 
@@ -273,7 +307,11 @@ public class AdminViewController extends ViewController {
     }
 
     @FXML private void studentSelectionHandler() {
-
+        int index = studentTableView.getSelectionModel().getSelectedIndex();
+        fillStudentForm(index);
+        disableStudentForm(true);
+        disableButtons(false, studentNewButton, studentEditButton, studentCancelButton);
+        disableButtons(true, studentAcceptButton);
     }
 
     // TeacherTab
@@ -311,7 +349,8 @@ public class AdminViewController extends ViewController {
     }
 
     @FXML private void teacherSelectionHandler() {
-
+        int index = teacherTableView.getSelectionModel().getSelectedIndex();
+        fillTeacherForm(index);
     }
 
     // Utils
@@ -440,6 +479,22 @@ public class AdminViewController extends ViewController {
         studentImageView.setDisable(toggle);
     }
 
+    private void clearStudentForm() {
+        clearTextFields(
+                studentNameField,
+                studentLastNameField,
+                studentPhoneField,
+                studentEmailField,
+                studentStreetField,
+                studentPCField,
+                studentColonyField,
+                studentCityField,
+                studentStateField,
+                studentCountryField
+        );
+        studentDegreeComboBox.getSelectionModel().clearSelection();
+    }
+
     private void disableTeacherForm(boolean toggle) {
         disableTextFields(toggle,
                 teacherNameField,
@@ -475,9 +530,33 @@ public class AdminViewController extends ViewController {
         teacherDatePicker.setDisable(toggle);
     }
 
+    private void clearTeacherForm() {
+        clearTextFields(
+                teacherNameField,
+                teacherLastNameField,
+                teacherLicenseField,
+                teacherSpecializationField,
+                teacherPhoneField,
+                teacherEmailField,
+                teacherStreetField,
+                teacherPCField,
+                teacherColonyField,
+                teacherCityField,
+                teacherStateField,
+                teacherCountryField
+        );
+        teacherDegreeComboBox.getSelectionModel().clearSelection();
+    }
+
     private void disableTextFields(boolean value, TextField... textFields) {
         for (TextField textField : textFields) {
             textField.setDisable(value);
+        }
+    }
+
+    private void clearTextFields(TextField... textFields) {
+        for (TextField textField : textFields) {
+            textField.clear();
         }
     }
 
@@ -578,5 +657,67 @@ public class AdminViewController extends ViewController {
         studentGenderComboBox.getItems().setAll(Gender.values());
         teacherDegreeComboBox.setItems(data.getDegrees());
         teacherGenderComboBox.getItems().setAll(Gender.values());
+    }
+
+    private void fillStudentForm(int index) {
+        fillForm(
+                index,
+                Map.ofEntries(
+                        entry(studentNameField, studentNameTableColumn),
+                        entry(studentLastNameField, studentLastNameTableColumn),
+                        entry(studentPhoneField, studentPhoneTableColumn),
+                        entry(studentEmailField, studentEmailTableColumn),
+                        entry(studentStreetField, studentStreetTableColumn),
+                        entry(studentPCField, studentPCTableColumn),
+                        entry(studentColonyField, studentColonyTableColumn),
+                        entry(studentCityField, studentCityTableColumn),
+                        entry(studentStateField, studentStateTableColumn),
+                        entry(studentCountryField, studentCountryTableColumn)
+                ),
+                Map.ofEntries(
+                        entry(studentGenderComboBox, studentGenderTableColumn),
+                        entry(studentDegreeComboBox, studentDegreeTableColumn),
+                        entry(studentGroupComboBox, studentGroupTableColumn)
+                )
+        );
+    }
+
+    private void fillTeacherForm(int index) {
+        fillForm(
+                index,
+                Map.ofEntries(
+                        entry(teacherNameField, teacherNameTableColumn),
+                        entry(teacherLastNameField, teacherLastNameTableColumn),
+                        entry(teacherLicenseField, teacherLicenseTableColumn),
+                        entry(teacherSpecializationField, teacherSpecializationTableColumn),
+                        entry(teacherPhoneField, teacherPhoneTableColumn),
+                        entry(teacherEmailField, teacherEmailTableColumn),
+                        entry(teacherStreetField, teacherStreetTableColumn),
+                        entry(teacherPCField, teacherPCTableColumn),
+                        entry(teacherColonyField, teacherColonyTableColumn),
+                        entry(teacherCityField, teacherCityTableColumn),
+                        entry(teacherStateField, teacherStateTableColumn),
+                        entry(teacherCountryField, teacherCountryTableColumn)
+                ),
+                Map.ofEntries(
+                        entry(teacherGenderComboBox, teacherGenderTableColumn),
+                        entry(teacherDegreeComboBox, teacherDegreeTableColumn)
+                )
+        );
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T> void fillForm(int index,
+                              Map<TextField, TableColumn<T, String>> textFields,
+                              Map<ComboBox<?>, TableColumn<T, ?>> comboBoxes) {
+
+        textFields.forEach((field, column) ->
+                field.setText(column.getCellObservableValue(index).getValue())
+        );
+
+        comboBoxes.forEach((combo, column) -> {
+            Object value = column.getCellObservableValue(index).getValue();
+            ((ComboBox<Object>) combo).setValue(value);
+        });
     }
 }
