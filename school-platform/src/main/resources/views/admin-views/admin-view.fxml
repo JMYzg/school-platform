@@ -150,16 +150,19 @@
                      <VBox layoutX="14.0" layoutY="8.0" prefHeight="166.0" prefWidth="219.0" spacing="5.0">
                         <children>
                                   <Label prefHeight="17.0" prefWidth="58.0" text="Degree:" />
-                                  <ComboBox id="studentDegreeComboBox" fx:id="studentDegreeComboBox" editable="true" prefHeight="28.0" prefWidth="227.0" />
+                                  <ComboBox id="studentDegreeComboBox" fx:id="studentDegreeComboBox" editable="true" prefHeight="39.0" prefWidth="219.0" />
                                   <Button id="btnA" fx:id="studentManageDegreeButton" mnemonicParsing="false" onAction="#onStudentManageDegreeClick" prefHeight="29.0" prefWidth="222.0" text="Manage" />
-                                  <Label prefHeight="17.0" prefWidth="219.0" text="Group:                          Semester:" />
+                                  <Label prefHeight="17.0" prefWidth="219.0" text="Semester:    Group:" />
                            <HBox prefHeight="49.0" prefWidth="219.0" spacing="5.0">
                               <children>
-                                 <ComboBox id="studentGroupComboBox" fx:id="studentGroupComboBox" editable="true" prefHeight="29.0" prefWidth="130.0" />
-                                 <ComboBox id="studentGroupComboBox" fx:id="studentGroupComboBox1" editable="true" prefHeight="29.0" prefWidth="107.0" />
+                                 <ComboBox id="studentGroupComboBox" editable="true" prefHeight="29.0" prefWidth="40.0" />
+                                 <ComboBox id="studentGroupComboBox" fx:id="studentGroupComboBox1" editable="true" prefHeight="24.0" prefWidth="164.0" />
                               </children>
                            </HBox>
-                                  <Button id="btnA" fx:id="studentManageGroupButton" mnemonicParsing="false" onAction="#onStudentManageGroupClick" prefHeight="35.0" prefWidth="219.0" text="Manage" />
+                                  <Button id="btnA" fx:id="studentManageGroupButton" mnemonicParsing="false" onAction="#onStudentManageGroupClick" prefHeight="35.0" prefWidth="167.0" text="Manage">
+                              <VBox.margin>
+                                 <Insets left="55.0" />
+                              </VBox.margin></Button>
                         </children>
                      </VBox>
                      <StackPane layoutX="253.0" layoutY="31.0" prefHeight="107.0" prefWidth="107.0" style="-fx-background-color: dedede; -fx-background-radius: 5;">
@@ -347,16 +350,34 @@
                         <Label layoutX="8.0" layoutY="15.0" prefHeight="17.0" prefWidth="59.0" text="Degree:" />
                         <ComboBox fx:id="teacherDegreeComboBox" editable="true" layoutX="61.0" layoutY="8.0" prefHeight="25.0" prefWidth="215.0" />
                         <Button id="btnA" fx:id="teacherManageDegreeButton" layoutX="287.0" layoutY="11.0" mnemonicParsing="false" onAction="#onTeacherManageDegreeClick" prefHeight="29.0" prefWidth="72.0" text="Manage" />
-                        <TextField id="teacherSubjectField" fx:id="teacherSubjectField" layoutX="90.0" layoutY="73.0" prefHeight="40.0" prefWidth="185.0" />
-                        <Button id="btnA" fx:id="teacherCreateSubjectButton" layoutX="287.0" layoutY="76.0" mnemonicParsing="false" onAction="#onTeacherCreateSubjectClick" prefHeight="29.0" prefWidth="72.0" text="Create" />
-                        <ComboBox id="teacherAssignSubjectComboBox" fx:id="teacherAssignSubjectComboBox" editable="true" layoutX="90.0" layoutY="116.0" prefHeight="17.0" prefWidth="185.0" />
-                        <ComboBox id="teacherUnassignSubjectComboBox" fx:id="teacherUnassignSubjectComboBox" editable="true" layoutX="90.0" layoutY="156.0" prefHeight="17.0" prefWidth="185.0" />
-                        <Button id="btnN" fx:id="teacherUnassignSubjectButton" layoutX="287.0" layoutY="159.0" mnemonicParsing="false" onAction="#onTeacherUnassignSubjectClick" prefHeight="29.0" prefWidth="72.0" text="Unassign" />
-                        <Button id="btnM" fx:id="teacherAssignSubjectButton" layoutX="287.0" layoutY="119.0" mnemonicParsing="false" onAction="#onTeacherAssignSubjectClick" prefWidth="72.0" text="Assign" />
+                        <GridPane layoutX="14.0" layoutY="71.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="119.0" prefWidth="344.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.0" minWidth="10.0" prefWidth="60.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="462.0" minWidth="10.0" prefWidth="215.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="462.0" minWidth="10.0" prefWidth="64.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="85.0" minHeight="0.0" prefHeight="41.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="94.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <ComboBox fx:id="teacherSubjectSemesterComboBox" editable="true" prefHeight="17.0" prefWidth="37.0" />
+                              <ComboBox id="teacherAssignSubjectSemesterComboBox" fx:id="teacherAssignSubjectSemesterComboBox" editable="true" prefHeight="17.0" prefWidth="40.0" GridPane.rowIndex="1" />
+                              <ComboBox fx:id="teacherUnassignSubjectSemesterComboBox" editable="true" prefHeight="17.0" prefWidth="40.0" GridPane.rowIndex="2" />
+                              <TextField fx:id="teacherSubjectField" prefHeight="24.0" prefWidth="379.0" GridPane.columnIndex="1">
+                                 <GridPane.margin>
+                                    <Insets right="15.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <ComboBox id="teacherAssignSubjectComboBox" fx:id="teacherAssignSubjectComboBox" editable="true" prefHeight="17.0" prefWidth="202.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ComboBox id="teacherUnassignSubjectComboBox" fx:id="teacherUnassignSubjectComboBox" editable="true" prefHeight="17.0" prefWidth="202.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button id="btnA" fx:id="teacherCreateSubjectButton" mnemonicParsing="false" onAction="#onTeacherCreateSubjectClick" prefHeight="29.0" prefWidth="72.0" text="Create" GridPane.columnIndex="2" />
+                              <Button id="btnM" fx:id="teacherAssignSubjectButton" mnemonicParsing="false" onAction="#onTeacherAssignSubjectClick" prefWidth="72.0" text="Assign" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button id="btnN" fx:id="teacherUnassignSubjectButton" mnemonicParsing="false" onAction="#onTeacherUnassignSubjectClick" prefHeight="29.0" prefWidth="72.0" text="Unassign" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                           </children>
+                        </GridPane>
                         <Label id="txtbold" layoutX="9.0" layoutY="46.0" prefHeight="17.0" prefWidth="142.0" style="-fx-text-fill: #014B58;" text="Subject management" />
-                        <ComboBox id="teacherAssignSubjectSemesterComboBox" fx:id="teacherAssignSubjectSemesterComboBox" editable="true" layoutX="14.0" layoutY="116.0" prefHeight="17.0" prefWidth="68.0" />
-                        <ComboBox id="teacherUnassignSubjectSemesterComboBox" fx:id="teacherUnassignSubjectSemesterComboBox" editable="true" layoutX="14.0" layoutY="156.0" prefHeight="17.0" prefWidth="68.0" />
-                        <ComboBox id="teacherSubjectSemesterComboBox" fx:id="teacherSubjectSemesterComboBox" editable="true" layoutX="14.0" layoutY="74.0" prefHeight="17.0" prefWidth="68.0" />
                      </children>
                   </AnchorPane>
                     </VBox>
