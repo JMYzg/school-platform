@@ -38,3 +38,8 @@
 .tab:hover {
     -fx-background-color: #bdbdbd; /* Hover color */
 }
+.tab:filled:focused {
+    -fx-background-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}

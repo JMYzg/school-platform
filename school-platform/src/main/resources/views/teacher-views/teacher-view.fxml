@@ -38,8 +38,4 @@
          </children>
       </AnchorPane>
    </children>
-   <stylesheets>
-      <URL value="@../../styles/main.css" />
-      <URL value="@../../styles/buttons.css" />
-   </stylesheets>
 </VBox>
