@@ -171,9 +171,10 @@ public class AdminViewController extends ViewController {
         notEditableComboBoxes();
         bindComboBoxes();
         studentDegreeComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+            if (studentDegreeComboBox.isDisabled()) return;
             if (newValue != null) {
-                studentSemesterComboBox.getItems().clear();
                 studentSemesterComboBox.getSelectionModel().clearSelection();
+                studentSemesterComboBox.getItems().clear();
                 studentSemesterComboBox.setDisable(false);
                 studentSemesterComboBox.setItems(newValue.getSemesters());
                 studentSemesterComboBox.setConverter(new StringConverter<>() {
@@ -193,6 +194,7 @@ public class AdminViewController extends ViewController {
         });
 
         studentSemesterComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+            if (!studentSemesterComboBox.isDisabled()) return;
             if (newValue != null) {
                 studentGroupComboBox.getItems().clear();
                 studentGroupComboBox.getSelectionModel().clearSelection();
@@ -257,6 +259,8 @@ public class AdminViewController extends ViewController {
     @FXML private void studentNewButtonHandler() {
         clearStudentForm();
         disableStudentForm(false);
+        disableButtons(true, studentEditButton, studentCancelButton);
+        disableButtons(false, studentAcceptButton);
     }
 
     @FXML private Image onStudentUploadImageClick() {
@@ -299,7 +303,14 @@ public class AdminViewController extends ViewController {
 
     }
     @FXML private void studentCancelButtonHandler() {
-
+        switch (studentCancelButton.getText()) {
+            case "Cancel":
+                break;
+            case "Unselect":
+                break;
+            default:
+                break;
+        }
     }
 
     @FXML private void onStudentFilterClick() {
@@ -311,6 +322,7 @@ public class AdminViewController extends ViewController {
         fillStudentForm(index);
         disableStudentForm(true);
         disableButtons(false, studentNewButton, studentEditButton, studentCancelButton);
+        studentCancelButton.setText("Unselect");
         disableButtons(true, studentAcceptButton);
     }
 
@@ -341,7 +353,6 @@ public class AdminViewController extends ViewController {
 
     }
     @FXML private void teacherCancelButtonHandler() {
-
     }
 
     @FXML private void onTeacherFilterClick() {
@@ -467,8 +478,7 @@ public class AdminViewController extends ViewController {
         );
         disableComboBoxes(toggle,
                 studentGenderComboBox,
-                studentDegreeComboBox,
-                studentGroupComboBox
+                studentDegreeComboBox
         );
         disableButtons(toggle,
                 studentManageDegreeButton,
@@ -493,6 +503,7 @@ public class AdminViewController extends ViewController {
                 studentCountryField
         );
         studentDegreeComboBox.getSelectionModel().clearSelection();
+        studentGenderComboBox.getSelectionModel().clearSelection();
     }
 
     private void disableTeacherForm(boolean toggle) {
