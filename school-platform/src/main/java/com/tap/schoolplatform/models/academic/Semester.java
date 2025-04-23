@@ -8,7 +8,9 @@ package com.tap.schoolplatform.models.academic;
 
 import com.tap.schoolplatform.models.academic.enums.Shift;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -51,6 +53,12 @@ public class Semester {
 
     public ObservableList<Group> getGroups(Shift shift) {
         return FXCollections.unmodifiableObservableList(groups.get(shift));
+    }
+
+    public ObservableList<Group> getAllGroups() {
+        ObservableList<Group> all  = FXCollections.observableArrayList();
+        groups.values().forEach(all::addAll);
+        return all;
     }
 
     public Map<Shift, ObservableList<Group>> getGroups() {

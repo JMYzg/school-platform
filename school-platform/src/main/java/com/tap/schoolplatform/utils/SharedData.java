@@ -63,8 +63,10 @@ public class SharedData {
 
         Degree SE = new Degree("Software Engineering", 9);
         Semester first = SE.getSemester(1);
+        Semester third = SE.getSemester(3);
         Group G1M = new Group(first, Shift.MORNINGS);
         Subject IC = new Subject(first, "Integral Calculus");
+        new Subject(third, "Object Oriented Programming");
         degrees.add(SE);
 
         Teacher teacher = getTeacher();

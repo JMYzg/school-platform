@@ -204,7 +204,7 @@
                                  <TableColumn id="studentNameTableColumn" fx:id="studentNameTableColumn" prefWidth="100.0" text="Name" />
                                  <TableColumn id="studentLastNameTableColumn" fx:id="studentLastNameTableColumn" prefWidth="96.0" text="Last Name" />
                                  <TableColumn id="studentDegreeTableColumn" fx:id="studentDegreeTableColumn" prefWidth="102.0" text="Degree" />
-                                 <TableColumn prefWidth="109.0" text="Semester" />
+                                 <TableColumn fx:id="studentSemesterTableColumn" prefWidth="109.0" text="Semester" />
                                  <TableColumn id="studentGroupTableColumn" fx:id="studentGroupTableColumn" prefWidth="90.0" text="Group" />
                                  <TableColumn id="studentEmailTableColumn" fx:id="studentEmailTableColumn" prefWidth="125.0" text="E-mail" />
                                  <TableColumn id="studentPhoneTableColumn" fx:id="studentPhoneTableColumn" minWidth="3.0" prefWidth="133.0" text="Phone" />
@@ -216,7 +216,7 @@
                                  <TableColumn id="studentCountryTableColumn" fx:id="studentCountryTableColumn" prefWidth="129.0" text="Country" />
                                  <TableColumn id="studentGenderTableColumn" fx:id="studentGenderTableColumn" prefWidth="94.0" text="Gender" />
                                  <TableColumn id="studentAgeTableColumn" fx:id="studentAgeTableColumn" prefWidth="38.0" text="Age" />
-                                 <TableColumn prefWidth="76.0" text="Birth-Date" />
+                                 <TableColumn fx:id="studentBirthDateTableColumn" prefWidth="76.0" text="Birth-Date" />
                               </columns>
                               <padding>
                                  <Insets left="5.0" />
@@ -423,7 +423,7 @@
                                  <TableColumn id="teacherCountryTableColumn" fx:id="teacherCountryTableColumn" prefWidth="98.0" text="Country" />
                                  <TableColumn id="teacherGenderTableColumn" fx:id="teacherGenderTableColumn" prefWidth="86.0" text="Gender" />
                                  <TableColumn id="teacherAgeTableColumn" fx:id="teacherAgeTableColumn" prefWidth="40.0" text="Age" />
-                                 <TableColumn prefWidth="87.0" text="Birth-Date" />
+                                 <TableColumn fx:id="teacherBirthDateTableColumn" prefWidth="87.0" text="Birth-Date" />
                               </columns>
                               <padding>
                                  <Insets left="5.0" />

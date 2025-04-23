@@ -7,6 +7,8 @@ package com.tap.schoolplatform.models.academic;
 
 import com.tap.schoolplatform.models.users.Teacher;
 import com.tap.schoolplatform.utils.SharedData;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -17,6 +19,7 @@ public class Degree {
 
     private final StringProperty name;
     private final ObservableList<Semester> semesters = FXCollections.observableArrayList();
+//    private final ListProperty<Semester> semestersProperty = new SimpleListProperty<>(semesters);
     private final ObservableList<Teacher> teachers = FXCollections.observableArrayList();
 
     public Degree(String name, int numberOfSemesters) {
@@ -63,6 +66,9 @@ public class Degree {
     public ObservableList<Semester> getSemesters() {
         return FXCollections.unmodifiableObservableList(semesters);
     }
+//    public ListProperty<Semester> semestersProperty() {
+//        return semestersProperty;
+//    }
 
     public void addTeacher(Teacher teacher) {
         this.teachers.add(teacher);
