@@ -27,9 +27,11 @@ public class Student extends User {
     public String getID() {
         return ID.get();
     }
+
     public StringProperty IDProperty() {
         return ID;
     }
+
     public void setID(String ID) {
         this.ID.set(ID);
     }
@@ -37,6 +39,7 @@ public class Student extends User {
     public Image getProfilePicture() {
         return profilePicture;
     }
+
     public void setProfilePicture(Image profilePicture) {
         this.profilePicture = profilePicture;
     }
@@ -44,6 +47,7 @@ public class Student extends User {
     public Group getGroup() {
         return group;
     }
+
     public void setGroup(Group group) { // Only used by Group in addStudent and removeStudent
         this.group = group;
         ID.set(Integer.toString(SharedData.getInstance().getUsers(this.role).indexOf(this) + 1));
@@ -55,5 +59,9 @@ public class Student extends User {
 
     public Degree getDegree() {
         return this.group.getSemester().getDegree();
+    }
+
+    public void copyFrom(Student tempStudent) {
+
     }
 }
