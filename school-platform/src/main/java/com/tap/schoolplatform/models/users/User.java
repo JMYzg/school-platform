@@ -3,6 +3,7 @@ package com.tap.schoolplatform.models.users;
 import com.tap.schoolplatform.models.users.enums.Role;
 import com.tap.schoolplatform.models.users.shared.Address;
 import com.tap.schoolplatform.models.users.enums.Gender;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 

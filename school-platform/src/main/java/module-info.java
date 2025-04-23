@@ -21,6 +21,9 @@ module com.tap.schoolplatform {
     opens com.tap.schoolplatform.controllers.login to javafx.fxml;
     exports com.tap.schoolplatform.controllers.login;
 
+    opens com.tap.schoolplatform.controllers.teacher to javafx.fxml;
+    exports com.tap.schoolplatform.controllers.teacher;
+
     // Models
     opens com.tap.schoolplatform.models.academic to javafx.fxml;
     exports com.tap.schoolplatform.models.academic;
@@ -43,4 +46,6 @@ module com.tap.schoolplatform {
     // SharedData
     opens com.tap.schoolplatform.utils to javafx.fxml;
     exports com.tap.schoolplatform.utils;
+    exports com.tap.schoolplatform.controllers.admin.pages;
+    opens com.tap.schoolplatform.controllers.admin.pages to javafx.fxml;
 }

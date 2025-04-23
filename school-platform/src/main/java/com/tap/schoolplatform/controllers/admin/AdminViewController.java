@@ -44,15 +44,15 @@ public class AdminViewController extends ViewController {
     @FXML private Button
             studentNewButton,
 
-    studentUploadImageButton,
+            studentUploadImageButton,
             studentManageDegreeButton,
             studentManageGroupButton,
 
-    studentEditButton,
+            studentEditButton,
             studentAcceptButton,
             studentCancelButton,
 
-    studentFilterButton;
+            studentFilterButton;
 
     @FXML private TextField
             studentNameField,
@@ -66,7 +66,7 @@ public class AdminViewController extends ViewController {
             studentStateField,
             studentCountryField,
 
-    studentSearchField;
+            studentSearchField;
 
     @FXML private ComboBox<Gender> studentGenderComboBox;
     @FXML private ComboBox<Degree> studentDegreeComboBox;
@@ -103,16 +103,16 @@ public class AdminViewController extends ViewController {
     @FXML private Button
             teacherNewButton,
 
-    teacherManageDegreeButton,
+            teacherManageDegreeButton,
             teacherCreateSubjectButton,
             teacherAssignSubjectButton,
             teacherUnassignSubjectButton,
 
-    teacherEditButton,
+            teacherEditButton,
             teacherAcceptButton,
             teacherCancelButton,
 
-    teacherFilterButton;
+            teacherFilterButton;
 
     @FXML private TextField
             teacherNameField,
@@ -128,9 +128,9 @@ public class AdminViewController extends ViewController {
             teacherStateField,
             teacherCountryField,
 
-    teacherSubjectField,
+            teacherSubjectField,
 
-    teacherSearchField;
+            teacherSearchField;
 
     @FXML private ComboBox<Gender> teacherGenderComboBox;
     @FXML private ComboBox<Degree> teacherDegreeComboBox;
@@ -256,10 +256,10 @@ public class AdminViewController extends ViewController {
         try {
             Optional<ButtonType> response =
                     AlertHandler.showAlert(
-                            Alert.AlertType.CONFIRMATION,
-                            "Please confirm",
-                            "Performing logout",
-                            "Are you sure you want to log out?"
+                    Alert.AlertType.CONFIRMATION,
+                    "Please confirm",
+                    "Performing logout",
+                    "Are you sure you want to log out?"
                     );
             if (response.isPresent() && response.get() == ButtonType.OK)
                 toView(LOGIN_VIEW, "Log in", logoutButton);
@@ -312,10 +312,10 @@ public class AdminViewController extends ViewController {
                 return pfp;
             } catch (IllegalArgumentException e) {
                 AlertHandler.showAlert(
-                        Alert.AlertType.ERROR,
-                        "Error",
-                        "Error loading image",
-                        "Could not load image, please try again.\n" + e.getMessage()
+                  Alert.AlertType.ERROR,
+                  "Error",
+                  "Error loading image",
+                  "Could not load image, please try again.\n" + e.getMessage()
                 );
             }
         }
@@ -368,7 +368,6 @@ public class AdminViewController extends ViewController {
                             "Successful operation",
                             "The student has been created!"
                     );
-                    clearStudentForm();
                 } catch (NotValidFormatException e) {
                     AlertHandler.showAlert(
                             Alert.AlertType.ERROR,
@@ -433,21 +432,12 @@ public class AdminViewController extends ViewController {
     }
 
     @FXML private void studentSelectionHandler() {
-        if (!studentAcceptButton.isDisabled() && studentAcceptButton.getText().equals("Update")) {
-            AlertHandler.showAlert(
-                    Alert.AlertType.ERROR,
-                    "Error",
-                    "You must unselect the current user",
-                    "Please unselect the current user to continue"
-            );
-        } else {
-            fillStudentForm(studentTableView.getSelectionModel().getSelectedIndex());
-            disableStudentForm(true);
-            disableButtons(false, studentNewButton, studentEditButton, studentCancelButton);
-            studentCancelButton.setText("Unselect");
-            studentAcceptButton.setText("Update");
-            disableButtons(true, studentAcceptButton);
-        }
+        fillStudentForm(studentTableView.getSelectionModel().getSelectedIndex());
+        disableStudentForm(true);
+        disableButtons(false, studentNewButton, studentEditButton, studentCancelButton);
+        studentCancelButton.setText("Unselect");
+        studentAcceptButton.setText("Update");
+        disableButtons(true, studentAcceptButton);
     }
 
     // TeacherTab
@@ -625,7 +615,7 @@ public class AdminViewController extends ViewController {
                 teacherStateTableColumn,
                 teacherCountryTableColumn
         );
-    }
+}
 
     private void injectCellValues(TableColumn<?, ?>[] columns, String[] properties) {
         for (int i = 0; i < columns.length; i++) {

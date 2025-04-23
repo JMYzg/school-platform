@@ -63,8 +63,10 @@ public class Group {
 //    }
 
     public void addStudent(Student student) {
-        students.add(student);
-        student.setGroup(this);
+        if (!students.contains(student)) {
+            students.add(student);
+            student.setGroup(this);
+        }
     }
     public void removeStudent(Student student) {
         students.remove(student);
