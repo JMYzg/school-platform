@@ -80,4 +80,6 @@ public class Semester {
         Semester semester = (Semester) o;
         return number.equals(semester.number) && degree.equals(semester.degree);
     }
+
+
 }
