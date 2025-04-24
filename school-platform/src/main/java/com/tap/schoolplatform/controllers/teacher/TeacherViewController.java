@@ -2,6 +2,8 @@ package com.tap.schoolplatform.controllers.teacher;
 
 import com.tap.schoolplatform.controllers.ViewController;
 import com.tap.schoolplatform.controllers.alerts.AlertHandler;
+import com.tap.schoolplatform.models.academic.Group;
+import com.tap.schoolplatform.models.academic.Semester;
 import com.tap.schoolplatform.models.academic.Subject;
 import com.tap.schoolplatform.models.users.Teacher;
 import com.tap.schoolplatform.services.auth.LoginService;
@@ -9,7 +11,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
@@ -32,8 +33,11 @@ public class TeacherViewController extends ViewController {
 
     public void initialize() {
         teacherName.setText("Welcome " + LoginService.getCurrentUser().toString() + "!");
-        //Quiero una TreeView Dinamica que solo tendra dos niveles roots (Subjects) y Leafs (Groups),
-        //Necesito que se creen los roots a partir de una lista de observable de materias llamada "getSubjects() de la clase "Teacher"
+        setTreeView();
+
+    }
+
+    public void setTreeView(){
         TreeItem<String> rootItem = new TreeItem<>("Subjects");
         rootItem.setExpanded(true);
 
@@ -44,12 +48,17 @@ public class TeacherViewController extends ViewController {
             TreeItem<String> item = new TreeItem<>(subject.getName());
             item.setExpanded(true);
             rootItem.getChildren().add(item);
+
+            Semester semester = subject.getSemester();
+
+            ObservableList<Group> groups = semester.getAllGroups();
+
+            for (Group group : groups) {
+                TreeItem<String> Subitem = new TreeItem<>(group.getID());
+                Subitem.setExpanded(true);
+                item.getChildren().add(Subitem);
+            }
         }
-
-        //Se crearian las hojas a partir de los "groups" de cada "Subject" estos dos se vinculan a traves del semestre.
-        //El flujo seria: Se jalan las subjects de maestro, de cada una de ellas se obtiene el semestre y el semestre proporciona un mapa de grupos, esos grupos serian las Leafs (Hojas).
-
-        //TreeItem<String> leaftItem = new TreeItem<>("Groups");
         treeView.setRoot(rootItem);
     }
 
