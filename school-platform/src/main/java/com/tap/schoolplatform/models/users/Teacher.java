@@ -1,6 +1,7 @@
 package com.tap.schoolplatform.models.users;
 
 import com.tap.schoolplatform.models.academic.Degree;
+import com.tap.schoolplatform.models.academic.Semester;
 import com.tap.schoolplatform.models.academic.Subject;
 import com.tap.schoolplatform.models.users.enums.Gender;
 import com.tap.schoolplatform.models.users.enums.Role;
@@ -64,5 +65,11 @@ public class Teacher extends User {
 
     public ObservableList<Subject> getSubjects() {
         return FXCollections.unmodifiableObservableList(subjects);
+    }
+
+    public ObservableList<Semester> getSemesters() {
+        ObservableList<Semester> semesters = FXCollections.observableArrayList();
+        subjects.forEach(subject -> semesters.add(subject.getSemester()));
+        return semesters;
     }
 }

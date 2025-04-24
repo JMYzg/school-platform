@@ -39,4 +39,9 @@ public class Subject {
     public void setTeacher(Teacher teacher) { // Only used by Teacher in addSubject() and removeSubject()
         this.teacher = teacher;
     }
+
+    @Override
+    public String toString() {
+        return name.get();
+    }
 }
