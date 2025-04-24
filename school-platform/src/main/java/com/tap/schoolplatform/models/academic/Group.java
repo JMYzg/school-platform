@@ -40,6 +40,7 @@ public class Group {
     public String getID() {
         return ID.get();
     }
+
     public StringProperty IDProperty() {
         return ID;
     }

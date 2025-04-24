@@ -54,16 +54,25 @@ public class Teacher extends User {
         this.degree = degree;
     }
 
-    public void addSubject(Subject subject) {
-        subjects.add(subject);
-        subject.setTeacher(this);
+    //Make Modifications find last one down
+    public void addSubject(Subject... subject) {
+        for (Subject s : subject) {
+            subjects.add(s);
+            s.setTeacher(this);
+        }
     }
+    //Last one, before one
+//    public void addSubject(Subject subject) {
+//        subjects.add(subject);
+//        subject.setTeacher(this);
+//    }
     public void removeSubject(Subject subject) {
         subjects.remove(subject);
         subject.setTeacher(null);
     }
 
     public ObservableList<Subject> getSubjects() {
+
         return FXCollections.unmodifiableObservableList(subjects);
     }
 
