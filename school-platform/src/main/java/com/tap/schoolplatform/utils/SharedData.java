@@ -64,12 +64,14 @@ public class SharedData {
         Degree SE = new Degree("Software Engineering", 9);
         Semester first = SE.getSemester(1);
         Group G1M = new Group(first, Shift.MORNINGS);
+        //Make Changes
         Subject IC = new Subject(first, "Integral Calculus");
         Subject P = new Subject(first, "Psychology");
         Subject POO = new Subject(first, "Political Communication");
         degrees.add(SE);
 
         Teacher teacher = getTeacher();
+        //Make Modifications
         teacher.addSubject(IC, P, POO);
         SE.addTeacher(teacher);
 

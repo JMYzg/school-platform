@@ -53,13 +53,14 @@ public class Teacher extends User {
         this.degree = degree;
     }
 
-
+    //Make Modifications find last one down
     public void addSubject(Subject... subject) {
         for (Subject s : subject) {
             subjects.add(s);
             s.setTeacher(this);
         }
     }
+    //Last one, before one
 //    public void addSubject(Subject subject) {
 //        subjects.add(subject);
 //        subject.setTeacher(this);
