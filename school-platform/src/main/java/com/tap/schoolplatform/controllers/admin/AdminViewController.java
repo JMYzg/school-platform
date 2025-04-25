@@ -23,15 +23,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-import javafx.util.StringConverter;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
-import static java.util.Map.entry;
 
 public class AdminViewController extends ViewController {
 
@@ -143,21 +142,21 @@ public class AdminViewController extends ViewController {
 
     @FXML private TableView<Teacher> teacherTableView;
     @FXML private TableColumn<Teacher, String>
-            teacherLicenseTableColumn,
-            teacherNameTableColumn,
-            teacherLastNameTableColumn,
-            teacherSpecializationTableColumn,
-            teacherEmailTableColumn,
-            teacherPhoneTableColumn;
+    teacherLicenseTableColumn,
+    teacherNameTableColumn,
+    teacherLastNameTableColumn,
+    teacherSpecializationTableColumn,
+    teacherEmailTableColumn,
+    teacherPhoneTableColumn;
     @FXML private TableColumn<Teacher, Degree> teacherDegreeTableColumn;
     @FXML private TableColumn<Teacher, Gender> teacherGenderTableColumn;
     @FXML private TableColumn<Teacher, String>
-            teacherStreetTableColumn,
-            teacherPCTableColumn,
-            teacherColonyTableColumn,
-            teacherCityTableColumn,
-            teacherStateTableColumn,
-            teacherCountryTableColumn;
+    teacherStreetTableColumn,
+    teacherPCTableColumn,
+    teacherColonyTableColumn,
+    teacherCityTableColumn,
+    teacherStateTableColumn,
+    teacherCountryTableColumn;
     @FXML private TableColumn<Teacher, LocalDate> teacherBirthDateTableColumn;
     @FXML private TableColumn<Teacher, Integer> teacherAgeTableColumn;
 
@@ -167,500 +166,14 @@ public class AdminViewController extends ViewController {
         initializeTabs();
     }
 
-    private void initializeTabs() {
-        bindTableViews();
-        bindTableColumns();
-        bindComboBoxes();
-        makeComboBoxesNotEditable();
-
-        disableComboBoxes(true,
-                studentSemesterComboBox,
-                studentGroupComboBox,
-
-                teacherSubjectSemesterComboBox,
-                teacherAssignSubjectSemesterComboBox,
-                teacherAssignSubjectComboBox,
-                teacherUnassignSubjectSemesterComboBox,
-                teacherUnassignSubjectComboBox
-        );
-
-        setListeners();
-
-        disableButtons(true,
-                studentNewButton,
-
-                studentEditButton,
-                studentCancelButton,
-
-                teacherNewButton,
-
-                teacherEditButton,
-                teacherCancelButton
-        );
-
-        disableTextFields(true, teacherSubjectField);
-
-        disableButtons(true,
-                teacherCreateSubjectButton,
-                teacherAssignSubjectButton,
-                teacherUnassignSubjectButton
-        );
-
-        studentAcceptButton.setText("Create");
-        teacherAcceptButton.setText("Create");
-    }
-
-    private void setListeners() {
-        setStudentListeners();
-        setTeacherListeners();
-    }
-
-    private void setTeacherListeners() {
-        teacherDegreeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                disableComboBoxes(false,
-                        teacherSubjectSemesterComboBox,
-                        teacherAssignSubjectSemesterComboBox,
-                        teacherUnassignSubjectSemesterComboBox
-                );
-                ObservableList<Semester> semesters = newValue.getSemesters();
-                teacherSubjectSemesterComboBox.setItems(semesters);
-//                setStringConverter(teacherSubjectSemesterComboBox);
-                teacherAssignSubjectSemesterComboBox.setItems(semesters.stream()
-                        .filter(semester -> !semester.getSubjects().isEmpty() &&
-                                semester.getSubjects().stream()
-                                        .anyMatch(subject -> subject.getTeacher() == null))
-                        .collect(Collectors.toCollection(FXCollections::observableArrayList)));
-//                setStringConverter(teacherAssignSubjectSemesterComboBox);
-                if (teacherAssignSubjectSemesterComboBox.getItems().isEmpty()) {
-                    disableComboBoxes(true, teacherAssignSubjectSemesterComboBox);
-                }
-                if (teacherTableView.getSelectionModel().getSelectedItem() != null) {
-                    Teacher teacher = teacherTableView.getSelectionModel().getSelectedItem();
-                    teacherUnassignSubjectSemesterComboBox.setItems(teacher.getSemesters());
-//                    setStringConverter(teacherUnassignSubjectSemesterComboBox);
-                } else {
-                    disableComboBoxes(true, teacherUnassignSubjectSemesterComboBox);
-                }
-            } else {
-                disableTextFields(true, teacherSubjectField);
-                disableComboBoxes(true,
-                        teacherSubjectSemesterComboBox,
-                        teacherAssignSubjectSemesterComboBox,
-                        teacherAssignSubjectComboBox,
-                        teacherUnassignSubjectSemesterComboBox,
-                        teacherUnassignSubjectComboBox
-                );
-                disableButtons(true,
-                        teacherCreateSubjectButton,
-                        teacherAssignSubjectButton,
-                        teacherUnassignSubjectButton
-                );
-            }
-        });
-
-        teacherSubjectSemesterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                disableTextFields(false, teacherSubjectField);
-                disableButtons(false, teacherCreateSubjectButton);
-            } else {
-                disableTextFields(true, teacherSubjectField);
-                disableButtons(true, teacherCreateSubjectButton);
-            }
-        });
-
-        teacherAssignSubjectSemesterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                disableComboBoxes(false, teacherAssignSubjectComboBox);
-                disableButtons(false, teacherAssignSubjectButton);
-
-                teacherAssignSubjectComboBox.setItems(newValue.getSubjects().stream()
-                        .filter(subject -> subject.getTeacher() == null)
-                        .collect(Collectors.toCollection(FXCollections::observableArrayList))
-                );
-//                setStringConverter(teacherAssignSubjectComboBox);
-
-            } else {
-                disableComboBoxes(true, teacherAssignSubjectComboBox);
-                disableButtons(true, teacherAssignSubjectButton);
-            }
-        });
-
-        teacherTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                disableComboBoxes(false, teacherUnassignSubjectSemesterComboBox);
-                Teacher teacher = teacherTableView.getSelectionModel().getSelectedItem();
-                teacherUnassignSubjectSemesterComboBox.setItems(teacher.getSemesters());
-//                setStringConverter(teacherUnassignSubjectSemesterComboBox);
-            } else {
-                disableComboBoxes(true, teacherUnassignSubjectSemesterComboBox);
-            }
-        });
-
-        teacherUnassignSubjectSemesterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                disableComboBoxes(false, teacherUnassignSubjectComboBox);
-                disableButtons(false, teacherUnassignSubjectButton);
-                if (teacherTableView.getSelectionModel().getSelectedItem() != null) {
-                    Teacher teacher = teacherTableView.getSelectionModel().getSelectedItem();
-                    teacherUnassignSubjectComboBox.setItems(newValue.getSubjects().stream()
-                            .filter(subject -> subject.getTeacher() == teacher)
-                            .collect(Collectors.toCollection(FXCollections::observableArrayList))
-                    );
-//                    setStringConverter(teacherUnassignSubjectComboBox);
-                }
-            } else {
-                disableComboBoxes(true, teacherUnassignSubjectComboBox);
-                disableButtons(true, teacherUnassignSubjectButton);
-            }
-        });
-    }
-
-//    private void setTeacherListeners() {
-//        teacherDegreeComboBox.disabledProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue) {
-//                disableComboBoxes(true,
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherUnassignSubjectSemesterComboBox
-//                );
-//            } else {
-//                disableComboBoxes(false,
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox
-//                );
-//            }
-//        });
-//
-//        teacherDegreeComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue == null) {
-//                clearComboBoxes(
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherUnassignSubjectSemesterComboBox
-//                );
-//                disableComboBoxes(true,
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherUnassignSubjectSemesterComboBox
-//                        );
-//            } else {
-//                disableComboBoxes(false,
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherUnassignSubjectSemesterComboBox
-//                );
-//            }
-//        });
-//
-//        teacherDegreeComboBox.itemsProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue == null) {
-//                emptyComboBoxes(
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherUnassignSubjectSemesterComboBox
-//                );
-//            }
-//        });
-//
-//        teacherSubjectSemesterComboBox.disabledProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue) {
-//                disableTextFields(true, teacherSubjectField);
-//                disableButtons(true, teacherCreateSubjectButton);
-//            } else {
-//                disableTextFields(false, teacherSubjectField);
-//                disableButtons(false, teacherCreateSubjectButton);
-//            }
-//        });
-//
-//        teacherSubjectSemesterComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue == null) {
-//                clearTextFields(teacherSubjectField);
-//                disableTextFields(true, teacherSubjectField);
-//                disableButtons(true, teacherCreateSubjectButton);
-//            } else {
-//                disableTextFields(false, teacherSubjectField);
-//                disableButtons(false, teacherCreateSubjectButton);
-//            }
-//        });
-//
-//        teacherSubjectSemesterComboBox.itemsProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue == null) teacherSubjectField.clear();
-//        });
-//
-//        teacherAssignSubjectSemesterComboBox.disabledProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue) {
-//                disableComboBoxes(true, teacherAssignSubjectComboBox);
-//                disableButtons(true, teacherAssignSubjectButton);
-//            } else {
-//                disableComboBoxes(false, teacherAssignSubjectComboBox);
-//                disableButtons( false, teacherAssignSubjectButton);
-//            }
-//        });
-//
-//        teacherAssignSubjectSemesterComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue == null) {
-//                clearComboBoxes(teacherAssignSubjectComboBox);
-//                disableComboBoxes(true, teacherAssignSubjectComboBox);
-//                disableButtons(true, teacherAssignSubjectButton);
-//            } else {
-//                disableComboBoxes(false, teacherAssignSubjectComboBox);
-//                disableButtons(false, teacherAssignSubjectButton);
-//            }
-//        });
-//
-//        teacherAssignSubjectSemesterComboBox.itemsProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue == null) emptyComboBoxes(teacherAssignSubjectComboBox);
-//        });
-//
-//        teacherUnassignSubjectComboBox.disabledProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue) {
-//                disableComboBoxes(true, teacherUnassignSubjectComboBox);
-//                disableButtons(true, teacherUnassignSubjectButton);
-//            } else {
-//                disableComboBoxes(false, teacherUnassignSubjectComboBox);
-//                disableButtons(false, teacherUnassignSubjectButton);
-//            }
-//        });
-//
-//        teacherUnassignSubjectComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue == null) {
-//                clearComboBoxes(teacherUnassignSubjectComboBox);
-//                disableComboBoxes(true, teacherUnassignSubjectComboBox);
-//                disableButtons(true, teacherUnassignSubjectButton);
-//            } else {
-//                disableComboBoxes(false, teacherUnassignSubjectComboBox);
-//                disableButtons(false, teacherUnassignSubjectButton);
-//            }
-//        });
-//
-//        teacherUnassignSubjectComboBox.itemsProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue == null) emptyComboBoxes(teacherUnassignSubjectComboBox);
-//        });
-//
-//        teacherDegreeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue != null) {
-//                disableComboBoxes(false,
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherUnassignSubjectSemesterComboBox
-//                );
-//                ObservableList<Semester> semesters = newValue.getSemesters();
-//                teacherSubjectSemesterComboBox.setItems(semesters);
-//                setStringConverter(teacherSubjectSemesterComboBox);
-//
-//                teacherAssignSubjectSemesterComboBox.setItems(semesters.stream()
-//                        .filter(semester -> !semester.getSubjects().isEmpty() &&
-//                                semester.getSubjects().stream()
-//                                        .anyMatch(subject -> subject.getTeacher() == null))
-//                        .collect(Collectors.toCollection(FXCollections::observableArrayList)));
-//                setStringConverter(teacherAssignSubjectSemesterComboBox);
-//                if (teacherAssignSubjectSemesterComboBox.getItems().isEmpty()) {
-//                    clearComboBoxes(teacherAssignSubjectSemesterComboBox);
-//                    emptyComboBoxes(teacherAssignSubjectSemesterComboBox);
-//                    disableComboBoxes(true, teacherAssignSubjectSemesterComboBox);
-//                }
-//            } else {
-//                teacherSubjectSemesterComboBox.setItems(null);
-//                clearComboBoxes(
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherUnassignSubjectSemesterComboBox
-//                );
-//                disableComboBoxes(true,
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherUnassignSubjectSemesterComboBox
-//                );
-//            }
-//        });
-//
-//        teacherAssignSubjectSemesterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue != null) {
-//                List<Subject> subjects = newValue.getSubjects();
-//                teacherAssignSubjectComboBox.setItems(
-//                        subjects.stream()
-//                                .filter(subject -> subject.getTeacher() == null)
-//                                .collect(Collectors.toCollection(FXCollections::observableArrayList))
-//                );
-//                setStringConverter(teacherAssignSubjectComboBox);
-//            }
-//        });
-//
-//        teacherTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue != null) {
-//                teacherUnassignSubjectSemesterComboBox.setItems(newValue.getSemesters());
-//                setStringConverter(teacherUnassignSubjectSemesterComboBox);
-//            } else {
-//                clearComboBoxes(teacherUnassignSubjectSemesterComboBox);
-//                emptyComboBoxes(teacherUnassignSubjectSemesterComboBox);
-//                disableComboBoxes(true, teacherUnassignSubjectSemesterComboBox);
-//            }
-//        });
-//
-//        teacherUnassignSubjectSemesterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue != null) {
-//                teacherUnassignSubjectComboBox.setItems(
-//                        newValue.getSubjects().stream()
-//                                .filter(subject -> subject.getTeacher().equals(teacherTableView.getSelectionModel().getSelectedItem()))
-//                                .collect(Collectors.toCollection(FXCollections::observableArrayList))
-//                );
-//                setStringConverter(teacherUnassignSubjectComboBox);
-//            }
-//        });
-//    }
-
-    private <T> void setStringConverter(ComboBox<T> comboBox) {
-        comboBox.setConverter(new StringConverter<>() {
-            @Override
-            public String toString(T object) {
-                return (object == null) ? "" : object.toString();
-            }
-
-            @Override
-            public T fromString(String s) {
-                return null;
-            }
-        });
-    }
-
-    private void setStudentListeners() {
-        studentDegreeComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
-            if (studentDegreeComboBox.isDisabled()) {
-                studentSemesterComboBox.setDisable(true);
-            }
-            if (newValue != null) {
-                studentSemesterComboBox.getSelectionModel().clearSelection();
-                studentSemesterComboBox.setItems(FXCollections.observableArrayList());
-                studentSemesterComboBox.setDisable(false);
-                studentSemesterComboBox.setItems(newValue.getSemesters());
-            } else {
-                studentSemesterComboBox.getSelectionModel().clearSelection();
-                studentSemesterComboBox.setDisable(true);
-            }
-        });
-
-        studentSemesterComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
-            if (studentSemesterComboBox.isDisabled()) {
-                studentGroupComboBox.setDisable(true);
-            }
-            if (newValue != null) {
-                studentGroupComboBox.getSelectionModel().clearSelection();
-                studentGroupComboBox.setItems(FXCollections.observableArrayList());
-                studentGroupComboBox.setDisable(false);
-                studentGroupComboBox.setItems(newValue.getAllGroups());
-                if (studentGroupComboBox.getItems().isEmpty()) studentGroupComboBox.setDisable(true);
-            } else {
-                studentGroupComboBox.getSelectionModel().clearSelection();
-                studentGroupComboBox.setDisable(true);
-            }
-        });
-
-//        teacherDegreeComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
-//            if (teacherDegreeComboBox.isDisabled()) {
-//                disableTextFields(true, teacherSubjectField);
-//                disableButtons(true,
-//                        teacherCreateSubjectButton,
-//                        teacherAssignSubjectButton,
-//                        teacherUnassignSubjectButton
-//                );
-//                disableComboBoxes(true,
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherAssignSubjectComboBox,
-//                        teacherUnassignSubjectSemesterComboBox,
-//                        teacherUnassignSubjectComboBox
-//                );
-//            }
-//            if (newValue != null) {
-//                clearComboBoxes(
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherAssignSubjectComboBox,
-//                        teacherUnassignSubjectSemesterComboBox,
-//                        teacherUnassignSubjectComboBox
-//                );
-//
-//                emptyComboBoxes(
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherAssignSubjectComboBox,
-//                        teacherUnassignSubjectSemesterComboBox,
-//                        teacherUnassignSubjectComboBox
-//                );
-//
-//                disableComboBoxes(false,
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherAssignSubjectComboBox,
-//                        teacherUnassignSubjectSemesterComboBox,
-//                        teacherUnassignSubjectComboBox
-//                );
-//                createDependencies(teacherSubjectSemesterComboBox, newValue);
-//            } else {
-//                clearComboBoxes(
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherAssignSubjectComboBox,
-//                        teacherUnassignSubjectSemesterComboBox,
-//                        teacherUnassignSubjectComboBox
-//                );
-//                disableComboBoxes(true,
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherAssignSubjectComboBox,
-//                        teacherUnassignSubjectSemesterComboBox,
-//                        teacherUnassignSubjectComboBox
-//                );
-//            }
-//        });
-    }
-
-    private void emptyComboBoxes(ComboBox<?>... comboBoxes) {
-        for (ComboBox<?> comboBox : comboBoxes) {
-            comboBox.setItems(null);
-        }
-    }
-
-//    private void setListeners(ComboBox<Degree> degreeComboBox, ComboBox<Semester> semesterComboBox) {
-//        degreeComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
-//            if (degreeComboBox.isDisabled()) {
-//                semesterComboBox.setDisable(true);
-//            }
-//            if (newValue != null) {
-//                semesterComboBox.getSelectionModel().clearSelection();
-//                semesterComboBox.setItems(FXCollections.observableArrayList());
-//                semesterComboBox.setDisable(false);
-//                semesterComboBox.setItems(newValue.getSemesters());
-//            } else {
-//                semesterComboBox.getSelectionModel().clearSelection();
-//                semesterComboBox.setDisable(true);
-//            }
-//        });
-//    }
-
-    private void setStudentListeners(ComboBox<Semester> semesterComboBox, Degree degree) {
-        semesterComboBox.setItems(degree.getSemesters());
-        semesterComboBox.setConverter(new StringConverter<>() {
-            @Override
-            public String toString(Semester semester) {
-                return (semester == null) ? "" : semester.toString();
-            }
-            @Override
-            public Semester fromString(String string) {
-                return null;
-            }
-        });
-    }
-
     @FXML private void onLogoutClick() {
         try {
             Optional<ButtonType> response =
                     AlertHandler.showAlert(
-                    Alert.AlertType.CONFIRMATION,
-                    "Please confirm",
-                    "Performing logout",
-                    "Are you sure you want to log out?"
+                            Alert.AlertType.CONFIRMATION,
+                            "Please confirm",
+                            "Performing logout",
+                            "Are you sure you want to log out?"
                     );
             if (response.isPresent() && response.get() == ButtonType.OK)
                 toView(LOGIN_VIEW, "Log in", logoutButton);
@@ -685,12 +198,9 @@ public class AdminViewController extends ViewController {
                 );
         if (response.isPresent() && response.get() == ButtonType.OK) {
             studentTableView.getSelectionModel().clearSelection();
-//            if (studentTableView.getSelectionModel().getSelectedItem() != null) {
-//                Student current = studentTableView.getSelectionModel().getSelectedItem();
-//                unbindStudentForm(current);
-//            }
             clearStudentForm();
             disableStudentForm(false);
+            studentTableView.setDisable(false);
             disableButtons(true, studentNewButton, studentEditButton, studentCancelButton);
             disableButtons(false, studentAcceptButton);
             studentAcceptButton.setText("Create");
@@ -723,16 +233,14 @@ public class AdminViewController extends ViewController {
         }
         return null;
     }
-    @FXML private void onStudentManageDegreeClick() {
 
+    @FXML private void onStudentManageDegreeClick() {
     }
     @FXML private void onStudentManageGroupClick() {
-
     }
 
     @FXML private void studentEditButtonHandler() {
         fillStudentForm(studentTableView.getSelectionModel().getSelectedItem());
-//        bindStudentForm(studentTableView.getSelectionModel().getSelectedItem());
         disableStudentForm(false);
         disableComboBoxes(false,
                 studentSemesterComboBox,
@@ -741,10 +249,10 @@ public class AdminViewController extends ViewController {
         disableButtons(false, studentAcceptButton);
         disableButtons(true, studentEditButton);
         studentTableView.setDisable(true);
+        studentCancelButton.setText("Cancel");
     }
 
     // Move this
-
 
     @FXML private void studentAcceptButtonHandler() {
         switch (studentAcceptButton.getText()) {
@@ -818,8 +326,8 @@ public class AdminViewController extends ViewController {
                 break;
         }
     }
-
     // Move this
+
     private void updateStudent(Student student) {
         updateUser(student,
                 studentNameField,
@@ -840,41 +348,10 @@ public class AdminViewController extends ViewController {
             if (student.getProfilePicture() == null || !student.getProfilePicture().equals(studentImageView.getImage())) student.setProfilePicture(studentImageView.getImage());
         }
     }
-
-    private void updateUser(
-            User user,
-            TextField nameField,
-            TextField lastNameField,
-            TextField phoneField,
-            TextField emailField,
-            TextField streetField,
-            TextField PCField,
-            TextField colonyField,
-            TextField cityField,
-            TextField stateField,
-            TextField countryField,
-            ComboBox<Gender> genderComboBox,
-            DatePicker datePicker
-            ) {
-        if (!user.getName().equals(nameField.getText())) user.setName(nameField.getText());
-        if (!user.getLastName().equals(lastNameField.getText())) user.setLastName(lastNameField.getText());
-        if (!user.getPhone().equals(phoneField.getText())) user.setPhone(phoneField.getText());
-        if (!user.getEmail().equals(emailField.getText())) user.setEmail(emailField.getText());
-        if (!user.getAddress().getStreet().equals(streetField.getText())) user.getAddress().setStreet(streetField.getText());
-        if (!user.getAddress().getPostalCode().equals(PCField.getText())) user.getAddress().setPostalCode(PCField.getText());
-        if (!user.getAddress().getColony().equals(colonyField.getText())) user.getAddress().setColony(colonyField.getText());
-        if (!user.getAddress().getCity().equals(cityField.getText())) user.getAddress().setCity(cityField.getText());
-        if (!user.getAddress().getState().equals(stateField.getText())) user.getAddress().setState(stateField.getText());
-        if (!user.getAddress().getCountry().equals(countryField.getText())) user.getAddress().setCountry(countryField.getText());
-        if (!user.getGender().equals(genderComboBox.getValue())) user.setGender(genderComboBox.getValue());
-        if (!user.getBirthDate().equals(datePicker.getValue())) user.setBirthDate(datePicker.getValue());
-    }
-
-
     @FXML private void studentCancelButtonHandler() {
         switch (studentCancelButton.getText()) {
             case "Cancel":
-                disableStudentForm(true);
+                studentSelectionHandler();
                 break;
             case "Unselect":
                 clearStudentForm();
@@ -882,34 +359,36 @@ public class AdminViewController extends ViewController {
                 disableButtons(true, studentNewButton, studentEditButton, studentCancelButton);
                 disableButtons(false, studentAcceptButton);
                 studentAcceptButton.setText("Create");
-                studentTableView.setDisable(false);
                 break;
             default:
                 break;
         }
+        studentTableView.setDisable(false);
     }
 
     @FXML private void onStudentFilterClick() {
-
+        studentTableView.setItems(findStudent(studentSearchField.getText()));
     }
 
     @FXML private void studentSelectionHandler() {
-        if (!studentAcceptButton.isDisabled() && studentAcceptButton.getText().equals("Update")) {
-            AlertHandler.showAlert(
-                    Alert.AlertType.ERROR,
-                    "Error",
-                    "You must unselect the current user",
-                    "Please unselect or update the current user to continue"
-            );
-        } else {
-            fillStudentForm(studentTableView.getSelectionModel().getSelectedItem());
-            disableStudentForm(true);
-            disableButtons(false, studentNewButton, studentEditButton, studentCancelButton);
-            studentCancelButton.setText("Unselect");
-            studentAcceptButton.setText("Update");
-            disableButtons(true, studentAcceptButton);
-        }
+//        if (!studentAcceptButton.isDisabled() && studentAcceptButton.getText().equals("Update")) {
+//            AlertHandler.showAlert(
+//                    Alert.AlertType.ERROR,
+//                    "Error",
+//                    "You must unselect the current user",
+//                    "Please unselect or update the current user to continue"
+//            );
+//        } else {
+//
+//        }
+        fillStudentForm(studentTableView.getSelectionModel().getSelectedItem());
+        disableStudentForm(true);
+        disableButtons(false, studentNewButton, studentEditButton, studentCancelButton);
+        studentCancelButton.setText("Unselect");
+        studentAcceptButton.setText("Update");
+        disableButtons(true, studentAcceptButton);
     }
+
 
     // TeacherTab
     @FXML private void teacherNewButtonHandler() {
@@ -924,6 +403,7 @@ public class AdminViewController extends ViewController {
             teacherTableView.getSelectionModel().clearSelection();
             clearTeacherForm();
             disableTeacherForm(false);
+            teacherTableView.setDisable(false);
             disableButtons(true, teacherNewButton, teacherEditButton, teacherCancelButton);
             disableButtons(false, teacherAcceptButton);
             teacherAcceptButton.setText("Create");
@@ -933,7 +413,6 @@ public class AdminViewController extends ViewController {
     @FXML private void onTeacherManageDegreeClick() {
 
     }
-
     @FXML private void onTeacherCreateSubjectClick() {
 
     }
@@ -941,12 +420,12 @@ public class AdminViewController extends ViewController {
     @FXML private void onTeacherAssignSubjectClick() {
 
     }
+
     @FXML private void onTeacherUnassignSubjectClick() {
 
     }
 
     @FXML private void teacherEditButtonHandler() {
-//        bindTeacherForm(teacherTableView.getSelectionModel().getSelectedItem());
         fillTeacherForm(teacherTableView.getSelectionModel().getSelectedItem());
         disableTeacherForm(false);
         disableComboBoxes(false,
@@ -958,6 +437,7 @@ public class AdminViewController extends ViewController {
         disableButtons(false, teacherAcceptButton);
         disableButtons(true, teacherEditButton);
         teacherTableView.setDisable(true);
+        teacherCancelButton.setText("Cancel");
     }
 
     @FXML private void teacherAcceptButtonHandler() {
@@ -1016,97 +496,85 @@ public class AdminViewController extends ViewController {
         }
     }
 
-    private Teacher getTeacher() {
-        Teacher teacher = new Teacher(
-                teacherNameField.getText(),
-                teacherLastNameField.getText(),
-                teacherEmailField.getText(),
-                "456",
-                teacherPhoneField.getText(),
-                new Address(
-                        teacherStreetField.getText(),
-                        teacherPCField.getText(),
-                        teacherColonyField.getText(),
-                        teacherCityField.getText(),
-                        teacherStateField.getText(),
-                        teacherCountryField.getText()
-                ),
-                teacherDatePicker.getValue(),
-                teacherGenderComboBox.getValue()
-        );
-        teacher.setLicense(teacherLicenseField.getText());
-        teacher.setSpecialization(teacherSpecializationField.getText());
-        return teacher;
-    }
-
-    private void updateTeacher(Teacher teacher) {
-        updateUser(
-                teacher,
-                teacherNameField,
-                teacherLastNameField,
-                teacherPhoneField,
-                teacherEmailField,
-                teacherStreetField,
-                teacherPCField,
-                teacherColonyField,
-                teacherCityField,
-                teacherStateField,
-                teacherCountryField,
-                teacherGenderComboBox,
-                teacherDatePicker
-        );
-        if(!teacher.getLicense().equals(teacherLicenseField.getText())) teacher.setLicense(teacherLicenseField.getText());
-        if(!teacher.getSpecialization().equals(teacherSpecializationField.getText())) teacher.setSpecialization(teacherSpecializationField.getText());
-        if(!teacher.getDegree().equals(teacherDegreeComboBox.getValue())) teacher.setDegree(teacherDegreeComboBox.getValue());
-    }
-
     @FXML private void teacherCancelButtonHandler() {
         switch (teacherCancelButton.getText()) {
             case "Cancel":
-                teacherNewButton.fire();
+                teacherSelectionHandler();
                 break;
             case "Unselect":
                 clearTeacherForm();
                 disableTeacherForm(false);
-//                disableButtons(true, teacherEditButton, teacherCancelButton);
-//                disableButtons(false, teacherAcceptButton);
-//                disableButtons(true,
-//                        teacherCreateSubjectButton,
-//                        teacherAssignSubjectButton,
-//                        teacherUnassignSubjectButton
-//                );
-//                disableTextFields(true, teacherSubjectField);
-//                disableComboBoxes(true,
-//                        teacherSubjectSemesterComboBox,
-//                        teacherAssignSubjectSemesterComboBox,
-//                        teacherAssignSubjectComboBox,
-//                        teacherUnassignSubjectComboBox,
-//                        teacherUnassignSubjectSemesterComboBox
-//                );
-                disableButtons(true, teacherNewButton, teacherEditButton, teacherCancelButton);
+                disableButtons(true,
+                        teacherNewButton,
+                        teacherEditButton,
+                        teacherCancelButton
+                );
                 disableButtons(false, teacherAcceptButton);
                 teacherAcceptButton.setText("Create");
-                teacherTableView.setDisable(false);
+                teacherTableView.getSelectionModel().clearSelection();
                 break;
             default:
                 break;
         }
+        teacherTableView.setDisable(false);
     }
 
     @FXML private void onTeacherFilterClick() {
-
+        teacherTableView.setItems(findTeacher(teacherSearchField.getText()));
     }
 
     @FXML private void teacherSelectionHandler() {
         fillTeacherForm(teacherTableView.getSelectionModel().getSelectedItem());
         disableTeacherForm(true);
+        clearComboBoxes(
+                teacherSubjectSemesterComboBox,
+                teacherAssignSubjectSemesterComboBox,
+                teacherAssignSubjectComboBox,
+                teacherUnassignSubjectSemesterComboBox,
+                teacherSubjectSemesterComboBox
+        );
+        clearTextFields(teacherSubjectField);
         disableButtons(false, teacherNewButton, teacherEditButton, teacherCancelButton);
         teacherCancelButton.setText("Unselect");
         teacherAcceptButton.setText("Update");
         disableButtons(true, teacherAcceptButton);
     }
-
     // Utils
+
+    private void updateUser(
+            User user,
+            TextField nameField,
+            TextField lastNameField,
+            TextField phoneField,
+            TextField emailField,
+            TextField streetField,
+            TextField PCField,
+            TextField colonyField,
+            TextField cityField,
+            TextField stateField,
+            TextField countryField,
+            ComboBox<Gender> genderComboBox,
+            DatePicker datePicker
+    ) {
+        if (!user.getName().equals(nameField.getText())) user.setName(nameField.getText());
+        if (!user.getLastName().equals(lastNameField.getText())) user.setLastName(lastNameField.getText());
+        if (!user.getPhone().equals(phoneField.getText())) user.setPhone(phoneField.getText());
+        if (!user.getEmail().equals(emailField.getText())) user.setEmail(emailField.getText());
+        if (!user.getAddress().getStreet().equals(streetField.getText()))
+            user.getAddress().setStreet(streetField.getText());
+        if (!user.getAddress().getPostalCode().equals(PCField.getText()))
+            user.getAddress().setPostalCode(PCField.getText());
+        if (!user.getAddress().getColony().equals(colonyField.getText()))
+            user.getAddress().setColony(colonyField.getText());
+        if (!user.getAddress().getCity().equals(cityField.getText())) user.getAddress().setCity(cityField.getText());
+        if (!user.getAddress().getState().equals(stateField.getText()))
+            user.getAddress().setState(stateField.getText());
+        if (!user.getAddress().getCountry().equals(countryField.getText()))
+            user.getAddress().setCountry(countryField.getText());
+        if (!user.getGender().equals(genderComboBox.getValue())) user.setGender(genderComboBox.getValue());
+        if (!user.getBirthDate().equals(datePicker.getValue())) user.setBirthDate(datePicker.getValue());
+    }
+
     private void bindTableViews() {
         studentTableView.setItems(data.getUsers(Role.STUDENT));
         teacherTableView.setItems(data.getUsers(Role.TEACHER));
@@ -1156,7 +624,6 @@ public class AdminViewController extends ViewController {
                 studentCountryTableColumn
         );
     }
-
     private void bindTeacherTableColumns() {
         TableColumn<?, ?>[] TeacherTableColumns = {
                 teacherLicenseTableColumn,
@@ -1192,12 +659,191 @@ public class AdminViewController extends ViewController {
                 teacherStateTableColumn,
                 teacherCountryTableColumn
         );
-}
+    }
 
     private void injectCellValues(TableColumn<?, ?>[] columns, String[] properties) {
         for (int i = 0; i < columns.length; i++) {
             columns[i].setCellValueFactory(new PropertyValueFactory<>(properties[i]));
         }
+    }
+
+    private void initializeTabs() {
+        bindTableViews();
+        bindTableColumns();
+        bindComboBoxes();
+        makeComboBoxesNotEditable();
+
+        disableComboBoxes(true,
+                studentSemesterComboBox,
+                studentGroupComboBox,
+
+                teacherSubjectSemesterComboBox,
+                teacherAssignSubjectSemesterComboBox,
+                teacherAssignSubjectComboBox,
+                teacherUnassignSubjectSemesterComboBox,
+                teacherUnassignSubjectComboBox
+        );
+
+        setListeners();
+
+        disableButtons(true,
+                studentNewButton,
+
+                studentEditButton,
+                studentCancelButton,
+
+                teacherNewButton,
+
+                teacherEditButton,
+                teacherCancelButton
+        );
+
+        disableTextFields(true, teacherSubjectField);
+
+        disableButtons(true,
+                teacherCreateSubjectButton,
+                teacherAssignSubjectButton,
+                teacherUnassignSubjectButton
+        );
+
+        studentDatePicker.setEditable(false);
+        teacherDatePicker.setEditable(false);
+
+        studentAcceptButton.setText("Create");
+        teacherAcceptButton.setText("Create");
+    }
+
+    private void setListeners() {
+        setStudentListeners();
+        setTeacherListeners();
+    }
+
+    private void setTeacherListeners() {
+        teacherDegreeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                disableComboBoxes(false,
+                        teacherSubjectSemesterComboBox,
+                        teacherAssignSubjectSemesterComboBox,
+                        teacherUnassignSubjectSemesterComboBox
+                );
+                ObservableList<Semester> semesters = newValue.getSemesters();
+                teacherSubjectSemesterComboBox.setItems(semesters);
+                teacherAssignSubjectSemesterComboBox.setItems(semesters.stream()
+                        .filter(semester -> !semester.getSubjects().isEmpty() &&
+                                semester.getSubjects().stream()
+                                        .anyMatch(subject -> subject.getTeacher() == null))
+                        .collect(Collectors.toCollection(FXCollections::observableArrayList)));
+                if (teacherAssignSubjectSemesterComboBox.getItems().isEmpty()) {
+                    disableComboBoxes(true, teacherAssignSubjectSemesterComboBox);
+                }
+                if (teacherTableView.getSelectionModel().getSelectedItem() != null) {
+                    Teacher teacher = teacherTableView.getSelectionModel().getSelectedItem();
+                    teacherUnassignSubjectSemesterComboBox.setItems(teacher.getSemesters());
+                } else {
+                    disableComboBoxes(true, teacherUnassignSubjectSemesterComboBox);
+                }
+            } else {
+                disableTextFields(true, teacherSubjectField);
+                disableComboBoxes(true,
+                        teacherSubjectSemesterComboBox,
+                        teacherAssignSubjectSemesterComboBox,
+                        teacherAssignSubjectComboBox,
+                        teacherUnassignSubjectSemesterComboBox,
+                        teacherUnassignSubjectComboBox
+                );
+                disableButtons(true,
+                        teacherCreateSubjectButton,
+                        teacherAssignSubjectButton,
+                        teacherUnassignSubjectButton
+                );
+            }
+        });
+
+        teacherSubjectSemesterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                disableTextFields(false, teacherSubjectField);
+                disableButtons(false, teacherCreateSubjectButton);
+            } else {
+                disableTextFields(true, teacherSubjectField);
+                disableButtons(true, teacherCreateSubjectButton);
+            }
+        });
+
+        teacherAssignSubjectSemesterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                disableComboBoxes(false, teacherAssignSubjectComboBox);
+                disableButtons(false, teacherAssignSubjectButton);
+
+                teacherAssignSubjectComboBox.setItems(newValue.getSubjects().stream()
+                        .filter(subject -> subject.getTeacher() == null)
+                        .collect(Collectors.toCollection(FXCollections::observableArrayList))
+                );
+
+            } else {
+                disableComboBoxes(true, teacherAssignSubjectComboBox);
+                disableButtons(true, teacherAssignSubjectButton);
+            }
+        });
+
+        teacherTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Teacher teacher = teacherTableView.getSelectionModel().getSelectedItem();
+                teacherUnassignSubjectSemesterComboBox.setItems(teacher.getSemesters());
+                disableComboBoxes(false, teacherUnassignSubjectSemesterComboBox);
+            } else {
+                disableComboBoxes(true, teacherUnassignSubjectSemesterComboBox);
+            }
+        });
+
+        teacherUnassignSubjectSemesterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                disableComboBoxes(false, teacherUnassignSubjectComboBox);
+                disableButtons(false, teacherUnassignSubjectButton);
+                if (teacherTableView.getSelectionModel().getSelectedItem() != null) {
+                    Teacher teacher = teacherTableView.getSelectionModel().getSelectedItem();
+                    teacherUnassignSubjectComboBox.setItems(newValue.getSubjects().stream()
+                            .filter(subject -> subject.getTeacher() == teacher)
+                            .collect(Collectors.toCollection(FXCollections::observableArrayList))
+                    );
+                }
+            } else {
+                disableComboBoxes(true, teacherUnassignSubjectComboBox);
+                disableButtons(true, teacherUnassignSubjectButton);
+            }
+        });
+    }
+
+    private void setStudentListeners() {
+        studentDegreeComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+            if (studentDegreeComboBox.isDisabled()) {
+                studentSemesterComboBox.setDisable(true);
+            }
+            if (newValue != null) {
+                studentSemesterComboBox.getSelectionModel().clearSelection();
+                studentSemesterComboBox.setItems(FXCollections.observableArrayList());
+                studentSemesterComboBox.setDisable(false);
+                studentSemesterComboBox.setItems(newValue.getSemesters());
+            } else {
+                studentSemesterComboBox.getSelectionModel().clearSelection();
+                studentSemesterComboBox.setDisable(true);
+            }
+        });
+
+        studentSemesterComboBox.valueProperty().addListener((obs, oldValue, newValue) -> {
+            if (studentSemesterComboBox.isDisabled()) {
+                studentGroupComboBox.setDisable(true);
+            }
+            if (newValue != null) {
+                studentGroupComboBox.getSelectionModel().clearSelection();
+                studentGroupComboBox.setItems(FXCollections.observableArrayList());
+                studentGroupComboBox.setDisable(false);
+                studentGroupComboBox.setItems(newValue.getAllGroups());
+                if (studentGroupComboBox.getItems().isEmpty()) studentGroupComboBox.setDisable(true);
+            } else {
+                studentGroupComboBox.getSelectionModel().clearSelection();
+                studentGroupComboBox.setDisable(true);
+            }
+        });
     }
 
     private <T extends User> void bindAddressTableColumns(
@@ -1274,29 +920,6 @@ public class AdminViewController extends ViewController {
         studentImageView.setImage(null);
     }
 
-/*    private void validateStudentForm() throws NotValidFormatException {
-        if (studentNameField.textProperty() == null
-                || studentLastNameField.getText() == null
-                || studentPhoneField.getText() == null
-                || studentEmailField.getText() == null
-                || studentStreetField.getText() == null
-                || studentPCField.getText() == null
-                || studentColonyField == null
-                || studentCityField == null
-                || studentStateField == null
-                || studentCountryField == null
-                || studentDegreeComboBox.getSelectionModel().getSelectedItem() == null
-                || studentGenderComboBox.getSelectionModel().getSelectedItem() == null
-                || studentGroupComboBox.getSelectionModel().getSelectedItem() == null
-                || studentImageView.getImage() == null
-                || studentDatePicker.getValue() == null
-        ) throw new NotValidFormatException("Make sure every field is filled.");
-        if (!Validation.ofName(studentNameField.getText())) throw new NotValidFormatException("Not a valid name.");
-        if (!Validation.ofName(studentLastNameField.getText())) throw new NotValidFormatException("Not a valid Last name.");
-        if (!Validation.ofPhone(studentPhoneField.getText())) throw new NotValidFormatException("Not a valid phone number.");
-        if (!Validation.ofEmail(studentEmailField.getText())) throw new NotValidFormatException("Not a valid email address.");
-    }*/
-
     private void validateStudentForm() throws NotValidFormatException {
         checkRequirements(
                 studentNameField,
@@ -1346,7 +969,6 @@ public class AdminViewController extends ViewController {
         requireText(studentCountryField.getText(), "Country is required.");
     }
 
-
     private void disableTeacherForm(boolean toggle) {
         disableTextFields(toggle,
                 teacherNameField,
@@ -1360,8 +982,7 @@ public class AdminViewController extends ViewController {
                 teacherColonyField,
                 teacherCityField,
                 teacherStateField,
-                teacherCountryField,
-                teacherSubjectField
+                teacherCountryField
         );
         disableComboBoxes(toggle,
                 teacherGenderComboBox,
@@ -1376,13 +997,15 @@ public class AdminViewController extends ViewController {
                     teacherUnassignSubjectSemesterComboBox,
                     teacherUnassignSubjectComboBox
             );
+
+            disableTextFields(true, teacherSubjectField);
+            disableButtons(true,
+                    teacherCreateSubjectButton,
+                    teacherAssignSubjectButton,
+                    teacherUnassignSubjectButton
+                    );
         }
-        disableButtons(toggle,
-                teacherManageDegreeButton,
-                teacherCreateSubjectButton,
-                teacherAssignSubjectButton,
-                teacherUnassignSubjectButton
-        );
+        disableButtons(toggle, teacherManageDegreeButton);
         teacherDatePicker.setDisable(toggle);
     }
 
@@ -1418,26 +1041,49 @@ public class AdminViewController extends ViewController {
         teacherDatePicker.setValue(null);
     }
 
-/*    private void validateTeacherForm() throws NotValidFormatException {
-        if (teacherNameField.textProperty() == null
-                || teacherLastNameField.getText() == null
-                || teacherPhoneField.getText() == null
-                || teacherEmailField.getText() == null
-                || teacherStreetField.getText() == null
-                || teacherPCField.getText() == null
-                || teacherColonyField == null
-                || teacherCityField == null
-                || teacherStateField == null
-                || teacherCountryField == null
-        ) throw new NotValidFormatException("Make sure every field is filled.");
-        if (!Validation.ofName(teacherNameField.getText())) throw new NotValidFormatException("Not a valid name.");
-        if (!Validation.ofName(teacherLastNameField.getText())) throw new NotValidFormatException("Not a valid Last name.");
-        if (!Validation.ofName(teacherSpecializationField.getText())) throw new NotValidFormatException("Not a valid Specialization name.");
-        if (!Validation.ofPhone(teacherPhoneField.getText())) throw new NotValidFormatException("Not a valid phone number.");
-        if (!Validation.ofEmail(teacherEmailField.getText())) throw new NotValidFormatException("Not a valid email address.");
-        if (teacherGenderComboBox.getSelectionModel().getSelectedItem() == null) throw new NotValidFormatException("Not a valid gender.");
-        if (teacherDegreeComboBox.getSelectionModel().getSelectedItem() == null) throw new NotValidFormatException("Not a valid degree.");
-    }*/
+    private void updateTeacher(Teacher teacher) {
+        updateUser(
+                teacher,
+                teacherNameField,
+                teacherLastNameField,
+                teacherPhoneField,
+                teacherEmailField,
+                teacherStreetField,
+                teacherPCField,
+                teacherColonyField,
+                teacherCityField,
+                teacherStateField,
+                teacherCountryField,
+                teacherGenderComboBox,
+                teacherDatePicker
+        );
+        if(!teacher.getLicense().equals(teacherLicenseField.getText())) teacher.setLicense(teacherLicenseField.getText());
+        if(!teacher.getSpecialization().equals(teacherSpecializationField.getText())) teacher.setSpecialization(teacherSpecializationField.getText());
+        if(!teacher.getDegree().equals(teacherDegreeComboBox.getValue())) teacher.setDegree(teacherDegreeComboBox.getValue());
+    }
+
+    private Teacher getTeacher() {
+        Teacher teacher = new Teacher(
+                teacherNameField.getText(),
+                teacherLastNameField.getText(),
+                teacherEmailField.getText(),
+                "456",
+                teacherPhoneField.getText(),
+                new Address(
+                        teacherStreetField.getText(),
+                        teacherPCField.getText(),
+                        teacherColonyField.getText(),
+                        teacherCityField.getText(),
+                        teacherStateField.getText(),
+                        teacherCountryField.getText()
+                ),
+                teacherDatePicker.getValue(),
+                teacherGenderComboBox.getValue()
+        );
+        teacher.setLicense(teacherLicenseField.getText());
+        teacher.setSpecialization(teacherSpecializationField.getText());
+        return teacher;
+    }
 
     private void validateTeacherForm() throws NotValidFormatException {
         checkRequirements(
@@ -1527,64 +1173,6 @@ public class AdminViewController extends ViewController {
         }
     }
 
-//    private void bindComboBoxes() {
-//        studentDegreeComboBox.setItems(data.getDegrees());
-//        bindComboBoxes(studentDegreeComboBox, studentSemesterComboBox);
-//
-//        studentDegreeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-//            studentSemesterComboBox.setDisable(newValue == null);
-//            studentSemesterComboBox.getSelectionModel().clearSelection();
-//            studentGroupComboBox.setDisable(true);
-//        });
-//
-//        studentSemesterComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue != null) {
-//                studentGroupComboBox.setDisable(false);
-//                for (Shift shift : newValue.getGroups().keySet()) {
-//                    studentGroupComboBox.getItems().setAll(newValue.getGroups(shift));
-//                    studentGroupComboBox.setConverter(new StringConverter<>() {
-//                        @Override
-//                        public String toString(Group group) {
-//                            return (group == null) ? "" : group.toString();
-//                        }
-//
-//                        @Override
-//                        public Group fromString(String string) {
-//                            return null;
-//                        }
-//                    });
-//                }
-//            } else {
-//                studentGroupComboBox.getItems().clear();
-//                studentGroupComboBox.setDisable(true);
-//            }
-//        });
-//        teacherDegreeComboBox.setItems(data.getDegrees());
-//        bindComboBoxes(teacherDegreeComboBox, teacherSubjectSemesterComboBox);
-//    }
-//
-//    private void bindComboBoxes(ComboBox<Degree> degreeComboBox, ComboBox<Semester> semesterComboBox) {
-//        degreeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue != null) {
-//                semesterComboBox.setItems(newValue.getSemesters());
-//                semesterComboBox.setConverter(new StringConverter<>() {
-//                    @Override
-//                    public String toString(Semester semester) {
-//                        return (semester == null) ? "" : semester.toString();
-//                    }
-//
-//                    @Override
-//                    public Semester fromString(String string) {
-//                        return null;
-//                    }
-//                });
-//            } else {
-//                semesterComboBox.getItems().clear();
-//                semesterComboBox.setDisable(Boolean.TRUE);
-//            }
-//        });
-//    }
-
     private void bindComboBoxes() {
         bindStudentComboBoxes();
         bindTeacherComboBoxes();
@@ -1625,125 +1213,6 @@ public class AdminViewController extends ViewController {
         studentImageView.setImage(student.getProfilePicture());
     }
 
-    @Deprecated
-    private void fillStudentForm(int index) {
-        fillForm(
-                index,
-                Map.ofEntries(
-                        entry(studentNameField, studentNameTableColumn),
-                        entry(studentLastNameField, studentLastNameTableColumn),
-                        entry(studentPhoneField, studentPhoneTableColumn),
-                        entry(studentEmailField, studentEmailTableColumn),
-                        entry(studentStreetField, studentStreetTableColumn),
-                        entry(studentPCField, studentPCTableColumn),
-                        entry(studentColonyField, studentColonyTableColumn),
-                        entry(studentCityField, studentCityTableColumn),
-                        entry(studentStateField, studentStateTableColumn),
-                        entry(studentCountryField, studentCountryTableColumn)
-                ),
-                Map.ofEntries(
-                        entry(studentGenderComboBox, studentGenderTableColumn),
-                        entry(studentDegreeComboBox, studentDegreeTableColumn),
-                        entry(studentSemesterComboBox, studentSemesterTableColumn),
-                        entry(studentGroupComboBox, studentGroupTableColumn)
-                )
-        );
-        studentDatePicker.setValue(studentBirthDateTableColumn.getCellObservableValue(index).getValue());
-    }
-
-    @Deprecated
-    private void bindStudentForm(Student current) {
-        studentNameField.textProperty().bindBidirectional(current.nameProperty());
-        studentLastNameField.textProperty().bindBidirectional(current.lastNameProperty());
-        studentPhoneField.textProperty().bindBidirectional(current.phoneProperty());
-        studentEmailField.textProperty().bindBidirectional(current.emailProperty());
-        studentStreetField.textProperty().bindBidirectional(current.getAddress().streetProperty());
-        studentPCField.textProperty().bindBidirectional(current.getAddress().postalCodeProperty());
-        studentColonyField.textProperty().bindBidirectional(current.getAddress().colonyProperty());
-        studentCityField.textProperty().bindBidirectional(current.getAddress().cityProperty());
-        studentStateField.textProperty().bindBidirectional(current.getAddress().stateProperty());
-        studentCountryField.textProperty().bindBidirectional(current.getAddress().countryProperty());
-
-        studentGenderComboBox.setValue(current.getGender());
-        studentDegreeComboBox.setValue(current.getDegree());
-
-        studentSemesterComboBox.setItems(current.getDegree().getSemesters());
-        studentSemesterComboBox.setValue(current.getSemester());
-
-        studentGroupComboBox.setItems(current.getSemester().getAllGroups());
-        studentGroupComboBox.setValue(current.getGroup());
-
-        studentDatePicker.setValue(current.getBirthDate());
-        studentImageView.setImage(current.getProfilePicture());
-    }
-
-    @Deprecated
-    private void unbindStudentForm(Student current) {
-        studentNameField.textProperty().unbindBidirectional(current.nameProperty());
-        studentLastNameField.textProperty().unbindBidirectional(current.lastNameProperty());
-        studentPhoneField.textProperty().unbindBidirectional(current.phoneProperty());
-        studentEmailField.textProperty().unbindBidirectional(current.emailProperty());
-        studentStreetField.textProperty().unbindBidirectional(current.getAddress().streetProperty());
-        studentPCField.textProperty().unbindBidirectional(current.getAddress().postalCodeProperty());
-        studentColonyField.textProperty().unbindBidirectional(current.getAddress().colonyProperty());
-        studentCityField.textProperty().unbindBidirectional(current.getAddress().cityProperty());
-        studentStateField.textProperty().unbindBidirectional(current.getAddress().stateProperty());
-        studentCountryField.textProperty().unbindBidirectional(current.getAddress().countryProperty());
-
-        clearComboBoxes(
-                studentGenderComboBox,
-                studentSemesterComboBox,
-                studentGroupComboBox
-        );
-
-        studentDatePicker.setValue(null);
-        studentImageView.setImage(null);
-    }
-
-    @Deprecated
-    private void bindTeacherForm(Teacher current) {
-        teacherNameField.textProperty().bindBidirectional(current.nameProperty());
-        teacherLastNameField.textProperty().bindBidirectional(current.lastNameProperty());
-        teacherLicenseField.textProperty().bindBidirectional(current.licenseProperty());
-        teacherSpecializationField.textProperty().bindBidirectional(current.specializationProperty());
-        teacherPhoneField.textProperty().bindBidirectional(current.phoneProperty());
-        teacherEmailField.textProperty().bindBidirectional(current.emailProperty());
-        teacherStreetField.textProperty().bindBidirectional(current.getAddress().streetProperty());
-        teacherPCField.textProperty().bindBidirectional(current.getAddress().postalCodeProperty());
-        teacherColonyField.textProperty().bindBidirectional(current.getAddress().colonyProperty());
-        teacherCityField.textProperty().bindBidirectional(current.getAddress().cityProperty());
-        teacherStateField.textProperty().bindBidirectional(current.getAddress().stateProperty());
-        teacherCountryField.textProperty().bindBidirectional(current.getAddress().countryProperty());
-
-        teacherGenderComboBox.setValue(current.getGender());
-        teacherDegreeComboBox.setValue(current.getDegree());
-
-        studentDatePicker.setValue(current.getBirthDate());
-    }
-
-    @Deprecated
-    private void unbindTeacherForm(Teacher current) {
-        teacherNameField.textProperty().unbindBidirectional(current.nameProperty());
-        teacherLastNameField.textProperty().unbindBidirectional(current.lastNameProperty());
-        teacherLicenseField.textProperty().unbindBidirectional(current.licenseProperty());
-        teacherSpecializationField.textProperty().unbindBidirectional(current.specializationProperty());
-        teacherPhoneField.textProperty().unbindBidirectional(current.phoneProperty());
-        teacherEmailField.textProperty().unbindBidirectional(current.emailProperty());
-        teacherStreetField.textProperty().unbindBidirectional(current.getAddress().streetProperty());
-        teacherPCField.textProperty().unbindBidirectional(current.getAddress().postalCodeProperty());
-        teacherColonyField.textProperty().unbindBidirectional(current.getAddress().colonyProperty());
-        teacherCityField.textProperty().unbindBidirectional(current.getAddress().cityProperty());
-        teacherStateField.textProperty().unbindBidirectional(current.getAddress().stateProperty());
-        teacherCountryField.textProperty().unbindBidirectional(current.getAddress().countryProperty());
-
-        clearComboBoxes(
-                teacherGenderComboBox,
-                teacherDegreeComboBox
-        );
-
-        teacherDatePicker.setValue(null);
-    }
-
     private void fillTeacherForm(Teacher teacher) {
         FormFiller.create()
                 .with(teacherNameField, teacher.getName())
@@ -1764,48 +1233,6 @@ public class AdminViewController extends ViewController {
                 .with(teacherDegreeComboBox, teacher.getDegree())
                 .with(teacherDatePicker, teacher.getBirthDate())
                 .fill();
-    }
-
-    @Deprecated
-    private void fillTeacherForm(int index) {
-        fillForm(
-                index,
-                Map.ofEntries(
-                        entry(teacherNameField, teacherNameTableColumn),
-                        entry(teacherLastNameField, teacherLastNameTableColumn),
-                        entry(teacherLicenseField, teacherLicenseTableColumn),
-                        entry(teacherSpecializationField, teacherSpecializationTableColumn),
-                        entry(teacherPhoneField, teacherPhoneTableColumn),
-                        entry(teacherEmailField, teacherEmailTableColumn),
-                        entry(teacherStreetField, teacherStreetTableColumn),
-                        entry(teacherPCField, teacherPCTableColumn),
-                        entry(teacherColonyField, teacherColonyTableColumn),
-                        entry(teacherCityField, teacherCityTableColumn),
-                        entry(teacherStateField, teacherStateTableColumn),
-                        entry(teacherCountryField, teacherCountryTableColumn)
-                ),
-                Map.ofEntries(
-                        entry(teacherGenderComboBox, teacherGenderTableColumn),
-                        entry(teacherDegreeComboBox, teacherDegreeTableColumn)
-                )
-        );
-        teacherDatePicker.setValue(teacherBirthDateTableColumn.getCellObservableValue(index).getValue());
-    }
-
-    @Deprecated
-    @SuppressWarnings("unchecked")
-    private <T> void fillForm(int index,
-                              Map<TextField, TableColumn<T, String>> textFields,
-                              Map<ComboBox<?>, TableColumn<T, ?>> comboBoxes) {
-
-        textFields.forEach((field, column) ->
-                field.setText(column.getCellObservableValue(index).getValue())
-        );
-
-        comboBoxes.forEach((combo, column) -> {
-            Object value = column.getCellObservableValue(index).getValue();
-            ((ComboBox<Object>) combo).setValue(value);
-        });
     }
 
     private static class FormFiller {
@@ -1849,5 +1276,70 @@ public class AdminViewController extends ViewController {
 
     private void validateFieldFormat(boolean condition, String errorMessage) throws NotValidFormatException {
         if (!condition) throw new NotValidFormatException(errorMessage);
+    }
+
+    private ObservableList<Student> findStudent(String query) {
+        return findPersons(query, data.getUsers(Role.STUDENT), student -> Arrays.asList(
+                student.getID(),
+                student.getName(),
+                student.getLastName(),
+                student.getDegree().toString(),
+                student.getSemester().toString(),
+                student.getGroup().toString(),
+                student.getEmail(),
+                student.getPhone(),
+                safeGet(() -> student.getAddress().getStreet()),
+                safeGet(() -> student.getAddress().getPostalCode()),
+                safeGet(() -> student.getAddress().getColony()),
+                safeGet(() -> student.getAddress().getCity()),
+                safeGet(() -> student.getAddress().getState()),
+                safeGet(() -> student.getAddress().getCountry()),
+                student.getGender().toString(),
+                student.getBirthDate().toString(),
+                Integer.toString(student.getAge())
+                ));
+    }
+
+    public ObservableList<Teacher> findTeacher(String query) {
+        return findPersons(query, data.getUsers(Role.TEACHER), teacher -> Arrays.asList(
+                teacher.getLicense(),
+                teacher.getName(),
+                teacher.getLastName(),
+                teacher.getSpecialization(),
+                teacher.getDegree().toString(),
+                teacher.getEmail(),
+                teacher.getPhone(),
+                safeGet(() -> teacher.getAddress().getStreet()),
+                safeGet(() -> teacher.getAddress().getPostalCode()),
+                safeGet(() -> teacher.getAddress().getColony()),
+                safeGet(() -> teacher.getAddress().getCity()),
+                safeGet(() -> teacher.getAddress().getState()),
+                safeGet(() -> teacher.getAddress().getCountry()),
+                teacher.getGender().toString(),
+                teacher.getBirthDate().toString(),
+                Integer.toString(teacher.getAge())
+        ));
+    }
+
+    private <T> ObservableList<T> findPersons(String attribute, List<T> persons, Function<T, List<String>> fieldExtractor) {
+        String toLowerCase = attribute.toLowerCase();
+        return persons.stream()
+                .filter(person -> extractFields(person, fieldExtractor).stream()
+                        .anyMatch(field -> field.toLowerCase().contains(toLowerCase)))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+    }
+
+    private <T> List<String> extractFields(T person, Function<T, List<String>> fieldExtractor) {
+        return fieldExtractor.apply(person).stream()
+                .map(field -> field != null ? field : "")
+                .collect(Collectors.toList());
+    }
+
+    private static String safeGet(Supplier<String> supplier) {
+        try {
+            return supplier.get();
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 }

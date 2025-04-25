@@ -78,7 +78,9 @@ public class Teacher extends User {
 
     public ObservableList<Semester> getSemesters() {
         ObservableList<Semester> semesters = FXCollections.observableArrayList();
-        subjects.forEach(subject -> semesters.add(subject.getSemester()));
+        subjects.forEach(subject -> {
+            if (!semesters.contains(subject.getSemester())) semesters.add(subject.getSemester());
+        });
         return semesters;
     }
 }
