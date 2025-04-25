@@ -66,9 +66,10 @@ public class SharedData {
         Semester third = SE.getSemester(3);
         new Subject(third, "Object Oriented Programming");
         Group G1M = new Group(first, Shift.MORNINGS);
+        Group G2M = new Group(first, Shift.MORNINGS);
         //Make Changes
         Subject IC = new Subject(first, "Integral Calculus");
-        Subject P = new Subject(first, "Psychology");
+        Subject P = new Subject(third, "Psychology");
         Subject POO = new Subject(first, "Political Communication");
         degrees.add(SE);
 
@@ -96,6 +97,26 @@ public class SharedData {
                         Gender.FEMALE
                 );
         G1M.addStudent(student);
+
+        Student student1 =
+                new Student(
+                        "Luis",
+                        "Zatarain",
+                        "thatB@Outlook.com",
+                        "101112",
+                        "624-169-6968",
+                        new Address(
+                                "Cabo Avenue",
+                                "23477",
+                                "Las Palmas",
+                                "C.S.L.",
+                                "B.C.S.",
+                                "México"
+                        ),
+                        LocalDate.of(2005, 1, 29),
+                        Gender.OTHER
+                );
+
     }
 
     private static Teacher getTeacher() {
