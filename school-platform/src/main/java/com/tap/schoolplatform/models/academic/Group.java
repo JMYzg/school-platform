@@ -19,8 +19,9 @@ public class Group {
     public Group(Semester semester, Shift shift) {
         this.semester = semester;
         this.shift = shift;
+        this.ID = new SimpleStringProperty();
         this.semester.addGroup(this);
-        this.ID = new SimpleStringProperty(generateID());
+        this.ID.set(generateID());
         students.addListener((ListChangeListener<Student>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {

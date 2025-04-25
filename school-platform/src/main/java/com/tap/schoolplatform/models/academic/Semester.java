@@ -26,7 +26,7 @@ public class Semester {
     private final Map<Shift, ObservableList<Group>> groups = new HashMap<>();
     private final ObservableList<Subject> subjects = FXCollections.observableArrayList();
 
-    protected Semester(Degree degree, int number) { // Only used by Degree in Constructor
+    public Semester(Degree degree, int number) { // Only used by Degree in Constructor
         this.degree = degree;
         this.number = new SimpleIntegerProperty(number);
     }

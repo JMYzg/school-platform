@@ -2,11 +2,14 @@ package com.tap.schoolplatform.controllers;
 
 import com.tap.schoolplatform.services.auth.LoginService;
 import com.tap.schoolplatform.utils.SharedData;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Control;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,4 +34,17 @@ public abstract class ViewController {
         newStage.show();
         newStage.setResizable(false);
     }
+
+    public void loadNewView(ActionEvent event, String view, String title) throws IOException {
+        Stage ownerStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage primaryStage = new Stage();
+        primaryStage.initModality(Modality.WINDOW_MODAL);
+        primaryStage.initOwner(ownerStage);
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(view)));
+        primaryStage.setTitle(title);
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+        primaryStage.setResizable(false);
+    }
+
 }

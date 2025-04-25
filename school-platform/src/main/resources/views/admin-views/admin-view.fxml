@@ -191,7 +191,7 @@
                                     <Image url="@../../images/lupa.png" />
                                  </image>
                               </ImageView>
-                              <Label id="txtbold" layoutX="14.0" layoutY="42.0" text="please enter any word" />
+                              <Label id="txtbold" fx:id="studentSearchLabel" layoutX="14.0" layoutY="42.0" text="Please enter any word" />
                            </children>
                         </AnchorPane>
                             </HBox>
@@ -399,7 +399,7 @@
                                     <Image url="@../../images/lupa.png" />
                                  </image>
                               </ImageView>
-                              <Label id="txtbold" layoutX="14.0" layoutY="42.0" text="please enter any word" />
+                              <Label id="txtbold" fx:id="teacherSearchLabel" layoutX="14.0" layoutY="42.0" text="Please enter any word" />
                            </children>
                         </AnchorPane>
                             </HBox>
