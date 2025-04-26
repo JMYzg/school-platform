@@ -3,6 +3,7 @@ package com.tap.schoolplatform.controllers.teacher.pages.homework;
 
 import com.tap.schoolplatform.controllers.ViewController;
 import com.tap.schoolplatform.models.academic.Group;
+import com.tap.schoolplatform.models.academic.Subject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,10 +23,10 @@ public class TeacherHomeworkController extends ViewController {
 
     @FXML private AnchorPane anchorPaneHomeworkContainer;
 
-    private Group group;
+    private Subject subject;
 
-    public void setGroup(Group group){
-        this.group = group;
+    public void setSubject(Subject subject){
+        this.subject = subject;
     }
 
     @FXML private void addHomework(ActionEvent event) throws IOException {

@@ -6,10 +6,7 @@ import com.tap.schoolplatform.controllers.teacher.pages.exam.TeacherExamControll
 import com.tap.schoolplatform.controllers.teacher.pages.TeacherGradeController;
 import com.tap.schoolplatform.controllers.teacher.pages.homework.TeacherHomeworkController;
 import com.tap.schoolplatform.controllers.teacher.pages.TeacherStudentListController;
-import com.tap.schoolplatform.models.academic.Group;
-import com.tap.schoolplatform.models.academic.Semester;
 import com.tap.schoolplatform.models.academic.Subject;
-import com.tap.schoolplatform.models.users.Student;
 import com.tap.schoolplatform.models.users.Teacher;
 import com.tap.schoolplatform.services.auth.LoginService;
 import javafx.collections.ObservableList;
@@ -47,7 +44,7 @@ public class TeacherViewController extends ViewController {
             previousButton,
     nextButton;
 
-    public Group lastSelectedGroup;
+    public Subject lastSelectedSubject;
 
     public void initialize() {
         teacherName.setText("Welcome " + LoginService.getCurrentUser().toString() + "!");
@@ -62,11 +59,17 @@ public class TeacherViewController extends ViewController {
             if (newValue != null) {
                 Object selectedObject = newValue.getValue();
                 System.out.println(selectedObject);
-                TreeItem<Object> parent = newValue.getParent();
-                     subjectNameLabel.setText(selectedObject.toString());
 
-                     Subject subject = (Subject) selectedObject;
-                     semesterGroup.setText(subject.getSemester().toString());
+                if(selectedObject instanceof Subject x){
+                    lastSelectedSubject = x;
+
+                    TreeItem<Object> parent = newValue.getParent();
+                    subjectNameLabel.setText(selectedObject.toString());
+
+                    Subject subject = (Subject) selectedObject;
+                    semesterGroup.setText(subject.getSemester().toString());
+                }
+
 
 //No funcionan las listas
 
@@ -116,15 +119,16 @@ public class TeacherViewController extends ViewController {
         treeView.setShowRoot(false);
     }
 
-    public void setLastSelectedGroup(Group actualGroup) {
-        this.lastSelectedGroup = actualGroup;
-
+    public void setLastSelectedSubject(Subject actualSubject) {
+        this.lastSelectedSubject = actualSubject;
     }
 
     public void goPrevious(ActionEvent actionEvent) {
+
     }
 
     public void goNext(ActionEvent actionEvent) {
+
     }
 
     //utils
@@ -169,48 +173,48 @@ public class TeacherViewController extends ViewController {
         }
     }
 
-    public void loadPageStudentList(String pageName, BorderPane borderPane, Group group) {
+    public void loadPageStudentList(String pageName, BorderPane borderPane, Subject subject) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName));
             Parent root = loader.load();
             TeacherStudentListController controller = loader.getController();
-            controller.setGroup(group);
+            controller.setSubject(subject);
             borderPane.setCenter(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void loadPageViewB(String pageName, BorderPane borderPane, Group group) {
+    public void loadPageHomeworks(String pageName, BorderPane borderPane, Subject subject) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName));
             Parent root = loader.load();
             TeacherHomeworkController controller = loader.getController();
-            controller.setGroup(group);
+            controller.setSubject(subject);
             borderPane.setCenter(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void loadPageViewC(String pageName, BorderPane borderPane, Group group) {
+    public void loadPageExams(String pageName, BorderPane borderPane, Subject subject) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName));
             Parent root = loader.load();
             TeacherExamController controller = loader.getController();
-            controller.setGroup(group);
+            controller.setSubject(subject);
             borderPane.setCenter(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void loadPageViewD(String pageName, BorderPane borderPane, Group group) {
+    public void loadPageGrades(String pageName, BorderPane borderPane, Subject subject) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName));
             Parent root = loader.load();
             TeacherGradeController controller = loader.getController();
-            controller.setGroup(group);
+            controller.setGroup(subject);
             borderPane.setCenter(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -218,18 +222,18 @@ public class TeacherViewController extends ViewController {
     }
 
     public void openStudentList() {
-        loadPageStudentList("/views/teacher-views/teacher-option-student-list-view.fxml", optionBorderPane, lastSelectedGroup);
+        loadPageStudentList("/views/teacher-views/teacher-option-student-list-view.fxml", optionBorderPane, lastSelectedSubject);
     }
     public void openHomework() {
-        loadPageViewB("/views/teacher-views/teacher-option-homework-view.fxml", optionBorderPane, lastSelectedGroup);
+        loadPageHomeworks("/views/teacher-views/teacher-option-homework-view.fxml", optionBorderPane, lastSelectedSubject);
     }
 
     public void openExams() {
-        loadPageViewC("/views/teacher-views/teacher-option-exam-view.fxml", optionBorderPane, lastSelectedGroup);
+        loadPageExams("/views/teacher-views/teacher-option-exam-view.fxml", optionBorderPane, lastSelectedSubject);
     }
 
     public void openGradesList() {
-        loadPageViewD("/views/teacher-views/teacher-option-grade-view.fxml", optionBorderPane, lastSelectedGroup);
+        loadPageGrades("/views/teacher-views/teacher-option-grade-view.fxml", optionBorderPane, lastSelectedSubject);
     }
 
     public void selectItemTreeView(){

@@ -2,10 +2,10 @@ package com.tap.schoolplatform.controllers.teacher.pages.exam;
 
 import com.tap.schoolplatform.controllers.ViewController;
 import com.tap.schoolplatform.models.academic.Group;
+import com.tap.schoolplatform.models.academic.Subject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
@@ -19,10 +19,10 @@ public class TeacherExamController extends ViewController {
 
     @FXML AnchorPane anchorPaneExamContainer;
 
-    private Group group;
+    private Subject subject;
 
-    public void setGroup(Group group){
-        this.group = group;
+    public void setSubject(Subject subject){
+        this.subject = subject;
     }
 
     @FXML private void createNewExam(ActionEvent event) throws IOException {
