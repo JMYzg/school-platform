@@ -209,17 +209,17 @@ public class TeacherViewController extends ViewController {
         }
     }
 
-    public void loadPageGrades(String pageName, BorderPane borderPane, Subject subject) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName));
-            Parent root = loader.load();
-            TeacherGradeController controller = loader.getController();
-            controller.setGroup(subject);
-            borderPane.setCenter(root);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    public void loadPageGrades(String pageName, BorderPane borderPane, Subject subject) {
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName));
+//            Parent root = loader.load();
+//            TeacherGradeController controller = loader.getController();
+//            controller.setGroup(subject);
+//            borderPane.setCenter(root);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public void openStudentList() {
         loadPageStudentList("/views/teacher-views/teacher-option-student-list-view.fxml", optionBorderPane, lastSelectedSubject);
@@ -233,7 +233,7 @@ public class TeacherViewController extends ViewController {
     }
 
     public void openGradesList() {
-        loadPageGrades("/views/teacher-views/teacher-option-grade-view.fxml", optionBorderPane, lastSelectedSubject);
+//        loadPageGrades("/views/teacher-views/teacher-option-grade-view.fxml", optionBorderPane, lastSelectedSubject);
     }
 
     public void selectItemTreeView(){
