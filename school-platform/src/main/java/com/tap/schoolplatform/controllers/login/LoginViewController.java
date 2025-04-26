@@ -17,12 +17,11 @@ import java.io.IOException;
 
 public class LoginViewController extends ViewController {
 
-    @FXML
-    private TextField emailField;
-    @FXML
-    private TextField passwordField;
-    @FXML
-    private Button loginButton;
+    @FXML private TextField
+            emailField,
+            passwordField;
+
+    @FXML private Button loginButton;
 
     @FXML private void initialize() {
         LoginService.logout();

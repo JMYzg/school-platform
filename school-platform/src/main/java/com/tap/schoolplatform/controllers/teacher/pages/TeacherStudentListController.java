@@ -1,28 +1,29 @@
 package com.tap.schoolplatform.controllers.teacher.pages;
 
 import com.tap.schoolplatform.controllers.admin.AdminViewController;
+import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.academic.Subject;
 import com.tap.schoolplatform.models.users.Student;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class TeacherStudentListController {
+import java.util.LinkedList;
+
+public class TeacherStudentListController extends TeacherViewPage {
+
+    public static String PATH = "/views/teacher-views/teacher-option-student-list-view.fxml";
 
     @FXML public TableView<Student> table;
-    @FXML public TableColumn<Student, String>
+    @FXML private TableColumn<Student, String>
             idTableColumn,
             lastNameTableColumn,
             nameTableColumn,
             emailTableColumn;
 
-    public Subject subject;
-
-    public void setSubject(Subject subject){
-        this.subject = subject;
-//        updateUI();
+    @FXML private void initialize() {
+        bindTable();
     }
-
 //    private void updateUI(){
 ////        String nameGroup = group.getID();
 ////        groupName.setText(nameGroup);
@@ -36,6 +37,7 @@ public class TeacherStudentListController {
 //    }
 
     private void bindTable() {
+
         TableColumn<?, ?>[] tableColumns = {
                 idTableColumn,
                 lastNameTableColumn,
