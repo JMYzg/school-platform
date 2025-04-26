@@ -64,18 +64,17 @@ public class SharedData {
         Degree SE = new Degree("Software Engineering", 9);
         Semester first = SE.getSemester(1);
         Semester third = SE.getSemester(3);
-        new Subject(third, "Object Oriented Programming");
+        new Subject(third, "Object Oriented Programming", 5);
         Group G1M = new Group(first, Shift.MORNINGS);
         Group G2M = new Group(first, Shift.MORNINGS);
         //Make Changes
-        Subject IC = new Subject(first, "Integral Calculus");
-        Subject P = new Subject(third, "Psychology");
-        Subject POO = new Subject(first, "Political Communication");
+        Subject IC = new Subject(first, "Integral Calculus", 5);
+        Subject POO = new Subject(first, "Political Communication", 5);
         degrees.add(SE);
 
         Teacher teacher = getTeacher();
         //Make Modifications
-        teacher.addSubject(IC, P, POO);
+        teacher.addSubject(IC, POO);
         SE.addTeacher(teacher);
 
         Student student =
@@ -116,6 +115,7 @@ public class SharedData {
                         LocalDate.of(2005, 1, 29),
                         Gender.OTHER
                 );
+        G2M.addStudent(student1);
 
     }
 

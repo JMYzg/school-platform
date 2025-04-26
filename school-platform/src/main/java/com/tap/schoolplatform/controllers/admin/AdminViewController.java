@@ -454,7 +454,7 @@ public class AdminViewController extends ViewController {
                     "Please enter a subject to continue"
             );
         } else {
-            new Subject(teacherSubjectSemesterComboBox.getSelectionModel().getSelectedItem(), teacherSubjectField.getText());
+            new Subject(teacherSubjectSemesterComboBox.getSelectionModel().getSelectedItem(), teacherSubjectField.getText(), 5);
             AlertHandler.showAlert(
                     Alert.AlertType.INFORMATION,
                     "Create subject",
@@ -787,7 +787,7 @@ public class AdminViewController extends ViewController {
         );
     }
 
-    private void injectCellValues(TableColumn<?, ?>[] columns, String[] properties) {
+    public static void injectCellValues(TableColumn<?, ?>[] columns, String[] properties) {
         for (int i = 0; i < columns.length; i++) {
             columns[i].setCellValueFactory(new PropertyValueFactory<>(properties[i]));
         }

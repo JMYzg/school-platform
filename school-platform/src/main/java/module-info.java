@@ -35,6 +35,12 @@ module com.tap.schoolplatform {
     opens com.tap.schoolplatform.models.academic.tasks to javafx.fxml;
     exports com.tap.schoolplatform.models.academic.tasks;
 
+    opens com.tap.schoolplatform.models.academic.tasks.enums to javafx.fxml;
+    exports com.tap.schoolplatform.models.academic.tasks.enums;
+
+    opens com.tap.schoolplatform.models.academic.tasks.keys to javafx.fxml;
+    exports com.tap.schoolplatform.models.academic.tasks.keys;
+
     opens com.tap.schoolplatform.models.users to javafx.fxml;
     exports com.tap.schoolplatform.models.users;
 
@@ -47,6 +53,16 @@ module com.tap.schoolplatform {
     // SharedData
     opens com.tap.schoolplatform.utils to javafx.fxml;
     exports com.tap.schoolplatform.utils;
-    exports com.tap.schoolplatform.controllers.admin.pages;
+
     opens com.tap.schoolplatform.controllers.admin.pages to javafx.fxml;
+    exports com.tap.schoolplatform.controllers.admin.pages;
+
+    opens com.tap.schoolplatform.controllers.teacher.pages to javafx.fxml;
+    exports com.tap.schoolplatform.controllers.teacher.pages;
+
+    opens com.tap.schoolplatform.controllers.teacher.pages.exam to javafx.fxml;
+    exports com.tap.schoolplatform.controllers.teacher.pages.exam;
+
+    opens com.tap.schoolplatform.controllers.teacher.pages.homework to javafx.fxml;
+    exports com.tap.schoolplatform.controllers.teacher.pages.homework;
 }

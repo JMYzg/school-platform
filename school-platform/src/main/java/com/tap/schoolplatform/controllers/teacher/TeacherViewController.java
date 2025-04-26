@@ -2,14 +2,16 @@ package com.tap.schoolplatform.controllers.teacher;
 
 import com.tap.schoolplatform.controllers.ViewController;
 import com.tap.schoolplatform.controllers.alerts.AlertHandler;
+import com.tap.schoolplatform.controllers.teacher.pages.exam.TeacherExamController;
+import com.tap.schoolplatform.controllers.teacher.pages.TeacherGradeController;
+import com.tap.schoolplatform.controllers.teacher.pages.homework.TeacherHomeworkController;
+import com.tap.schoolplatform.controllers.teacher.pages.TeacherStudentListController;
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.academic.Semester;
 import com.tap.schoolplatform.models.academic.Subject;
 import com.tap.schoolplatform.models.users.Student;
 import com.tap.schoolplatform.models.users.Teacher;
 import com.tap.schoolplatform.services.auth.LoginService;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,18 +27,27 @@ public class TeacherViewController extends ViewController {
 
     @FXML public TreeView<Object> treeView;
 
-    @FXML public Label
+    @FXML private Label
             subjectNameLabel,
-            teacherName;
-    @FXML public Button
+            teacherName,
+            groupName,
+            semesterGroup,
+            groupShift;
+
+    @FXML private Button
             optionstudentsButton,
             optionexamsButton,
             optionhomeworkButton,
             optiongradesButton,
             logoutButton;
 
+    @FXML private BorderPane optionBorderPane;
+
+    @FXML private Button
+            previousButton,
+    nextButton;
+
     public Group lastSelectedGroup;
-    @FXML public BorderPane optionborderPane;
 
     public void initialize() {
         teacherName.setText("Welcome " + LoginService.getCurrentUser().toString() + "!");
@@ -47,74 +58,73 @@ public class TeacherViewController extends ViewController {
 
     public void listener(){
         // Listener
-        treeView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<Object>>() {
-            @Override
-            public void changed(ObservableValue<? extends TreeItem<Object>> observable, TreeItem<Object> oldValue, TreeItem<Object> newValue) {
-                if (newValue != null) {
-                    Object selectedObject = newValue.getValue();
-                    System.out.println(selectedObject);
-                    if (selectedObject instanceof Group) {
-                        Group selectedGroup = (Group) selectedObject;
-                        lastSelectedGroup = selectedGroup;
+        treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Object selectedObject = newValue.getValue();
+                System.out.println(selectedObject);
+                TreeItem<Object> parent = newValue.getParent();
+                     subjectNameLabel.setText(selectedObject.toString());
 
-                        // Aquí puedes usar el nombre y la lista observable de alumnos del grupo seleccionado
-                        String groupName = selectedGroup.getID();
-                        ObservableList<Student> students = selectedGroup.getStudents();
+                     Subject subject = (Subject) selectedObject;
+                     semesterGroup.setText(subject.getSemester().toString());
 
-                        // Realiza las acciones necesarias con el grupo seleccionado
-                        System.out.println("Grupo seleccionado: " + groupName);
-                        System.out.println("Lista de alumnos: " + students);
+//No funcionan las listas
 
-                        //Optains Parent Name
-                        TreeItem<Object> parentItem = newValue.getParent();
-                        System.out.println("Parent seleccionado: " + parentItem);
-                        subjectNameLabel.setText(parentItem.getValue().toString());
-
-                    } else if (selectedObject instanceof Subject) {
-                        if (lastSelectedGroup != null) {
-                            System.out.println("Selected Group: " + lastSelectedGroup.getID());
-                        }
-                        else{
-                            System.out.println("No select Group yet");
-                        }
-
-                    }
-                }
+//                if (selectedObject instanceof Group selectedGroup) {
+//                    lastSelectedGroup = selectedGroup;
+//
+//                    // Aquí puedes usar el nombre y la lista observable de alumnos del grupo seleccionado
+//                    String groupName = selectedGroup.getID();
+//                    ObservableList<Student> students = selectedGroup.getStudents();
+//
+//                    // Realiza las acciones necesarias con el grupo seleccionado
+//                    System.out.println("Grupo seleccionado: " + groupName);
+//                    System.out.println("Lista de alumnos: " + students);
+//
+//                    //Optains Parent Name
+//                    TreeItem<Object> parentItem = newValue.getParent();
+//                    System.out.println("Parent seleccionado: " + parentItem);
+//                    subjectNameLabel.setText(parentItem.getValue().toString());
+//
+//                } else if (selectedObject instanceof Subject) {
+//                    if (lastSelectedGroup != null) {
+//                        System.out.println("Selected Group: " + lastSelectedGroup.getID());
+//                    } else {
+//                        System.out.println("No select Group yet");
+//                    }
+//                }
             }
         });
     }
 
     public void setTreeView() {
-        TreeItem<Object> rootItem = new TreeItem<>("Subjects");
+//        TreeItem<Object> rootItem = new TreeItem<>(LoginService.getCurrentUser());
+        TreeItem<Object> rootItem = new TreeItem<>(LoginService.getCurrentUser());
         rootItem.setExpanded(true);
 
         Teacher teacher = (Teacher) LoginService.getCurrentUser();
         ObservableList<Subject> subjects = teacher.getSubjects();
 
         for (Subject subject : subjects) {
+//            TreeItem<Object> SubjectItem = new TreeItem<>(subject);
             TreeItem<Object> SubjectItem = new TreeItem<>(subject);
 
             SubjectItem.setExpanded(true);
             rootItem.getChildren().add(SubjectItem);
-
-            Semester semester = subject.getSemester();
-
-            ObservableList<Group> groups = semester.getAllGroups();
-
-            for (Group group : groups) {
-                TreeItem<Object> groupItem = new TreeItem<>(group);
-                groupItem.setExpanded(true);
-                SubjectItem.getChildren().add(groupItem);
-            }
         }
         treeView.setRoot(rootItem);
-
-
+        treeView.setShowRoot(false);
     }
 
     public void setLastSelectedGroup(Group actualGroup) {
         this.lastSelectedGroup = actualGroup;
 
+    }
+
+    public void goPrevious(ActionEvent actionEvent) {
+    }
+
+    public void goNext(ActionEvent actionEvent) {
     }
 
     //utils
@@ -138,7 +148,7 @@ public class TeacherViewController extends ViewController {
         }
     }
 
-    public void logOut(ActionEvent actionEvent) {
+    public void logOut() {
         try {
             Optional<ButtonType> response =
                     AlertHandler.showAlert(
@@ -159,69 +169,70 @@ public class TeacherViewController extends ViewController {
         }
     }
 
-    public void loadPageViewA(String pageName, BorderPane borderPane, Group group) {
-        try{
+    public void loadPageStudentList(String pageName, BorderPane borderPane, Group group) {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName));
             Parent root = loader.load();
             TeacherStudentListController controller = loader.getController();
             controller.setGroup(group);
             borderPane.setCenter(root);
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
     public void loadPageViewB(String pageName, BorderPane borderPane, Group group) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName));
             Parent root = loader.load();
             TeacherHomeworkController controller = loader.getController();
             controller.setGroup(group);
             borderPane.setCenter(root);
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
     public void loadPageViewC(String pageName, BorderPane borderPane, Group group) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName));
             Parent root = loader.load();
             TeacherExamController controller = loader.getController();
             controller.setGroup(group);
             borderPane.setCenter(root);
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
     public void loadPageViewD(String pageName, BorderPane borderPane, Group group) {
-        try{
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName));
             Parent root = loader.load();
             TeacherGradeController controller = loader.getController();
             controller.setGroup(group);
             borderPane.setCenter(root);
-        }catch (IOException e){
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void openStudentList() {
-        loadPageViewA("/views/teacher-views/teacher-option-student-list-view.fxml",optionborderPane, lastSelectedGroup);
+        loadPageStudentList("/views/teacher-views/teacher-option-student-list-view.fxml", optionBorderPane, lastSelectedGroup);
     }
     public void openHomework() {
-        loadPageViewB("/views/teacher-views/teacher-option-homework-view.fxml",optionborderPane, lastSelectedGroup);
+        loadPageViewB("/views/teacher-views/teacher-option-homework-view.fxml", optionBorderPane, lastSelectedGroup);
     }
 
     public void openExams() {
-        loadPageViewC("/views/teacher-views/teacher-option-exam-view.fxml",optionborderPane, lastSelectedGroup);
+        loadPageViewC("/views/teacher-views/teacher-option-exam-view.fxml", optionBorderPane, lastSelectedGroup);
     }
 
     public void openGradesList() {
-        loadPageViewD("/views/teacher-views/teacher-option-grade-view.fxml",optionborderPane, lastSelectedGroup);
+        loadPageViewD("/views/teacher-views/teacher-option-grade-view.fxml", optionBorderPane, lastSelectedGroup);
     }
 
     public void selectItemTreeView(){
         Object item = treeView.getSelectionModel().getSelectedItem();
     }
-
-
 }

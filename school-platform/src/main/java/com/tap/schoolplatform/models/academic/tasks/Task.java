@@ -5,13 +5,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public abstract class Task {
 
     public static final double MAX_SCORE = 10;
     public static final double MIN_SCORE = 0;
 
-    private StringProperty ID;
+    private final StringProperty ID;
     private final LocalDateTime creationDate;
     private final StringProperty title;
     private final StringProperty description;
@@ -19,10 +20,14 @@ public abstract class Task {
     private Status status;
 
     public Task(String title, String description, LocalDateTime deadline) {
+        ID = new SimpleStringProperty();
         creationDate = LocalDateTime.now();
+        creationDate.format(DateTimeFormatter.BASIC_ISO_DATE);
         this.title = new SimpleStringProperty(title);
         this.description = new SimpleStringProperty(description);
         this.deadline = deadline;
+        this.status = deadline.isAfter(creationDate) ? Status.ACTIVE : Status.INACTIVE;
+        ID.set(generateID());
     }
 
     public LocalDateTime getCreationDate() {
@@ -55,4 +60,17 @@ public abstract class Task {
     public void setDeadline(LocalDateTime deadline) {
         this.deadline = deadline;
     }
+
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    private String generateID() {
+        return creationDate.format(DateTimeFormatter.ISO_ORDINAL_DATE);
+    }
+
+
 }

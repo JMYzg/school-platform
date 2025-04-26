@@ -1,5 +1,8 @@
 package com.tap.schoolplatform.models.academic.tasks;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,7 +13,7 @@ public class Exam extends Task {
     private LocalDateTime startDate;
     private Timer timer;
 
-    private final Set<Question> questions = new HashSet<>();
+    private final ObservableList<Question> questions = FXCollections.observableArrayList();
 
     public Exam(String title, String description, LocalDateTime deadline) {
         super(title, description, deadline);
@@ -30,14 +33,13 @@ public class Exam extends Task {
         this.timer = timer;
     }
 
-    public Set<Question> getQuestionSet() {
-        return questions;
-    }
     public void addQuestion(Question question) {
         questions.add(question);
     }
-
     public void removeQuestion(Question question) {
         questions.remove(question);
+    }
+    public ObservableList<Question> getQuestions() {
+        return FXCollections.unmodifiableObservableList(questions);
     }
 }

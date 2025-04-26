@@ -1,16 +1,28 @@
 package com.tap.schoolplatform.models.academic;
 
+import com.tap.schoolplatform.models.academic.tasks.Task;
+import com.tap.schoolplatform.models.academic.tasks.Unit;
+import com.tap.schoolplatform.models.users.Student;
 import com.tap.schoolplatform.models.users.Teacher;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Subject {
 
     private final Semester semester;
     private final StringProperty name;
     private Teacher teacher;
+    private final ObservableList<Unit> units = FXCollections.observableArrayList();
 
-    public Subject(Semester semester, String name) {
+    public Subject(Semester semester, String name, int units) {
+        for (int i = 1; i <= units; i++) {
+            this.units.add(new Unit(this, i));
+        }
         this.semester = semester;
         this.semester.addSubject(this);
         this.name = new SimpleStringProperty(name);
