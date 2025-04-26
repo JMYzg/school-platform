@@ -35,12 +35,12 @@ public abstract class ViewController {
         newStage.setResizable(false);
     }
 
-    public void loadNewView(ActionEvent event, String view, String title) throws IOException {
+    public static void loadNewView(ActionEvent event, String view, String title) throws IOException {
         Stage ownerStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Stage primaryStage = new Stage();
         primaryStage.initModality(Modality.WINDOW_MODAL);
         primaryStage.initOwner(ownerStage);
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(view)));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(ViewController.class.getResource(view)));
         primaryStage.setTitle(title);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
