@@ -7,7 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
-public class TeacherGradeController {
+public class TeacherGradeController extends TeacherViewPage {
+
+    public static final String PATH = "/views/teacher-views/teacher-option-grade-view.fxml";
 
     @FXML private Label
             groupNameLabel,
