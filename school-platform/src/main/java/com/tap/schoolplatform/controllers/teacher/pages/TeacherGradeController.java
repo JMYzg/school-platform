@@ -1,6 +1,7 @@
 package com.tap.schoolplatform.controllers.teacher.pages;
 
 import com.tap.schoolplatform.models.academic.Group;
+import com.tap.schoolplatform.models.academic.Subject;
 import com.tap.schoolplatform.models.users.Student;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -26,20 +27,19 @@ public class TeacherGradeController {
     @FXML private TableColumn<Student, String> unit6TableColumn;
     @FXML private TableColumn<Student, String> unit7TableColumn;
 
-    private Group group;
+    private Subject subject;
 
-    public void setGroup(Group group) {
-        this.group = group;
-
+    public void setSubject(Subject subject) {
+        this.subject = subject;
         updateUI();
     }
 
     @FXML private void updateUI(){
-        String nameGroup = group.getID();
-        groupNameLabel.setText(nameGroup);
-        String semester = group.getSemester().toString();
-        groupSemesterLabel.setText(semester);
-        String shift = group.getShift().toString();
-        groupShiftLabel.setText(shift);
+//        String nameGroup = subject.getID();
+//        groupNameLabel.setText(nameGroup);
+//        String semester = subject.getSemester().toString();
+//        groupSemesterLabel.setText(semester);
+//        String shift = subject.getShift().toString();
+//        groupShiftLabel.setText(shift);
     }
 }

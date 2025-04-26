@@ -22,27 +22,19 @@ import java.util.Optional;
 
 public class TeacherViewController extends ViewController {
 
-    @FXML public TreeView<Object> treeView;
-
+    @FXML public TreeView<Subject> treeView;//aqui comienzan los cambios
     @FXML private Label
             subjectNameLabel,
             teacherName,
-            groupName,
-            semesterGroup,
-            groupShift;
-
+            semesterNameLabel;
     @FXML private Button
             optionstudentsButton,
             optionexamsButton,
             optionhomeworkButton,
             optiongradesButton,
             logoutButton;
-
     @FXML private BorderPane optionBorderPane;
-
-    @FXML private Button
-            previousButton,
-    nextButton;
+    @FXML private Button previousButton, nextButton;
 
     public Subject lastSelectedSubject;
 
@@ -50,78 +42,41 @@ public class TeacherViewController extends ViewController {
         teacherName.setText("Welcome " + LoginService.getCurrentUser().toString() + "!");
 
         setTreeView();
-        listener();
+        setListener();
     }
 
-    public void listener(){
+    private void setListener(){
         // Listener
         treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                Object selectedObject = newValue.getValue();
-                System.out.println(selectedObject);
+                Subject selectedSubject = newValue.getValue();
+                System.out.println(selectedSubject);
 
-                if(selectedObject instanceof Subject x){
-                    lastSelectedSubject = x;
-
-                    TreeItem<Object> parent = newValue.getParent();
-                    subjectNameLabel.setText(selectedObject.toString());
-
-                    Subject subject = (Subject) selectedObject;
-                    semesterGroup.setText(subject.getSemester().toString());
-                }
-
-
-//No funcionan las listas
-
-//                if (selectedObject instanceof Group selectedGroup) {
-//                    lastSelectedGroup = selectedGroup;
-//
-//                    // Aquí puedes usar el nombre y la lista observable de alumnos del grupo seleccionado
-//                    String groupName = selectedGroup.getID();
-//                    ObservableList<Student> students = selectedGroup.getStudents();
-//
-//                    // Realiza las acciones necesarias con el grupo seleccionado
-//                    System.out.println("Grupo seleccionado: " + groupName);
-//                    System.out.println("Lista de alumnos: " + students);
-//
-//                    //Optains Parent Name
-//                    TreeItem<Object> parentItem = newValue.getParent();
-//                    System.out.println("Parent seleccionado: " + parentItem);
-//                    subjectNameLabel.setText(parentItem.getValue().toString());
-//
-//                } else if (selectedObject instanceof Subject) {
-//                    if (lastSelectedGroup != null) {
-//                        System.out.println("Selected Group: " + lastSelectedGroup.getID());
-//                    } else {
-//                        System.out.println("No select Group yet");
-//                    }
-//                }
+                lastSelectedSubject = selectedSubject;
+                subjectNameLabel.setText(selectedSubject.toString());
+                semesterNameLabel.setText(selectedSubject.getSemester().toString()); //Solo aplicaba al principio
             }
         });
     }
 
     public void setTreeView() {
-//        TreeItem<Object> rootItem = new TreeItem<>(LoginService.getCurrentUser());
-        TreeItem<Object> rootItem = new TreeItem<>(LoginService.getCurrentUser());
+        Teacher currentTeacher = (Teacher) LoginService.getCurrentUser();
+        TreeItem<Subject> rootItem = new TreeItem<>(null);
         rootItem.setExpanded(true);
 
-        Teacher teacher = (Teacher) LoginService.getCurrentUser();
-        ObservableList<Subject> subjects = teacher.getSubjects();
-
+        ObservableList<Subject> subjects = currentTeacher.getSubjects();
         for (Subject subject : subjects) {
-//            TreeItem<Object> SubjectItem = new TreeItem<>(subject);
-            TreeItem<Object> SubjectItem = new TreeItem<>(subject);
-
-            SubjectItem.setExpanded(true);
-            rootItem.getChildren().add(SubjectItem);
+            TreeItem<Subject> subjectItem = new TreeItem<>(subject);
+            subjectItem.setExpanded(true);
+            rootItem.getChildren().add(subjectItem);
         }
         treeView.setRoot(rootItem);
         treeView.setShowRoot(false);
     }
 
-    public void setLastSelectedSubject(Subject actualSubject) {
-        this.lastSelectedSubject = actualSubject;
-    }
+//    public void setLastSelectedSubject(Subject actualSubject) {
+//        this.lastSelectedSubject = actualSubject;
+//    }
 
     public void goPrevious(ActionEvent actionEvent) {
 
@@ -214,7 +169,7 @@ public class TeacherViewController extends ViewController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName));
             Parent root = loader.load();
             TeacherGradeController controller = loader.getController();
-            controller.setGroup(subject);
+            controller.setSubject(subject);
             borderPane.setCenter(root);
         } catch (IOException e) {
             throw new RuntimeException(e);
