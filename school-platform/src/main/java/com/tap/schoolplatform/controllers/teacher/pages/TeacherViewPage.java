@@ -5,7 +5,7 @@ import com.tap.schoolplatform.models.academic.Subject;
 
 public abstract class TeacherViewPage {
 
-    private Subject subject;
+    public static Subject subject;
     private Group group;
 
     public Subject getSubject() {

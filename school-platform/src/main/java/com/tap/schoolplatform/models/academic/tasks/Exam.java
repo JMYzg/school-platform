@@ -15,8 +15,9 @@ public class Exam extends Task {
 
     private final ObservableList<Question> questions = FXCollections.observableArrayList();
 
-    public Exam(String title, String description, LocalDateTime deadline) {
-        super(title, description, deadline);
+    public Exam(Unit unit, String title, String description, LocalDateTime deadline) {
+        super(unit, title, description, deadline);
+        unit.setExam(this);
     }
 
     public LocalDateTime getStartDate() {

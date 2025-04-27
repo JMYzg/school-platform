@@ -66,8 +66,9 @@ public class TeacherViewController extends ViewController {
             if (newValue != null) {
                 Subject selectedSubject = (Subject) newValue.getValue();
                 System.out.println(selectedSubject);
-
-                currentSubject = selectedSubject;
+                TeacherViewPage.subject = selectedSubject;
+                currentGroups = new LinkedList<>(TeacherViewPage.subject.getSemester().getAllGroups());
+                iterator = currentGroups.listIterator();
                 subjectNameLabel.setText(selectedSubject.toString());
 //                semesterNameLabel.setText(selectedSubject.getSemester().toString()); //Solo aplicaba al principio
             }
@@ -95,14 +96,22 @@ public class TeacherViewController extends ViewController {
 
     public void goPrevious(ActionEvent actionEvent) {
         if (this.iterator.hasPrevious()) {
-            currentStudentList.table.setItems(iterator.previous().getStudents());
+            Group previous = this.iterator.previous();
+            currentStudentList.table.setItems(previous.getStudents());
+            groupName.setText(previous.getID());
+            semesterGroup.setText(previous.getSemester().toString());
+            groupShift.setText(previous.getShift().toString());
             currentStudentList.table.refresh();
         }
     }
 
     public void goNext(ActionEvent actionEvent) {
         if (this.iterator.hasNext()) {
-            currentStudentList.table.setItems(iterator.next().getStudents());
+            Group next = this.iterator.next();
+            currentStudentList.table.setItems(next.getStudents());
+            groupName.setText(next.getID());
+            semesterGroup.setText(next.getSemester().toString());
+            groupShift.setText(next.getShift().toString());
             currentStudentList.table.refresh();
         }
     }
@@ -197,14 +206,13 @@ public class TeacherViewController extends ViewController {
 //        }
 //    }
 
-    public void loadPage(String path, BorderPane pane, Subject subject) {
+    public void loadPage(String path, BorderPane pane) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
             Parent root = loader.load();
             Object controller = loader.getController();
             if (controller instanceof TeacherViewPage teacherViewPage) {
 //                ((TeacherViewPage) controller).setSubject(subject);
-                teacherViewPage.setSubject(subject);
                 if (teacherViewPage instanceof TeacherStudentListController teacherStudentListController) {
                     currentStudentList = teacherStudentListController;
                     currentStudentList.table.setItems(currentGroups.getFirst().getStudents());
@@ -243,25 +251,23 @@ public class TeacherViewController extends ViewController {
     }
 
     public void openStudentList() {
-        currentGroups = new LinkedList<>(currentSubject.getSemester().getAllGroups());
-        iterator = currentGroups.listIterator();
 //        loadPageStudentList("/views/teacher-views/teacher-option-student-list-view.fxml", optionBorderPane, currentSubject);
-        loadPage(TeacherStudentListController.PATH, optionBorderPane, currentSubject);
+        loadPage(TeacherStudentListController.PATH, optionBorderPane);
     }
 
     public void openHomework() {
 //        loadPageHomeworks("/views/teacher-views/teacher-option-homework-view.fxml", optionBorderPane, currentSubject);
-        loadPage(TeacherHomeworkController.PATH, optionBorderPane, currentSubject);
+        loadPage(TeacherHomeworkController.PATH, optionBorderPane);
     }
 
     public void openExams() {
 //        loadPageExams("/views/teacher-views/teacher-option-exam-view.fxml", optionBorderPane, currentSubject);
-        loadPage(TeacherExamController.PATH, optionBorderPane, currentSubject);
+        loadPage(TeacherExamController.PATH, optionBorderPane);
     }
 
     public void openGradesList() {
 //        loadPageGrades("/views/teacher-views/teacher-option-grade-view.fxml", optionBorderPane, currentSubject);
-        loadPage(TeacherGradeController.PATH, optionBorderPane, currentSubject);
+        loadPage(TeacherGradeController.PATH, optionBorderPane);
     }
 
     public void selectItemTreeView(){
