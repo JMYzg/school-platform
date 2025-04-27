@@ -13,13 +13,15 @@ public abstract class Task {
     public static final double MIN_SCORE = 0;
 
     private final StringProperty ID;
+    private final Unit unit;
     private final LocalDateTime creationDate;
     private final StringProperty title;
     private final StringProperty description;
     private LocalDateTime deadline;
     private Status status;
 
-    public Task(String title, String description, LocalDateTime deadline) {
+    public Task(Unit unit, String title, String description, LocalDateTime deadline) {
+        this.unit = unit;
         ID = new SimpleStringProperty();
         creationDate = LocalDateTime.now();
         creationDate.format(DateTimeFormatter.BASIC_ISO_DATE);
@@ -28,6 +30,20 @@ public abstract class Task {
         this.deadline = deadline;
         this.status = deadline.isAfter(creationDate) ? Status.ACTIVE : Status.INACTIVE;
         ID.set(generateID());
+    }
+
+    public String getID() {
+        return ID.get();
+    }
+    public StringProperty IDProperty() {
+        return ID;
+    }
+    public void setID(String ID) {
+        this.ID.set(ID);
+    }
+
+    public Unit getUnit() {
+        return unit;
     }
 
     public LocalDateTime getCreationDate() {
@@ -71,6 +87,4 @@ public abstract class Task {
     private String generateID() {
         return creationDate.format(DateTimeFormatter.ISO_ORDINAL_DATE);
     }
-
-
 }

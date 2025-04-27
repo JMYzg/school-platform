@@ -2,12 +2,18 @@ package com.tap.schoolplatform.models.academic.tasks;
 
 public class Answer {
 
+    private final Question question;
     private String text;
     private final boolean correct;
 
-    public Answer(String text, boolean correct) {
+    public Answer(Question question, String text, boolean correct) {
+        this.question = question;
         this.text = text;
         this.correct = correct;
+    }
+
+    public Question getQuestion() {
+        return question;
     }
 
     public String getText() {

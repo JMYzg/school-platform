@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="HomeworkContainer" prefHeight="80.0" prefWidth="599.0" style="-fx-background-radius: 5;" stylesheets="@../../styles/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.teacherControllers.examTeacherViewControllers.ExamContainerController">
+<AnchorPane id="HomeworkContainer" prefHeight="80.0" prefWidth="599.0" style="-fx-background-radius: 5;" stylesheets="@../../styles/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.teacher.pages.exam.TeacherExamContainerController">
    <children>
       <ImageView fitHeight="49.0" fitWidth="49.0" layoutX="14.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
          <image>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="HomeworkContainer" prefHeight="80.0" prefWidth="560.0" stylesheets="@../../styles/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.studentControllers.sudentHomeworkViewControllers.HomeworkContainerStudentController">
+<AnchorPane id="HomeworkContainer" prefHeight="80.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.studentControllers.sudentHomeworkViewControllers.HomeworkContainerStudentController">
    <children>
       <ImageView fitHeight="49.0" fitWidth="49.0" layoutX="20.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -21,4 +22,8 @@
       <Label id="txtregular" layoutX="472.0" layoutY="40.0" prefHeight="15.0" prefWidth="19.0" text="20" />
       <Label id="txtregular" layoutX="491.0" layoutY="40.0" prefHeight="15.0" prefWidth="41.0" text="Points" />
    </children>
+   <stylesheets>
+      <URL value="@../../styles/main.css" />
+      <URL value="@../../styles/buttons.css" />
+   </stylesheets>
 </AnchorPane>

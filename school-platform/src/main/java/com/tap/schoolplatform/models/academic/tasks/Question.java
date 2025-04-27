@@ -9,12 +9,22 @@ public class Question {
 
     private int number;
     private String description;
+    private Exam exam;
     private final ObservableList<Answer> answers;
 
-    public Question(int number, String description, List<Answer> answers) {
+    public Question(Exam exam, int number, String description) {
+        this.exam = exam;
         this.number = number;
         this.description = description;
-        this.answers = FXCollections.observableArrayList(answers);
+        this.answers = FXCollections.observableArrayList();
+    }
+
+    public Exam getExam() {
+        return exam;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
     }
 
     public int getNumber() {
@@ -33,5 +43,10 @@ public class Question {
 
     public ObservableList<Answer> getAnswers() {
         return FXCollections.unmodifiableObservableList(answers);
+    }
+
+    public void setAnswers(ObservableList<Answer> answers) {
+        this.answers.clear();
+        this.answers.addAll(answers);
     }
 }

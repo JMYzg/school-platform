@@ -13,21 +13,21 @@
       <VBox prefHeight="548.0" prefWidth="642.0" spacing="10.0">
          <children>
             <ScrollPane prefHeight="532.0" prefWidth="622.0" style="-fx-background-radius: 5;">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="531.0" prefWidth="601.0" style="-fx-background-radius: 5;">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="531.0" prefWidth="601.0" style="-fx-background-radius: 5;">
                      <children>
                         <TableView fx:id="table" prefHeight="532.0" prefWidth="604.0" style="-fx-background-color: f6f6f6; -fx-background-radius: 5;">
-                          <columns>
-                            <TableColumn minWidth="0.0" prefWidth="38.0" />
-                            <TableColumn fx:id="idTableColumn" prefWidth="121.0" text="ID" />
+                           <columns>
+                              <TableColumn minWidth="0.0" prefWidth="38.0" />
+                              <TableColumn fx:id="idTableColumn" prefWidth="121.0" text="ID" />
                               <TableColumn fx:id="lastNameTableColumn" prefWidth="118.0" text="Last name" />
                               <TableColumn fx:id="nameTableColumn" prefWidth="106.0" text="Name" />
                               <TableColumn fx:id="emailTableColumn" minWidth="0.0" prefWidth="219.0" text="Email" />
-                          </columns>
+                           </columns>
                         </TableView>
                      </children>
                   </AnchorPane>
-              </content>
+               </content>
             </ScrollPane>
          </children>
          <padding>

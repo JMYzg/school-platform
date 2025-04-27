@@ -52,6 +52,10 @@ public class Subject {
         this.teacher = teacher;
     }
 
+    public Unit getUnit(int number) {
+        return units.get(number);
+    }
+
     @Override
     public String toString() {
         return name.get();

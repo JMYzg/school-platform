@@ -7,6 +7,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
+import java.util.Optional;
+
 public class Unit {
 
     private final int number;
@@ -41,6 +43,11 @@ public class Unit {
     
     public void setExam(Exam exam) {
         this.exam.put(exam, FXCollections.observableHashMap());
+    }
+
+    public Exam getExam() {
+        Optional<Exam> exam = this.exam.keySet().stream().findFirst();
+        return exam.orElse(null);
     }
 
     public void addSubmission(Exam exam, Student student, Grade grade) {
