@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="604.0" prefWidth="642.0" style="-fx-background-color: dedede;" stylesheets="@../../styles/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.studentControllers.studentGradesViewController.studentGradesViewController">
+<AnchorPane prefHeight="604.0" prefWidth="642.0" style="-fx-background-color: dedede;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.student.pages.grades.StudentGradesViewController">
     <children>
         <VBox prefHeight="604.0" prefWidth="642.0" spacing="10.0">
             <children>
@@ -45,4 +46,9 @@
             </padding>
         </VBox>
     </children>
+   <stylesheets>
+      <URL value="@../../styles/main.css" />
+      <URL value="@../../styles/tableView.css" />
+      <URL value="@../../styles/scrollPane.css" />
+   </stylesheets>
 </AnchorPane>

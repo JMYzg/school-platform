@@ -65,4 +65,19 @@ module com.tap.schoolplatform {
 
     opens com.tap.schoolplatform.controllers.teacher.pages.homework to javafx.fxml;
     exports com.tap.schoolplatform.controllers.teacher.pages.homework;
+
+    opens com.tap.schoolplatform.controllers.student to javafx.fxml;
+    exports com.tap.schoolplatform.controllers.student;
+
+    opens com.tap.schoolplatform.controllers.student.pages.classes to javafx.fxml;
+    exports com.tap.schoolplatform.controllers.student.pages.classes;
+
+    exports com.tap.schoolplatform.controllers.student.pages.data;
+    opens com.tap.schoolplatform.controllers.student.pages.data to javafx.fxml;
+
+    exports com.tap.schoolplatform.controllers.student.pages.grades;
+    opens com.tap.schoolplatform.controllers.student.pages.grades to javafx.fxml;
+
+    exports com.tap.schoolplatform.controllers.student.pages.homework;
+    opens com.tap.schoolplatform.controllers.student.pages.homework to javafx.fxml;
 }

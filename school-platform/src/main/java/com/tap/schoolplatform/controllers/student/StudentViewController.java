@@ -30,15 +30,15 @@ public class StudentViewController extends ViewController {
     }
 
     @FXML private void openClassTab() {
-        loadPageView("/views/student-views/classes-view.fxml", borderPane);
+        loadPageView("/views/student-views/student-classes-view.fxml", borderPane);
     }
 
     @FXML private void openHomeworkTab() {
-        loadPageView("/views/student-views/homework-view.fxml", borderPane);
+        loadPageView("/views/student-views/student-homework-view.fxml", borderPane);
     }
 
     @FXML private void openGradesTab() {
-        loadPageView("/views/student-views/grades-view.fxml", borderPane);
+        loadPageView("/views/student-views/student-grades-view.fxml", borderPane);
     }
 
     @FXML private void exitStudentView() {
