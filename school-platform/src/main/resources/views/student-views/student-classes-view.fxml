@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="619.0" prefWidth="618.0" style="-fx-background-color: dedede;" stylesheets="@../../styles/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="619.0" prefWidth="618.0" style="-fx-background-color: dedede;" stylesheets="@../../styles/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.student.pages.classes.StudentClassesViewController">
    <children>
       <Button id="BtnTest" alignment="CENTER" graphicTextGap="3.0" layoutX="46.0" layoutY="87.0" mnemonicParsing="false" prefHeight="119.0" prefWidth="263.0" style="-fx-background-radius: 5; -fx-background-color: transparent;" stylesheets="@../../styles/main.css" />
       <GridPane layoutX="35.0" layoutY="50.0" prefHeight="460.0" prefWidth="548.0" AnchorPane.bottomAnchor="109.0">
