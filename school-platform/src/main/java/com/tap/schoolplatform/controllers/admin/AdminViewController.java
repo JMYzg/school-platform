@@ -194,23 +194,57 @@ public class AdminViewController extends ViewController {
 
     // StudentTab
     @FXML private void studentNewButtonHandler() {
-        Optional<ButtonType> response =
-                AlertHandler.showAlert(
-                        Alert.AlertType.CONFIRMATION,
-                        "Please confirm",
-                        "Clear form",
-                        "This action will clear the form, do you want to continue?"
-                );
-        if (response.isPresent() && response.get() == ButtonType.OK) {
-            studentTableView.getSelectionModel().clearSelection();
-            clearStudentForm();
-            disableStudentForm(false);
-            studentTableView.setDisable(false);
-            disableButtons(true, studentNewButton, studentEditButton, studentCancelButton);
-            disableButtons(false, studentAcceptButton, studentFilterButton);
-            disableTextFields(false, studentSearchField);
-            studentSearchLabel.setText("Please enter any word");
-            studentAcceptButton.setText("Create");
+        if (studentNewButton.getText().equals("New")) {
+            Optional<ButtonType> response =
+                    AlertHandler.showAlert(
+                            Alert.AlertType.CONFIRMATION,
+                            "Please confirm",
+                            "Clear form",
+                            "This action will clear the form, do you want to continue?"
+                    );
+            if (response.isPresent() && response.get() == ButtonType.OK) {
+                studentTableView.getSelectionModel().clearSelection();
+                clearStudentForm();
+                disableStudentForm(false);
+                studentTableView.setDisable(false);
+                disableButtons(true, studentNewButton, studentEditButton, studentCancelButton);
+                disableButtons(false, studentAcceptButton, studentFilterButton);
+                disableTextFields(false, studentSearchField);
+                studentSearchLabel.setText("Please enter any word");
+                studentAcceptButton.setText("Create");
+            }
+        } else {
+            Optional<ButtonType> response =
+                    AlertHandler.showAlert(
+                            Alert.AlertType.CONFIRMATION,
+                            "Please confirm",
+                            "Delete user",
+                            "This action will delete the user, do you want to continue?"
+                    );
+            if (response.isPresent() && response.get() == ButtonType.OK) {
+                Student student = studentTableView.getSelectionModel().getSelectedItem();
+                if (student != null) {
+                    clearStudentForm();
+                    Group group = student.getGroup();
+                    group.removeStudent(student);
+                    studentTableView.refresh();
+                    studentTableView.getSelectionModel().clearSelection();
+                    studentTableView.setDisable(false);
+                    disableButtons(false, studentFilterButton, studentAcceptButton);
+                    disableButtons(true, studentEditButton, studentCancelButton, studentNewButton);
+                    disableTextFields(false, studentSearchField);
+                    disableStudentForm(false);
+                    studentSearchLabel.setText("Please enter any word");
+                    studentAcceptButton.setText("Create");
+                    studentNewButton.setText("New");
+                    AlertHandler.showAlert(
+                            Alert.AlertType.INFORMATION,
+                            "Delete student",
+                            "Successful operation",
+                            "The student has been deleted!"
+                    );
+                }
+            }
         }
     }
 
@@ -256,7 +290,7 @@ public class AdminViewController extends ViewController {
                 studentSemesterComboBox,
                 studentGroupComboBox
         );
-        disableButtons(false, studentAcceptButton);
+        disableButtons(false, studentNewButton, studentAcceptButton);
         disableButtons(true, studentEditButton, studentFilterButton);
         disableTextFields(true, studentSearchField);
         studentTableView.setDisable(true);
@@ -313,9 +347,10 @@ public class AdminViewController extends ViewController {
 
                     updateStudent(student);
                     clearStudentForm();
+                    disableStudentForm(true);
                     studentTableView.refresh();
 
-                    disableButtons(true, studentAcceptButton);
+                    disableButtons(true, studentNewButton, studentAcceptButton);
                     disableButtons(false, studentEditButton);
 
                     studentTableView.setDisable(false);
@@ -380,8 +415,10 @@ public class AdminViewController extends ViewController {
                 );
                 disableButtons(false, studentAcceptButton, studentFilterButton);
                 disableTextFields(false, studentSearchField);
+                studentNewButton.setText("New");
                 studentSearchLabel.setText("Please enter any word");
                 studentAcceptButton.setText("Create");
+                studentCancelButton.setText("Cancel");
                 break;
             default:
                 break;
@@ -412,8 +449,9 @@ public class AdminViewController extends ViewController {
                 studentCancelButton,
                 studentFilterButton
         );
-        disableButtons(true, studentAcceptButton);
+        disableButtons(true, studentNewButton, studentAcceptButton);
         disableTextFields(false, studentSearchField);
+        studentNewButton.setText("Delete");
         studentCancelButton.setText("Unselect");
         studentAcceptButton.setText("Update");
         studentSearchLabel.setText("Please enter any word");
@@ -421,23 +459,57 @@ public class AdminViewController extends ViewController {
 
     // TeacherTab
     @FXML private void teacherNewButtonHandler() {
-        Optional<ButtonType> response =
-                AlertHandler.showAlert(
-                        Alert.AlertType.CONFIRMATION,
-                        "Please confirm",
-                        "Clear form",
-                        "This action will clear the form, do you want to continue?"
-                );
-        if (response.isPresent() && response.get() == ButtonType.OK) {
-            teacherTableView.getSelectionModel().clearSelection();
-            clearTeacherForm();
-            disableTeacherForm(false);
-            teacherTableView.setDisable(false);
-            disableButtons(true, teacherNewButton, teacherEditButton, teacherCancelButton);
-            disableButtons(false, teacherAcceptButton, teacherFilterButton);
-            disableTextFields(false, teacherSearchField);
-            teacherSearchLabel.setText("Please enter any word");
-            teacherAcceptButton.setText("Create");
+        if (teacherNewButton.getText().equals("New")) {
+            Optional<ButtonType> response =
+                    AlertHandler.showAlert(
+                            Alert.AlertType.CONFIRMATION,
+                            "Please confirm",
+                            "Clear form",
+                            "This action will clear the form, do you want to continue?"
+                    );
+            if (response.isPresent() && response.get() == ButtonType.OK) {
+                teacherTableView.getSelectionModel().clearSelection();
+                clearTeacherForm();
+                disableTeacherForm(false);
+                teacherTableView.setDisable(false);
+                disableButtons(true, teacherNewButton, teacherEditButton, teacherCancelButton);
+                disableButtons(false, teacherAcceptButton, teacherFilterButton);
+                disableTextFields(false, teacherSearchField);
+                teacherSearchLabel.setText("Please enter any word");
+                teacherAcceptButton.setText("Create");
+            }
+        } else {
+            Optional<ButtonType> response =
+                    AlertHandler.showAlert(
+                            Alert.AlertType.CONFIRMATION,
+                            "Please confirm",
+                            "Delete user",
+                            "This action will delete the user, do you want to continue?"
+                    );
+            if (response.isPresent() && response.get() == ButtonType.OK) {
+                Teacher teacher = teacherTableView.getSelectionModel().getSelectedItem();
+                if (teacher != null) {
+                    clearTeacherForm();
+                    Degree degree = teacher.getDegree();
+                    degree.removeTeacher(teacher);
+                    teacherTableView.refresh();
+                    teacherTableView.getSelectionModel().clearSelection();
+                    teacherTableView.setDisable(false);
+                    disableButtons(false, teacherFilterButton, teacherAcceptButton);
+                    disableButtons(true, teacherEditButton, teacherCancelButton, teacherNewButton);
+                    disableTextFields(false, teacherSearchField);
+                    disableTeacherForm(false);
+                    teacherSearchLabel.setText("Please enter any word");
+                    teacherAcceptButton.setText("Create");
+                    teacherNewButton.setText("New");
+                    AlertHandler.showAlert(
+                            Alert.AlertType.INFORMATION,
+                            "Delete teacher",
+                            "Successful operation",
+                            "The teacher has been deleted!"
+                    );
+                }
+            }
         }
     }
 
@@ -537,7 +609,7 @@ public class AdminViewController extends ViewController {
 //                teacherAssignSubjectSemesterComboBox,
 //                teacherUnassignSubjectSemesterComboBox
         );
-        disableButtons(false, teacherAcceptButton);
+        disableButtons(false, teacherNewButton, teacherAcceptButton);
         disableButtons(true, teacherEditButton, teacherFilterButton);
         disableTextFields(true, teacherSearchField);
         teacherTableView.setDisable(true);
@@ -581,9 +653,10 @@ public class AdminViewController extends ViewController {
 
                     updateTeacher(teacher);
                     clearTeacherForm();
+                    disableTeacherForm(true);
                     teacherTableView.refresh();
 
-                    disableButtons(true, teacherAcceptButton);
+                    disableButtons(true, teacherNewButton, teacherAcceptButton);
                     disableButtons(false, teacherEditButton);
 
                     teacherTableView.setDisable(false);
@@ -630,6 +703,8 @@ public class AdminViewController extends ViewController {
                 disableTextFields(false, teacherSearchField);
                 teacherSearchLabel.setText("Please enter any word");
                 teacherAcceptButton.setText("Create");
+                teacherCancelButton.setText("Cancel");
+                teacherNewButton.setText("New");
                 teacherTableView.getSelectionModel().clearSelection();
                 break;
             default:
@@ -654,16 +729,16 @@ public class AdminViewController extends ViewController {
         );
         clearTextFields(teacherSubjectField);
         disableButtons(false,
-                teacherNewButton,
                 teacherEditButton,
                 teacherCancelButton,
                 teacherFilterButton
         );
-        disableButtons(true, teacherAcceptButton);
+        disableButtons(true, teacherNewButton, teacherAcceptButton);
         disableTextFields(false, teacherSearchField);
         teacherCancelButton.setText("Unselect");
         teacherAcceptButton.setText("Update");
         teacherSearchLabel.setText("Please enter any word");
+        teacherNewButton.setText("Delete");
     }
     // Utils
 
