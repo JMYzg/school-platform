@@ -45,6 +45,9 @@ public abstract class Task {
     public Unit getUnit() {
         return unit;
     }
+//    public void setUnit(Unit unit) {
+//        this.unit.set(unit);
+//    }
 
     public LocalDateTime getCreationDate() {
         return creationDate;
