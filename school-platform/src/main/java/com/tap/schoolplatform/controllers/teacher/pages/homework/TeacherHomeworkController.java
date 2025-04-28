@@ -44,17 +44,19 @@ public class TeacherHomeworkController extends TeacherViewPage {
             stage.setScene(new Scene(root));
             stage.show();
     }
-    public void updateHomeworkContainer(Assignment assignment) throws IOException {
-        for(Node node : homeworkViewsContainer.getChildren()){
-            if(node instanceof TeacherHomeworkContainerController){
-                TeacherHomeworkContainerController controller = (TeacherHomeworkContainerController) node;
-                if(controller.getAssignment().equals(assignment)){
-                    controller.updateAssignmentView(assignment);
-                    break;
-                }
-            }
-        }
-    }
+
+
+//    public void updateHomeworkContainer(Assignment assignment) throws IOException {
+//        for(Node node : homeworkViewsContainer.getChildren()){
+//            if(node instanceof TeacherHomeworkContainerController){
+//                TeacherHomeworkContainerController controller = (TeacherHomeworkContainerController) node;
+//                if(controller.getAssignment().equals(assignment)){
+//                    controller.updateAssignmentView(assignment);
+//                    break;
+//                }
+//            }
+//        }
+//    }
 
     public VBox getHomeworkViewsContainer() {
         return homeworkViewsContainer;

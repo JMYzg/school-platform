@@ -10,6 +10,8 @@ import java.io.IOException;
 import static com.tap.schoolplatform.controllers.ViewController.loadNewView;
 
 public class HomeworkContainerViewController {
+
+    public static String PATH = "views/student-views/student-homework-container-view.fxml";
     @FXML private Button homeworkButton;
 
     @FXML private Label

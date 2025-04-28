@@ -1,5 +1,6 @@
 package com.tap.schoolplatform.models.academic;
 
+import com.tap.schoolplatform.models.academic.tasks.Assignment;
 import com.tap.schoolplatform.models.academic.tasks.Exam;
 import com.tap.schoolplatform.models.academic.tasks.Task;
 import com.tap.schoolplatform.models.academic.tasks.Unit;
@@ -55,6 +56,16 @@ public class Subject {
 
     public Unit getUnit(int number) {
         return units.get(number - 1);
+    }
+
+    public ObservableList<Assignment> getAllAssignments() {
+        ObservableList<Assignment> assignments = FXCollections.observableArrayList();
+        for (Unit unit : units) {
+            if (!unit.getAssignments().isEmpty()) {
+                assignments.addAll(unit.getAssignments());
+            }
+        }
+        return assignments;
     }
 
     public ObservableList<Exam> getAllExams() {

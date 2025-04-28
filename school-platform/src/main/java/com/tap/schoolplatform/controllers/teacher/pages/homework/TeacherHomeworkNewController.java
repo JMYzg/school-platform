@@ -4,6 +4,7 @@ import com.tap.schoolplatform.controllers.alerts.AlertHandler;
 import com.tap.schoolplatform.controllers.teacher.pages.TeacherViewPage;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
 import com.tap.schoolplatform.models.academic.tasks.Unit;
+import com.tap.schoolplatform.models.users.Teacher;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,6 +17,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 public class TeacherHomeworkNewController extends TeacherViewPage {
@@ -37,8 +40,13 @@ public class TeacherHomeworkNewController extends TeacherViewPage {
     private VBox homeworkViewContainer;
     private Assignment assignment;
 
+    //Aqui comienza lo recientemente agregado
+    private Map<Assignment, FXMLLoader> assignmentLoaders = new HashMap<>();
+    private Map<Assignment, Node> assignmentNodes = new HashMap<>();
+
+
     @FXML private void initialize() {
-        loadAssignmentData();
+//        loadAssignmentData();
         spinnerConfiguration(spinnerHour, 23);
         spinnerConfiguration(spinnerMinute, 59);
     }
@@ -73,22 +81,12 @@ public class TeacherHomeworkNewController extends TeacherViewPage {
                 assignment.setTitle(title);
                 assignment.setDescription(description);
                 assignment.setDeadline(dueDateTime);
-
                 updateAssignmentView(assignment);
                 //Hace falta setUnit en Task
             }
-//            Unit unit = subject.getUnit(Integer.parseInt(unitTextField.getText().trim()));
-//            Assignment assignment = new Assignment(unit, title,description,dueDateTime);
-//            addAssignmentView(assignment);
+
         }
     }
-
-private void updateAssignmentView(Assignment assignment) throws IOException {
-        TeacherHomeworkController parentController = (TeacherHomeworkController)
-                homeworkViewContainer.getScene().getWindow().getUserData();
-        parentController.updateHomeworkContainer(assignment);
-}
-
 
     @FXML private void cancelHomework() {
         Optional<ButtonType> response =
@@ -148,14 +146,29 @@ private void updateAssignmentView(Assignment assignment) throws IOException {
             controller.setTitle(assignment.getTitle());
             controller.setDueDate(assignment.getDeadline());
             controller.setCreationDate(assignment.getCreationDate());
-
-
+//Add map
+            assignmentLoaders.put(assignment, Loader);
+            assignmentNodes.put(assignment, taskView);
             homeworkViewContainer.getChildren().add(taskView);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
+private void updateAssignmentView(Assignment assignment) throws IOException {
+        FXMLLoader Loader = assignmentLoaders.get(assignment);
+        if (Loader != null) {
+            TeacherHomeworkContainerController controller = Loader.getController();
+            controller.setAssignment(assignment);
+            controller.setTitle(assignment.getTitle());
+            controller.setDueDate(assignment.getDeadline());
+        }
+//        TeacherHomeworkController parentController = (TeacherHomeworkController)
+//                homeworkViewContainer.getScene().getWindow().getUserData();
+//        parentController.updateHomeworkContainer(assignment);
+}
 
 
     private void spinnerConfiguration(Spinner<Integer> spinner, int max) {
@@ -174,6 +187,9 @@ private void updateAssignmentView(Assignment assignment) throws IOException {
         });
         spinner.setValueFactory(valueFactory);
     }
+
+
+    //Esta información que se carga en automatico se debe actualizar en el Container
     private void loadAssignmentData() {
         if(assignment != null){
             titleTF.setText(assignment.getTitle());
@@ -182,7 +198,7 @@ private void updateAssignmentView(Assignment assignment) throws IOException {
             datePicker.setValue(deadline.toLocalDate());
             spinnerHour.getValueFactory().setValue(deadline.getHour());
             spinnerMinute.getValueFactory().setValue(deadline.getMinute());
-            unitTextField.setText(assignment.getUnit().toString()); //solo optiene el número 2 por alguna razón
+            unitTextField.setText(assignment.getUnit().toString());
         }
     }
 

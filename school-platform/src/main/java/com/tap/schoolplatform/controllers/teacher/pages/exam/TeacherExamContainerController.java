@@ -39,12 +39,14 @@ public class TeacherExamContainerController {
             Stage stage = new Stage();
             stage.setTitle("Edit Homework");
             stage.setScene(new Scene(root));
-            stage.show();
-
+            stage.showAndWait();
+            examTitleLabel.setText(asociatedExam.getTitle());
+            dayOfAplicationLabel.setText(asociatedExam.getDeadline().toLocalDate().toString());
+            timeLabel.setText(asociatedExam.getDeadline().toLocalTime().toString());
+            durationLabel.setText("-");
         }catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void openExamGrades(ActionEvent actionEvent) {

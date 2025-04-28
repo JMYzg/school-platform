@@ -22,6 +22,7 @@ import javafx.util.StringConverter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +75,7 @@ public class TeacherExamNewController extends TeacherViewPage {
             tableQuestions.getItems().setAll(exam.getQuestions());
             newExamUnit.setDisable(true);
             newExamUnit.setEditable(true);
+            tableQuestions.refresh();
         }
 
         bindColumns();
@@ -177,7 +179,7 @@ public class TeacherExamNewController extends TeacherViewPage {
                         LocalDateTime.of(datePicker.getValue(), LocalTime.of(spinnerHourDte.getValue(), spinnerMinuteDte.getValue()))
                 );
 
-                for(Question question : tableQuestions.getSelectionModel().getSelectedItems()) {
+                for(Question question : tableQuestions.getItems()) {
                     if (!exam.getQuestions().contains(question)) {
                         exam.addQuestion(question);
                         question.setExam(exam);
@@ -190,6 +192,8 @@ public class TeacherExamNewController extends TeacherViewPage {
                         "The exam has been submitted",
                         "Click OK to continue"
                 );
+                addExamContainer(exam);
+            } else {
                 addExamContainer(exam);
             }
             TeacherExamNewController.exam = null;
@@ -285,10 +289,20 @@ public class TeacherExamNewController extends TeacherViewPage {
 
     private void updateQuestion(Question question) {
         if (!question.getDescription().equals(titleQuestion.getText().trim())) question.setDescription(titleQuestion.getText().trim());
-        if (!question.getAnswers().get(0).getText().equals(examOption1TF.getText().trim())) question.getAnswers().get(0).setText(examOption1TF.getText().trim());
-        if (!question.getAnswers().get(1).getText().equals(examOption2TF.getText().trim())) question.getAnswers().get(1).setText(examOption2TF.getText().trim());
-        if (!question.getAnswers().get(2).getText().equals(examOption3TF.getText().trim())) question.getAnswers().get(2).setText(examOption3TF.getText().trim());
-        if (!question.getAnswers().get(3).getText().equals(examOption4TF.getText().trim())) question.getAnswers().get(3).setText(examOption4TF.getText().trim());
+//        if (!question.getAnswers().get(0).getText().equals(examOption1TF.getText().trim())) question.getAnswers().get(0).setText(examOption1TF.getText().trim());
+//        if (!question.getAnswers().get(1).getText().equals(examOption2TF.getText().trim())) question.getAnswers().get(1).setText(examOption2TF.getText().trim());
+//        if (!question.getAnswers().get(2).getText().equals(examOption3TF.getText().trim())) question.getAnswers().get(2).setText(examOption3TF.getText().trim());
+//        if (!question.getAnswers().get(3).getText().equals(examOption4TF.getText().trim())) question.getAnswers().get(3).setText(examOption4TF.getText().trim());
+        RadioButton[] radioButtons = {
+                rightAnswer1RadioButton,
+                rightAnswer2RadioButton,
+                rightAnswer3RadioButton,
+                rightAnswer4RadioButton
+        };
+        for (int i = 0; i < radioButtons.length; i++) {
+            if (!question.getAnswers().get(i).getText().equals(radioButtons[i].getText().trim())) question.getAnswers().get(i).setText(radioButtons[i].getText().trim());
+            question.getAnswers().get(i).setCorrect(radioButtons[i].isSelected());
+        }
         tableQuestions.refresh();
     }
 
@@ -349,11 +363,17 @@ public class TeacherExamNewController extends TeacherViewPage {
             controller.timeLabel.setText(exam.getDeadline().toLocalTime().toString());
             controller.durationLabel.setText("-");
             controller.asociatedExam = exam;
-            examContainer.getChildren().add(view);
-            TeacherExamController.exams.add(exam);
+            if (TeacherExamNewController.exam == null) {
+                examContainer.getChildren().add(view);
+                TeacherExamController.exams.add(exam);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void editContainer() {
+
     }
 
     private void bindColumns() {

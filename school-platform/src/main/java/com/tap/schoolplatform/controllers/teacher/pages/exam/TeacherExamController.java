@@ -6,6 +6,8 @@ import com.tap.schoolplatform.controllers.teacher.pages.homework.TeacherHomework
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.academic.Subject;
 import com.tap.schoolplatform.models.academic.tasks.Exam;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +28,7 @@ import static com.tap.schoolplatform.controllers.ViewController.loadNewView;
 public class TeacherExamController extends TeacherViewPage {
 
     public static final String PATH = "/views/teacher-views/teacher-option-exam-view.fxml";
-    public static List<Exam> exams;
+    public static ObservableList<Exam> exams;
 
     @FXML Button createNewExamButton;
 
@@ -35,7 +37,7 @@ public class TeacherExamController extends TeacherViewPage {
     @FXML AnchorPane anchorPaneExamContainer;
 
     public void initialize() {
-        exams = new ArrayList<>(subject.getAllExams());
+        exams = FXCollections.observableArrayList(subject.getAllExams());
         for (Exam exam : exams) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(TeacherExamContainerController.PATH));
@@ -45,6 +47,7 @@ public class TeacherExamController extends TeacherViewPage {
                 controller.dayOfAplicationLabel.setText(exam.getDeadline().toLocalDate().toString());
                 controller.timeLabel.setText(exam.getDeadline().toLocalTime().toString());
                 controller.durationLabel.setText("-");
+                controller.asociatedExam = exam;
                 examViewsContainer.getChildren().add(node);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -58,6 +61,7 @@ public class TeacherExamController extends TeacherViewPage {
         Parent root = loader.load();
         TeacherExamNewController controller = loader.getController();
         controller.setExamContainer(this.examViewsContainer);
+        TeacherExamNewController.exam = null;
         Stage stage = new Stage();
         stage.setTitle("Add/Edit Exam");
         stage.setScene(new Scene(root));

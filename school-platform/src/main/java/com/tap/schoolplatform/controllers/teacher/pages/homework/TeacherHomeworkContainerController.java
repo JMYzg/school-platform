@@ -24,6 +24,11 @@ public class TeacherHomeworkContainerController extends VBox {
     public Label deadLineLabel;
     private Assignment assignment;
 
+//    private final VBox homeworkViewsContainer;
+//
+//    public TeacherHomeworkContainerController(VBox homeworkViewsContainer) {
+//        this.homeworkViewsContainer = homeworkViewsContainer;
+//    }
     public void setAssignment(Assignment assignment) {
         this.assignment = assignment;
     }
@@ -49,12 +54,15 @@ public class TeacherHomeworkContainerController extends VBox {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(TeacherHomeworkNewController.PATH));
             Parent root = loader.load();
             TeacherHomeworkNewController controller = loader.getController();
-
             controller.setAssignment(assignment);
+
+//            controller.setHomeworkViewContainer(homeworkViewsContainer);
 
             Stage stage = new Stage();
             stage.setTitle("Edit Homework");
             stage.setScene(new Scene(root));
+
+//          stage.getScene().setUserData(this.getParentController());
             stage.show();
 
         }catch (IOException e) {
@@ -63,14 +71,16 @@ public class TeacherHomeworkContainerController extends VBox {
 
     }
 
+//    private TeacherHomeworkController getParentController() {
+//        return (TeacherHomeworkController) homeworkViewsContainer.getScene().getWindow().getUserData();
+//    }
+
+//    public void updateAssignmentView(Assignment assignment) {
+//        setTitle(assignment.getTitle());
+//        setDueDate(assignment.getDeadline());
+//        setCreationDate(assignment.getCreationDate());
+//    }
+
     public void openHomeworkGrades(ActionEvent actionEvent) {
     }
-
-    public void updateAssignmentView(Assignment assignment) {
-        setTitle(assignment.getTitle());
-        setDueDate(assignment.getDeadline());
-        setCreationDate(assignment.getCreationDate());
-    }
-
-
 }
