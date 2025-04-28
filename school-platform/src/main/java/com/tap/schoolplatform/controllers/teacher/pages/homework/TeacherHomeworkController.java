@@ -3,9 +3,11 @@ package com.tap.schoolplatform.controllers.teacher.pages.homework;
 
 import com.tap.schoolplatform.controllers.teacher.pages.TeacherViewPage;
 import com.tap.schoolplatform.models.academic.Subject;
+import com.tap.schoolplatform.models.academic.tasks.Assignment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -42,7 +44,17 @@ public class TeacherHomeworkController extends TeacherViewPage {
             stage.setScene(new Scene(root));
             stage.show();
     }
-
+    public void updateHomeworkContainer(Assignment assignment) throws IOException {
+        for(Node node : homeworkViewsContainer.getChildren()){
+            if(node instanceof TeacherHomeworkContainerController){
+                TeacherHomeworkContainerController controller = (TeacherHomeworkContainerController) node;
+                if(controller.getAssignment().equals(assignment)){
+                    controller.updateAssignmentView(assignment);
+                    break;
+                }
+            }
+        }
+    }
 
     public VBox getHomeworkViewsContainer() {
         return homeworkViewsContainer;

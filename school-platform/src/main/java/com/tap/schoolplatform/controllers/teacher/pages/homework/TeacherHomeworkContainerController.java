@@ -7,12 +7,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-public class TeacherHomeworkContainerController {
+public class TeacherHomeworkContainerController extends VBox {
 
     public static final String CONTAINER_PATH = "/views/teacher-views/teacher-option-homework-container-view.fxml";
 
@@ -21,11 +22,14 @@ public class TeacherHomeworkContainerController {
     public Label homeworkTitle;
     public Label creationDateLabel;
     public Label deadLineLabel;
-
     private Assignment assignment;
 
     public void setAssignment(Assignment assignment) {
         this.assignment = assignment;
+    }
+
+    public Assignment getAssignment() {
+        return assignment;
     }
 
     public void setTitle(String title) {
@@ -39,8 +43,6 @@ public class TeacherHomeworkContainerController {
     public void setCreationDate(LocalDateTime creationDate) {
         creationDateLabel.setText(creationDate.toString());
     }
-
-
 
     public void editHomework(ActionEvent actionEvent) {
         try{
@@ -62,6 +64,12 @@ public class TeacherHomeworkContainerController {
     }
 
     public void openHomeworkGrades(ActionEvent actionEvent) {
+    }
+
+    public void updateAssignmentView(Assignment assignment) {
+        setTitle(assignment.getTitle());
+        setDueDate(assignment.getDeadline());
+        setCreationDate(assignment.getCreationDate());
     }
 
 
