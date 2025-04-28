@@ -48,9 +48,30 @@ public class Student extends User {
         return group;
     }
 
+//    public void setGroup(Group group) { // Only used by Group in addStudent and removeStudent
+//        this.group = group;
+//        ID.set(Integer.toString(SharedData.getInstance().getUsers(this.role).indexOf(this) + 1));
+//    }
+
     public void setGroup(Group group) { // Only used by Group in addStudent and removeStudent
         this.group = group;
-        ID.set(Integer.toString(SharedData.getInstance().getUsers(this.role).indexOf(this) + 1));
+
+        // Generate a unique ID based on a combination of information that's unlikely to repeat
+        String uniqueId;
+        if (group == null) {
+            // If no group is assigned, use a placeholder ID
+            uniqueId = "UNASSIGNED";
+        } else {
+            // Combine group info with something unique to the student
+            String groupCode = group.getID() != null ? group.getID() : "G";
+            // Use student's email which should be unique in the system
+            String uniquePart = this.getEmail().replaceAll("[^a-zA-Z0-9]", "");
+            // Use a hash to create a shorter ID if needed
+            int hash = Math.abs(uniquePart.hashCode() % 10000);
+            uniqueId = groupCode + "-" + hash;
+        }
+
+        ID.set(uniqueId);
     }
 
     public Semester getSemester() {
