@@ -1,16 +1,24 @@
 package com.tap.schoolplatform.controllers.teacher.pages.exam;
 
+import com.tap.schoolplatform.controllers.teacher.pages.homework.TeacherHomeworkNewController;
+import com.tap.schoolplatform.models.academic.tasks.Exam;
 import com.tap.schoolplatform.models.academic.tasks.Unit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class TeacherExamContainerController {
 
     public static String PATH = "/views/teacher-views/teacher-option-exam-container-view.fxml";
 
-    private Unit unit;
+    public Exam asociatedExam;
 
     @FXML Button
             editButton,
@@ -23,7 +31,19 @@ public class TeacherExamContainerController {
             durationLabel;
 
     public void editExam(ActionEvent actionEvent) {
-        TeacherExamNewController.exam = unit.getExam();
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(TeacherExamNewController.PATH));
+            TeacherExamNewController.exam = asociatedExam;
+            Parent root = loader.load();
+//            TeacherExamNewController controller = loader.getController();
+            Stage stage = new Stage();
+            stage.setTitle("Edit Homework");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

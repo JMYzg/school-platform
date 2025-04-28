@@ -28,7 +28,7 @@ public class Question {
     }
 
     public int getNumber() {
-        return number;
+        return number + 1;
     }
     public void setNumber(int number) {
         this.number = number;

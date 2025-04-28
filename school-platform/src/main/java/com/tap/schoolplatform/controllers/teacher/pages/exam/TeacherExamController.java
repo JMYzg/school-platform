@@ -5,9 +5,11 @@ import com.tap.schoolplatform.controllers.teacher.pages.TeacherViewPage;
 import com.tap.schoolplatform.controllers.teacher.pages.homework.TeacherHomeworkNewController;
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.academic.Subject;
+import com.tap.schoolplatform.models.academic.tasks.Exam;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,12 +18,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.tap.schoolplatform.controllers.ViewController.loadNewView;
 
 public class TeacherExamController extends TeacherViewPage {
 
     public static final String PATH = "/views/teacher-views/teacher-option-exam-view.fxml";
+    public static List<Exam> exams;
 
     @FXML Button createNewExamButton;
 
@@ -29,13 +34,30 @@ public class TeacherExamController extends TeacherViewPage {
 
     @FXML AnchorPane anchorPaneExamContainer;
 
+    public void initialize() {
+        exams = new ArrayList<>(subject.getAllExams());
+        for (Exam exam : exams) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(TeacherExamContainerController.PATH));
+                Node node = fxmlLoader.load();
+                TeacherExamContainerController controller = fxmlLoader.getController();
+                controller.examTitleLabel.setText(exam.getTitle());
+                controller.dayOfAplicationLabel.setText(exam.getDeadline().toLocalDate().toString());
+                controller.timeLabel.setText(exam.getDeadline().toLocalTime().toString());
+                controller.durationLabel.setText("-");
+                examViewsContainer.getChildren().add(node);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @FXML private void createNewExam(ActionEvent event) throws IOException {
 //        loadNewView(event, TeacherExamNewController.PATH, "Create new exam");
         FXMLLoader loader = new FXMLLoader(getClass().getResource(TeacherExamNewController.PATH));
         Parent root = loader.load();
         TeacherExamNewController controller = loader.getController();
-        controller.setExamContainer(examViewsContainer);
-
+        controller.setExamContainer(this.examViewsContainer);
         Stage stage = new Stage();
         stage.setTitle("Add/Edit Exam");
         stage.setScene(new Scene(root));

@@ -71,8 +71,12 @@ public class TeacherExamNewController extends TeacherViewPage {
 
         if (exam != null) {
             fillExamForm();
-            tableQuestions.setItems(exam.getQuestions());
+            tableQuestions.getItems().setAll(exam.getQuestions());
+            newExamUnit.setDisable(true);
+            newExamUnit.setEditable(true);
         }
+
+        bindColumns();
 
 //        tableQuestions.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 //           if (newValue != null) {
@@ -112,6 +116,26 @@ public class TeacherExamNewController extends TeacherViewPage {
         }
     }
 
+    private void clearQuestionForm() {
+        titleQuestion.clear();
+        examOption1TF.clear();
+        examOption2TF.clear();
+        examOption3TF.clear();
+        examOption4TF.clear();
+
+//        RadioButton[] radioButtons = {
+//                rightAnswer1RadioButton,
+//                rightAnswer2RadioButton,
+//                rightAnswer3RadioButton,
+//                rightAnswer4RadioButton
+//        };
+//
+//        for (RadioButton radioButton : radioButtons) {
+//            ;
+//        }
+        radioGroup.getSelectedToggle().setSelected(false);
+    }
+
     private void disableQuestionForm(boolean toggle) {
         titleQuestion.setDisable(toggle);
         examOption1TF.setDisable(toggle);
@@ -136,6 +160,7 @@ public class TeacherExamNewController extends TeacherViewPage {
     }
 
     public void handleSubmitExam() {
+
         Optional<ButtonType> response =
         AlertHandler.showAlert(
                 Alert.AlertType.CONFIRMATION,
@@ -144,27 +169,29 @@ public class TeacherExamNewController extends TeacherViewPage {
                 "You'll be able to edit the exam details later"
         );
         if (response.isPresent() && response.get() == ButtonType.OK ) {
-            Exam exam = new Exam(
-                    subject.getUnit(Integer.parseInt(newExamUnit.getText().trim())),
-                    titleTextField.getText().trim(),
-                    "",
-                    LocalDateTime.of(datePicker.getValue(), LocalTime.of(spinnerHourDte.getValue(), spinnerMinuteDte.getValue()))
-            );
+            if (exam == null) {
+                Exam exam = new Exam(
+                        subject.getUnit(Integer.parseInt(newExamUnit.getText().trim())),
+                        titleTextField.getText().trim(),
+                        "",
+                        LocalDateTime.of(datePicker.getValue(), LocalTime.of(spinnerHourDte.getValue(), spinnerMinuteDte.getValue()))
+                );
 
-            for(Question question : tableQuestions.getSelectionModel().getSelectedItems()) {
-                if (!exam.getQuestions().contains(question)) {
-                    exam.addQuestion(question);
-                    question.setExam(exam);
+                for(Question question : tableQuestions.getSelectionModel().getSelectedItems()) {
+                    if (!exam.getQuestions().contains(question)) {
+                        exam.addQuestion(question);
+                        question.setExam(exam);
+                    }
                 }
-            }
 
-            AlertHandler.showAlert(
-                    Alert.AlertType.INFORMATION,
-                    "Exam created",
-                    "The exam has been submitted",
-                    "Click OK to continue"
-            );
-            if(examContainer == null) addExamContainer(exam);
+                AlertHandler.showAlert(
+                        Alert.AlertType.INFORMATION,
+                        "Exam created",
+                        "The exam has been submitted",
+                        "Click OK to continue"
+                );
+                addExamContainer(exam);
+            }
             TeacherExamNewController.exam = null;
             Stage stage = (Stage) submitExamButton.getScene().getWindow();
             stage.close();
@@ -176,11 +203,18 @@ public class TeacherExamNewController extends TeacherViewPage {
             titleTextField.setVisible(false);
             titleLabel.setText(titleTextField.getText());
             titleLabel.setVisible(true);
+            datePicker.setDisable(true);
+            spinnerHourDte.setDisable(true);
+            spinnerMinuteDte.setDisable(true);
             btnSetTittleExam.setText("EDIT");
         } else {
             titleTextField.setVisible(true);
             titleLabel.setVisible(false);
             btnSetTittleExam.setText("OK");
+            if (exam == null) datePicker.setDisable(false);
+            spinnerHourDte.setDisable(false);
+            spinnerMinuteDte.setDisable(false);
+            if (exam != null) updateExam();
         }
         isEditing = !isEditing;
     }
@@ -225,6 +259,7 @@ public class TeacherExamNewController extends TeacherViewPage {
                     );
                     tableQuestions.getItems().add(question);
                     tableQuestions.refresh();
+                    clearQuestionForm();
                 } catch (NotValidFormatException e) {
                     AlertHandler.showAlert(
                             Alert.AlertType.ERROR,
@@ -237,9 +272,13 @@ public class TeacherExamNewController extends TeacherViewPage {
             case "Edit Question":
                 disableQuestionForm(false);
                 tableQuestions.setDisable(true);
+                addQuestionButton.setText("OK");
                 break;
-            case "Finish":
-
+            case "OK":
+                updateQuestion(tableQuestions.getSelectionModel().getSelectedItem());
+                clearQuestionForm();
+                tableQuestions.setDisable(false);
+                addQuestionButton.setText("Add New Question");
                 break;
         }
     }
@@ -250,13 +289,20 @@ public class TeacherExamNewController extends TeacherViewPage {
         if (!question.getAnswers().get(1).getText().equals(examOption2TF.getText().trim())) question.getAnswers().get(1).setText(examOption2TF.getText().trim());
         if (!question.getAnswers().get(2).getText().equals(examOption3TF.getText().trim())) question.getAnswers().get(2).setText(examOption3TF.getText().trim());
         if (!question.getAnswers().get(3).getText().equals(examOption4TF.getText().trim())) question.getAnswers().get(3).setText(examOption4TF.getText().trim());
+        tableQuestions.refresh();
+    }
+
+    private void updateExam() {
+        if (!exam.getDescription().equals(titleTextField.getText().trim())) exam.setDescription(titleTextField.getText().trim());
+        if (!exam.getDeadline().equals(LocalDateTime.of(datePicker.getValue(), LocalTime.of(spinnerHourDte.getValue(), spinnerMinuteDte.getValue()))))
+            exam.setDeadline(LocalDateTime.of(datePicker.getValue(), LocalTime.of(spinnerHourDte.getValue(), spinnerMinuteDte.getValue())));
     }
 
     @FXML private void questionSelectionHandler() {
         if (tableQuestions.getSelectionModel().getSelectedItem() != null) {
             fillQuestionForm();
             disableQuestionForm(true);
-            addQuestionButton.setText("Edit");
+            addQuestionButton.setText("Edit Question");
         }
     }
 
@@ -301,9 +347,10 @@ public class TeacherExamNewController extends TeacherViewPage {
             controller.examTitleLabel.setText(exam.getTitle());
             controller.dayOfAplicationLabel.setText(exam.getDeadline().toLocalDate().toString());
             controller.timeLabel.setText(exam.getDeadline().toLocalTime().toString());
-            controller.durationLabel.setText("Undefined");
+            controller.durationLabel.setText("-");
+            controller.asociatedExam = exam;
             examContainer.getChildren().add(view);
-
+            TeacherExamController.exams.add(exam);
         } catch (IOException e) {
             e.printStackTrace();
         }

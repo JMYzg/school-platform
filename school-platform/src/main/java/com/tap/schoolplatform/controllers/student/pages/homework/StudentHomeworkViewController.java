@@ -17,8 +17,12 @@ public class StudentHomeworkViewController {
 
     @FXML private VBox homeworkdsContainerVBox;
 
+
+
     public void openHomework(ActionEvent actionEvent) throws IOException {
         loadNewView(actionEvent, "/views/student-views/student-homework-summit-view.fxml", "Homework");
-
     }
+
+
+
 }
