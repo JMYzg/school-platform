@@ -20,7 +20,9 @@ import java.io.IOException;
 public class TeacherExamController extends TeacherViewPage {
 
     public static final String PATH = "/views/teacher-views/teacher-option-exam-view.fxml";
+    //
     public static ObservableList<Exam> exams;
+    //
 
     @FXML Button createNewExamButton;
 
@@ -29,7 +31,9 @@ public class TeacherExamController extends TeacherViewPage {
     @FXML AnchorPane anchorPaneExamContainer;
 
     public void initialize() {
+        //
         exams = subject.getAllExams();
+
         for (Exam exam : exams) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(TeacherExamContainerController.PATH));
@@ -45,6 +49,7 @@ public class TeacherExamController extends TeacherViewPage {
                 e.printStackTrace();
             }
         }
+        //
     }
 
     @FXML private void createNewExam() throws IOException {

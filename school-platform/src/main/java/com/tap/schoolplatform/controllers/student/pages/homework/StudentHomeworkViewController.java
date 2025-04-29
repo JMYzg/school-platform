@@ -18,6 +18,8 @@ import java.io.IOException;
 
 import static com.tap.schoolplatform.controllers.ViewController.loadNewView;
 
+import com.tap.schoolplatform.controllers.teacher.TeacherViewController;
+
 public class StudentHomeworkViewController {
     @FXML private Button homeworkContainerButton;
 
@@ -32,6 +34,12 @@ public class StudentHomeworkViewController {
     }
 
     private void loadTasks() {
+        for (Subject subject : currentStudent.getSemester().getSubjects()) {
+            for (Assignment assignment : subject.getAllAssignments()) {
+
+            }
+        }
+        //        for (Unit unit : currentStudent)
 //        for (Task task : currentStudent.getGroup().getSemester().getUnits) {
 //currentStudent.getDegree().getSemester(task).get
 //        }

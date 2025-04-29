@@ -32,6 +32,7 @@ public class TeacherHomeworkController extends TeacherViewPage {
     conatinerMap = new HashMap<>();
     //
 
+
     public void setSubject(Subject subject){
         this.subject = subject;
     }
@@ -45,7 +46,7 @@ public class TeacherHomeworkController extends TeacherViewPage {
         //
         controller.setContainerMap(conatinerMap);
 
-        homeworkViewsContainer.getProperties().put("Parent controller", this);
+        homeworkViewsContainer.getProperties().put("parentController", this);
         //
 
         Stage stage = new Stage();

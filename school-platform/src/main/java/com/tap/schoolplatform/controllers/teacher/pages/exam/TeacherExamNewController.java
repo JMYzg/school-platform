@@ -285,9 +285,12 @@ public class TeacherExamNewController extends TeacherViewPage {
             controller.deadLineLabel.setText(exam.getDeadline().toLocalDate().toString());
             controller.hourLabel.setText(exam.getDeadline().toLocalTime().toString());
             controller.durationLabel.setText("-");
+            //
             controller.setAttachedExam(exam);
+            //
 
             vBox.getChildren().add(view);
+            //
             TeacherExamController.exams.add(exam);
         } catch (IOException e) {
             e.printStackTrace();
