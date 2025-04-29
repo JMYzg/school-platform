@@ -82,4 +82,10 @@ public class Subject {
     public String toString() {
         return name.get();
     }
+
+    //
+    public ObservableList<Unit> getUnits() {
+        return FXCollections.unmodifiableObservableList(units);
+    }
+    //
 }
