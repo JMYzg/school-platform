@@ -49,7 +49,7 @@ public class TeacherViewController extends ViewController {
             nextButton;
 
     public TeacherStudentListController currentStudentList;
-    public Subject currentSubject;
+    public static Subject currentSubject;
     public LinkedList<Group> currentGroups;
     ListIterator<Group> iterator;
 
@@ -58,6 +58,7 @@ public class TeacherViewController extends ViewController {
 
         setTreeView();
         setListener();
+//        setCurrentSubject();
     }
 
     private void setListener(){
@@ -90,9 +91,9 @@ public class TeacherViewController extends ViewController {
         treeView.setShowRoot(false);
     }
 
-    public void setCurrentSubject(Subject actualSubject) {
-        this.currentSubject = actualSubject;
-    }
+//    public void setCurrentSubject(Subject actualSubject) {
+//        currentSubject = actualSubject;
+//    }
 
     public void goPrevious(ActionEvent actionEvent) {
         if (this.iterator.hasPrevious()) {

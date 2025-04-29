@@ -29,7 +29,7 @@
                         <Insets right="210.0" />
                      </HBox.margin>
                   </Label>
-                  <Button id="btnM" fx:id="submitExamButton" mnemonicParsing="false" onAction="#handleSubmitExam" text="Submit Exam" />
+                  <Button id="btnM" fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonHandler" text="Submit Exam" />
                </children>
             </HBox>
             <Separator prefHeight="23.0" prefWidth="477.0" />
@@ -37,14 +37,14 @@
                <children>
                   <StackPane prefHeight="26.0" prefWidth="356.0">
                      <children>
-                        <TextField fx:id="titleTextField" prefHeight="21.0" prefWidth="367.0" promptText="Title" />
+                        <TextField fx:id="titleField" prefHeight="21.0" prefWidth="367.0" promptText="Title" />
                         <Label fx:id="titleLabel" prefHeight="17.0" prefWidth="349.0" text="Title" visible="false" />
                      </children>
                   </StackPane>
-                  <Button id="btnplus" fx:id="btnSetTittleExam" mnemonicParsing="false" onAction="#setExamTitle" prefHeight="34.0" prefWidth="53.0" text="OK" />
+                  <Button id="btnplus" fx:id="editButton" mnemonicParsing="false" onAction="#editButtonHandler" prefHeight="34.0" prefWidth="53.0" text="OK" />
                </children>
             </HBox>
-            <TextField fx:id="newExamUnit" prefHeight="28.0" prefWidth="276.0" promptText="Unit">
+            <TextField fx:id="unitField" prefHeight="28.0" prefWidth="276.0" promptText="Unit">
                <VBox.margin>
                   <Insets right="300.0" />
                </VBox.margin>
@@ -54,31 +54,31 @@
                   <Label text="Date:" />
                   <DatePicker fx:id="datePicker" prefHeight="29.0" prefWidth="143.0" promptText="DD/MM/YYYY" />
                   <Label alignment="BOTTOM_RIGHT" text="Limit time:" />
-                  <Spinner fx:id="spinnerHourDte" prefHeight="30.0" prefWidth="52.0" />
+                  <Spinner fx:id="hourSpinner" prefHeight="30.0" prefWidth="52.0" />
                   <Label text=":" />
-                  <Spinner fx:id="spinnerMinuteDte" prefHeight="30.0" prefWidth="52.0" />
+                  <Spinner fx:id="minuteSpinner" prefHeight="30.0" prefWidth="52.0" />
                </children>
             </HBox>
             <Separator prefHeight="23.0" prefWidth="477.0" />
-            <TextField fx:id="titleQuestion" prefHeight="21.0" prefWidth="367.0" promptText="Title" />
+            <TextField fx:id="questionField" prefHeight="21.0" prefWidth="367.0" promptText="Title" />
             <Label id="txtbold" text="Enter Exam Options:" />
-            <TextField fx:id="examOption1TF" prefWidth="349.0" promptText="Option 1" />
-            <TextField fx:id="examOption2TF" prefWidth="349.0" promptText="Option 2" />
-            <TextField fx:id="examOption3TF" prefWidth="349.0" promptText="Option 3" />
-            <TextField fx:id="examOption4TF" prefWidth="349.0" promptText="Option 4" />
+            <TextField fx:id="answer1Field" prefWidth="349.0" promptText="Option 1" />
+            <TextField fx:id="answer2Field" prefWidth="349.0" promptText="Option 2" />
+            <TextField fx:id="answer3Field" prefWidth="349.0" promptText="Option 3" />
+            <TextField fx:id="answer4Field" prefWidth="349.0" promptText="Option 4" />
             <Label id="txtbold" text="Select right answer:" />
             <HBox alignment="CENTER" prefHeight="33.0" prefWidth="435.0" spacing="10.0">
                <children>
-                  <RadioButton fx:id="rightAnswer1RadioButton" mnemonicParsing="false" text="Option 1">
+                  <RadioButton fx:id="radio1Button" mnemonicParsing="false" text="Option 1">
                      <toggleGroup>
-                        <ToggleGroup fx:id="radioGroup" />
+                        <ToggleGroup fx:id="toggleGroup" />
                      </toggleGroup></RadioButton>
-                  <RadioButton fx:id="rightAnswer2RadioButton" mnemonicParsing="false" text="Option 2" toggleGroup="$radioGroup" />
-                  <RadioButton fx:id="rightAnswer3RadioButton" mnemonicParsing="false" text="Option 3" toggleGroup="$radioGroup" />
-                  <RadioButton fx:id="rightAnswer4RadioButton" mnemonicParsing="false" text="Option 4" toggleGroup="$radioGroup" />
+                  <RadioButton fx:id="radio2Button" mnemonicParsing="false" text="Option 2" toggleGroup="$toggleGroup" />
+                  <RadioButton fx:id="radio3Button" mnemonicParsing="false" text="Option 3" toggleGroup="$toggleGroup" />
+                  <RadioButton fx:id="radio4Button" mnemonicParsing="false" text="Option 4" toggleGroup="$toggleGroup" />
                </children>
             </HBox>
-            <Button id="btnH" fx:id="addQuestionButton" mnemonicParsing="false" onAction="#addQuestion" prefHeight="35.0" prefWidth="401.0" text="Add New Question">
+            <Button id="btnH" fx:id="addButton" mnemonicParsing="false" onAction="#addQuestion" prefHeight="35.0" prefWidth="401.0" text="Add New Question">
                <graphic>
                   <ImageView fitHeight="19.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -95,10 +95,10 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
-      <TableView fx:id="tableQuestions" onMouseClicked="#questionSelectionHandler" prefHeight="520.0" prefWidth="474.0" style="-fx-background-color: f6f6f6; -fx-background-radius: 5;">
+      <TableView fx:id="tableView" onMouseClicked="#questionSelectionHandler" prefHeight="520.0" prefWidth="474.0" style="-fx-background-color: f6f6f6; -fx-background-radius: 5;">
          <columns>
-            <TableColumn fx:id="questionNumberTableColumn" prefWidth="36.0" text="No." />
-            <TableColumn fx:id="questionTableColumn" prefWidth="114.0" text="Question" />
+            <TableColumn fx:id="numberColumn" prefWidth="36.0" text="No." />
+            <TableColumn fx:id="questionColumn" prefWidth="114.0" text="Question" />
          </columns>
          <padding>
             <Insets left="5.0" right="5.0" />

@@ -3,10 +3,12 @@ package com.tap.schoolplatform.controllers.teacher.pages.homework;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,11 +23,14 @@ public class TeacherHomeworkContainerController {
     public Label homeworkTitle;
     public Label creationDateLabel;
     public Label deadLineLabel;
-
     private Assignment assignment;
 
     public void setAssignment(Assignment assignment) {
         this.assignment = assignment;
+    }
+
+    public Assignment getAssignment() {
+        return assignment;
     }
 
     public void setTitle(String title) {
@@ -41,18 +46,26 @@ public class TeacherHomeworkContainerController {
     }
 
 
-
     public void editHomework(ActionEvent actionEvent) {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(TeacherHomeworkNewController.PATH));
             Parent root = loader.load();
             TeacherHomeworkNewController controller = loader.getController();
-
             controller.setAssignment(assignment);
+            //
+            Node source = (Node) actionEvent.getSource();
+            Stage currentStage = (Stage) source.getScene().getWindow();
+            Scene scene = currentStage.getScene();
+            VBox homeworkContainer = (VBox) scene.lookup("#homeworkViewsContainer"); // Asegúrate de que el VBox tenga un fx:id
+            TeacherHomeworkController parentController = (TeacherHomeworkController) homeworkContainer.getProperties().get("parentController");
 
+            // Pasar el containerMap al controlador de edición
+            controller.setContainerMap(parentController.getContainerMap());
+            //
             Stage stage = new Stage();
             stage.setTitle("Edit Homework");
             stage.setScene(new Scene(root));
+
             stage.show();
 
         }catch (IOException e) {
@@ -61,8 +74,7 @@ public class TeacherHomeworkContainerController {
 
     }
 
+    //Este On action esta pendiente
     public void openHomeworkGrades(ActionEvent actionEvent) {
     }
-
-
 }

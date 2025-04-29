@@ -1,5 +1,6 @@
 package com.tap.schoolplatform.controllers.student.pages.homework;
 
+import com.tap.schoolplatform.models.academic.Subject;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
 import com.tap.schoolplatform.models.academic.tasks.Task;
 import com.tap.schoolplatform.models.users.Student;
@@ -7,6 +8,7 @@ import com.tap.schoolplatform.services.auth.LoginService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -15,6 +17,8 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 
 import static com.tap.schoolplatform.controllers.ViewController.loadNewView;
+
+import com.tap.schoolplatform.controllers.teacher.TeacherViewController;
 
 public class StudentHomeworkViewController {
     @FXML private Button homeworkContainerButton;
@@ -26,11 +30,22 @@ public class StudentHomeworkViewController {
     Student currentStudent = (Student) LoginService.getCurrentUser();
 
     private void initialize() {
-//        loadTasks();
+        loadTasks();
     }
 
-//    private void loadTasks() {
-//        for (Integer unit : currentStudent.getSemester().getDegree().getClass()./*currentSubject.getTaskListMap().keySet()*/) {
+    private void loadTasks() {
+        for (Subject subject : currentStudent.getSemester().getSubjects()) {
+            for (Assignment assignment : subject.getAllAssignments()) {
+
+            }
+        }
+        //        for (Unit unit : currentStudent)
+//        for (Task task : currentStudent.getGroup().getSemester().getUnits) {
+//currentStudent.getDegree().getSemester(task).get
+//        }
+
+
+//        for (Integer unit : currentStudent.getGroup()/*currentSubject.getTaskListMap().keySet()*/) {
 //            for (Task task : currentSubject.getTaskListMap().get(unit)) {
 //                if (task instanceof Assignment assignment) {
 //                    try {
@@ -62,9 +77,22 @@ public class StudentHomeworkViewController {
 //                }
 //            }
 //        }
-//    }
+        for (Subject subject : currentStudent.getSemester().getSubjects()) {
+            for (Assignment assignment : subject.getAllAssignments()) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource(HomeworkContainerViewController.PATH));
+                    Node node = loader.load();
+                    HomeworkContainerViewController controller = loader.getController();
 
-    private void openHomework(ActionEvent actionEvent) throws IOException {
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    public void openHomework(ActionEvent actionEvent) throws IOException {
         loadNewView(actionEvent, "/views/student-views/student-homework-summit-view.fxml", "Homework");
+
     }
 }

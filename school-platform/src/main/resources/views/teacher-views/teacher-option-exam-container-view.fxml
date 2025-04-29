@@ -17,12 +17,12 @@
       <Label id="txtbold" layoutX="193.0" layoutY="14.0" prefHeight="17.0" prefWidth="105.0" text="Day of aplication" />
       <Button id="btnN" fx:id="editButton" layoutX="545.0" layoutY="10.0" mnemonicParsing="false" onAction="#editExam" prefWidth="40.0" text="Edit" />
       <Button id="btnM" fx:id="gradeButton" layoutX="538.0" layoutY="45.0" mnemonicParsing="false" onAction="#openExamGrades" prefWidth="53.0" text="Grade" />
-      <Label id="txtregular" fx:id="examTitleLabel" layoutX="74.0" layoutY="6.0" prefHeight="18.0" prefWidth="119.0" text="Homework" />
+      <Label id="txtregular" fx:id="titleLabel" layoutX="74.0" layoutY="6.0" prefHeight="18.0" prefWidth="119.0" text="Homework" />
       <Label id="txtregular" fx:id="statusLabel" layoutX="114.0" layoutY="40.0" text="Inactive" />
-      <Label id="txtregular" fx:id="dayOfAplicationLabel" layoutX="209.0" layoutY="40.0" text="6/04/2025" />
+      <Label id="txtregular" fx:id="deadLineLabel" layoutX="209.0" layoutY="40.0" text="6/04/2025" />
       <Label id="txtbold" layoutX="343.0" layoutY="14.0" prefHeight="17.0" prefWidth="36.0" text="Time" />
       <Label id="txtbold" layoutX="434.0" layoutY="14.0" prefHeight="17.0" prefWidth="54.0" text="Duration" />
-      <Label id="txtregular" fx:id="timeLabel" layoutX="339.0" layoutY="40.0" text="8:00 am" />
+      <Label id="txtregular" fx:id="hourLabel" layoutX="339.0" layoutY="40.0" text="8:00 am" />
       <Label id="txtregular" fx:id="durationLabel" layoutX="446.0" layoutY="40.0" text="2 hr" />
    </children>
 </AnchorPane>

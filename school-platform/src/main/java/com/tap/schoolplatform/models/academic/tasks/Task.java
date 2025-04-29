@@ -45,6 +45,9 @@ public abstract class Task {
     public Unit getUnit() {
         return unit;
     }
+//    public void setUnit(Unit unit) {
+//        this.unit.set(unit);
+//    }
 
     public LocalDateTime getCreationDate() {
         return creationDate;
@@ -86,5 +89,18 @@ public abstract class Task {
 
     private String generateID() {
         return creationDate.format(DateTimeFormatter.ISO_ORDINAL_DATE);
+    }
+
+    @Override
+    public String toString() {
+        return ID.get();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return ID.equals(task.ID);
     }
 }

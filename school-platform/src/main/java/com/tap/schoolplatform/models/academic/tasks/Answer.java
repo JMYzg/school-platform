@@ -4,7 +4,7 @@ public class Answer {
 
     private final Question question;
     private String text;
-    private final boolean correct;
+    private boolean correct;
 
     public Answer(Question question, String text, boolean correct) {
         this.question = question;
@@ -25,6 +25,9 @@ public class Answer {
 
     public boolean isCorrect() {
         return correct;
+    }
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
     }
 
     @Override
