@@ -34,7 +34,7 @@ public class TeacherExamContainerController {
     public void editExam(ActionEvent actionEvent) {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(TeacherExamNewController.PATH));
-            TeacherExamNewController.exam = asociatedExam;
+//            TeacherExamNewController.exam = asociatedExam;
             Parent root = loader.load();
 //            TeacherExamNewController controller = loader.getController();
             Stage stage = new Stage();

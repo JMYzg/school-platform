@@ -52,7 +52,7 @@ public class TeacherExamController extends TeacherViewPage {
         Parent root = loader.load();
         TeacherExamNewController controller = loader.getController();
         controller.setVBox(this.examViewsContainer);
-        TeacherExamNewController.exam = null;
+//        TeacherExamNewController.exam = null;
         Stage stage = new Stage();
         stage.setTitle("Add/Edit Exam");
         stage.setScene(new Scene(root));

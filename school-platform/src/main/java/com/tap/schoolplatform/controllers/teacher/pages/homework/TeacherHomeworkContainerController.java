@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-public class TeacherHomeworkContainerController extends VBox {
+public class TeacherHomeworkContainerController {
 
     public static final String CONTAINER_PATH = "/views/teacher-views/teacher-option-homework-container-view.fxml";
 
@@ -24,11 +24,6 @@ public class TeacherHomeworkContainerController extends VBox {
     public Label deadLineLabel;
     private Assignment assignment;
 
-    //    private final VBox homeworkViewsContainer;
-//
-//    public TeacherHomeworkContainerController(VBox homeworkViewsContainer) {
-//        this.homeworkViewsContainer = homeworkViewsContainer;
-//    }
     public void setAssignment(Assignment assignment) {
         this.assignment = assignment;
     }
@@ -49,13 +44,6 @@ public class TeacherHomeworkContainerController extends VBox {
         creationDateLabel.setText(creationDate.toString());
     }
 
-    //
-    public void updateAssignmentView(Assignment assignment) {
-        setTitle(assignment.getTitle());
-        setDueDate(assignment.getDeadline());
-        setCreationDate(assignment.getCreationDate());
-    }
-    //
 
     public void editHomework(ActionEvent actionEvent) {
         try{
@@ -64,13 +52,10 @@ public class TeacherHomeworkContainerController extends VBox {
             TeacherHomeworkNewController controller = loader.getController();
             controller.setAssignment(assignment);
 
-//          controller.setHomeworkViewContainer(homeworkViewsContainer);
-
             Stage stage = new Stage();
             stage.setTitle("Edit Homework");
             stage.setScene(new Scene(root));
 
-//          stage.getScene().setUserData(this.getParentController());
             stage.show();
 
         }catch (IOException e) {
@@ -79,10 +64,7 @@ public class TeacherHomeworkContainerController extends VBox {
 
     }
 
-//    private TeacherHomeworkController getParentController() {
-//        return (TeacherHomeworkController) homeworkViewsContainer.getScene().getWindow().getUserData();
-//    }
-
+    //Este On action esta pendiente
     public void openHomeworkGrades(ActionEvent actionEvent) {
     }
 }
