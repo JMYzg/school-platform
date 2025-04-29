@@ -20,12 +20,14 @@ import java.io.IOException;
 public class TeacherHomeworkController extends TeacherViewPage {
 
     public static final String PATH = "/views/teacher-views/teacher-option-homework-view.fxml";
+
+    //
     public AnchorPane anchorPaneHomeworkContainer;
+    //
+
 
     @FXML private Button addHomeworkButton;
-
     @FXML private VBox homeworkViewsContainer;
-
     public Subject subject;
 
     public void setSubject(Subject subject){
@@ -33,17 +35,19 @@ public class TeacherHomeworkController extends TeacherViewPage {
     }
 
     @FXML private void addHomework() throws IOException {
-//        loadNewView(event, TeacherHomeworkNewController.PATH, "Create new assignment");
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(TeacherHomeworkNewController.PATH));
-            Parent root = loader.load();
-            TeacherHomeworkNewController controller = loader.getController();
-            controller.setHomeworkViewContainer(homeworkViewsContainer);
+//      loadNewView(event, TeacherHomeworkNewController.PATH, "Create new assignment");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(TeacherHomeworkNewController.PATH));
+        Parent root = loader.load();
+        TeacherHomeworkNewController controller = loader.getController();
+        controller.setHomeworkViewContainer(homeworkViewsContainer);
 
-            Stage stage = new Stage();
-            stage.setTitle("Add Homework");
-            stage.setScene(new Scene(root));
-            stage.show();
+        Stage stage = new Stage();
+        stage.setTitle("Add Homework");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
+
+    //
     public void updateHomeworkContainer(Assignment assignment) throws IOException {
         for(Node node : homeworkViewsContainer.getChildren()){
             if(node instanceof TeacherHomeworkContainerController){
@@ -55,6 +59,8 @@ public class TeacherHomeworkController extends TeacherViewPage {
             }
         }
     }
+
+    //
 
     public VBox getHomeworkViewsContainer() {
         return homeworkViewsContainer;
