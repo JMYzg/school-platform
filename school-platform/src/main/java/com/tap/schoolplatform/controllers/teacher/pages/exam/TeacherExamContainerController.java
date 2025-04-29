@@ -1,8 +1,7 @@
 package com.tap.schoolplatform.controllers.teacher.pages.exam;
 
-import com.tap.schoolplatform.controllers.teacher.pages.homework.TeacherHomeworkNewController;
+import com.tap.schoolplatform.controllers.teacher.pages.TeacherViewPage;
 import com.tap.schoolplatform.models.academic.tasks.Exam;
-import com.tap.schoolplatform.models.academic.tasks.Unit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,45 +18,53 @@ public class TeacherExamContainerController {
 
     public static String PATH = "/views/teacher-views/teacher-option-exam-container-view.fxml";
 
-    public Exam asociatedExam;
+    private Exam attachedExam;
 
-    @FXML Button
+    @FXML private Button
             editButton,
             gradeButton;
     public Label
-            examTitleLabel,
+            titleLabel,
             statusLabel,
-            dayOfAplicationLabel,
-            timeLabel,
+            deadLineLabel,
+            hourLabel,
             durationLabel;
 
-    public void editExam(ActionEvent actionEvent) {
+    public void editExam() {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(TeacherExamNewController.PATH));
-            TeacherExamNewController.exam = asociatedExam;
+
             Parent root = loader.load();
-//            TeacherExamNewController controller = loader.getController();
+
+            TeacherExamNewController controller = loader.getController();
+            controller.setExam(TeacherViewPage.subject.getUnit(attachedExam.getUnit().getNumber()).getExam());
+            controller.setController(this);
+
             Stage stage = new Stage();
             stage.setTitle("Edit Homework");
             stage.setScene(new Scene(root));
+
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-            examTitleLabel.setText(asociatedExam.getTitle());
-            dayOfAplicationLabel.setText(asociatedExam.getDeadline().toLocalDate().toString());
-            timeLabel.setText(asociatedExam.getDeadline().toLocalTime().toString());
-            durationLabel.setText("-");
-            if (TeacherExamController.exams.contains(asociatedExam)) {
-                TeacherExamController.exams.remove(asociatedExam);
-                TeacherExamController.exams.add(asociatedExam);
-            }
+
+            editContainer();
         }catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void openExamGrades(ActionEvent actionEvent) {
+    public void openExamGrades() {
 
     }
 
+    public void setAttachedExam(Exam exam) {
+        attachedExam = exam;
+    }
 
+    private void editContainer() {
+        titleLabel.setText(attachedExam.getTitle());
+        deadLineLabel.setText(attachedExam.getDeadline().toLocalDate().toString());
+        hourLabel.setText(attachedExam.getDeadline().toLocalTime().toString());
+        durationLabel.setText("-");
+    }
 }

@@ -26,18 +26,12 @@ public class TeacherExamNewController extends TeacherViewPage {
 
     public static final String PATH = "/views/teacher-views/teacher-option-exam-new-view.fxml";
 
-    private Exam exam;
-
-    @FXML private Button
-            submitButton,
-            editButton,
-            addButton;
-
     @FXML private TextField
             titleField,
             unitField,
 
             questionField,
+
             answer1Field,
             answer2Field,
             answer3Field,
@@ -45,10 +39,19 @@ public class TeacherExamNewController extends TeacherViewPage {
 
     @FXML private Label titleLabel;
 
+    @FXML private Button
+            submitButton,
+            editButton,
+            addButton;
+
     @FXML private DatePicker datePicker;
-    @FXML private Spinner<Integer> hourSpinner;
-    @FXML private Spinner<Integer> minuteSpinner;
+
+    @FXML private Spinner<Integer>
+            hourSpinner,
+            minuteSpinner;
+
     @FXML private ToggleGroup toggleGroup;
+
     @FXML private RadioButton
             radio1Button,
             radio2Button,
@@ -60,79 +63,36 @@ public class TeacherExamNewController extends TeacherViewPage {
     @FXML private TableColumn<Question, String> questionColumn;
 
     private VBox vBox;
+    private Exam exam;
 
-    private final TextField[] answerFields = {
-            answer1Field,
-            answer2Field,
-            answer3Field,
-            answer4Field
-    };
+    private TeacherExamContainerController controller;
 
-    private final RadioButton[] radioButtons = {
-            radio1Button,
-            radio2Button,
-            radio3Button,
-            radio4Button
-    };
+    private TextField[] answerFields;
+
+    private RadioButton[] radioButtons;
 
     @FXML private void initialize() {
+
+        answerFields = new TextField[]{
+                answer1Field,
+                answer2Field,
+                answer3Field,
+                answer4Field
+        };
+
+        radioButtons = new RadioButton[]{
+                radio1Button,
+                radio2Button,
+                radio3Button,
+                radio4Button
+        };
+
         spinnerConfiguration(hourSpinner, 23);
         spinnerConfiguration(minuteSpinner, 59);
-        if (exam != null) {
-            fillExamForm();
-            tableView.getItems().setAll(exam.getQuestions());
-            unitField.setDisable(true);
-            unitField.setEditable(true);
-            tableView.refresh();
-        }
         bindColumns();
     }
 
-    public void setExam(Exam exam) {
-        this.exam = exam;
-    }
-
-    private void fillExamForm() {
-        titleField.setText(exam.getTitle());
-        unitField.setText(exam.getUnit().toString());
-        datePicker.setValue(exam.getDeadline().toLocalDate());
-        hourSpinner.getValueFactory().setValue(exam.getDeadline().getHour());
-        minuteSpinner.getValueFactory().setValue(exam.getDeadline().getMinute());
-    }
-
-    private void fillQuestionForm() {
-        Question question = tableView.getSelectionModel().getSelectedItem();
-        if (question != null) {
-            questionField.setText(question.getDescription());
-            for (int i = 0; i < answerFields.length; i++) {
-                answerFields[i].setText(question.getAnswers().get(i).getText());
-            }
-            for (Answer answer : question.getAnswers()) {
-                if (answer.isCorrect()) {
-                    toggleGroup.selectToggle(radioButtons[question.getAnswers().indexOf(answer)]);
-                    break;
-                }
-            }
-        }
-    }
-
-    private void clearQuestionForm() {
-        questionField.clear();
-        for (TextField textField : answerFields) textField.clear();
-        toggleGroup.getSelectedToggle().setSelected(false);
-    }
-
-    private void disableQuestionForm(boolean toggle) {
-        questionField.setDisable(toggle);
-        for (TextField textField : answerFields) textField.setDisable(toggle);
-        for (RadioButton radioButton : radioButtons) radioButton.setDisable(toggle);
-    }
-
-    public void setVBox(VBox vBox) {
-        this.vBox = vBox;
-    }
-
-    public void handleSubmitExam() {
+    @FXML private void submitButtonHandler() {
         Optional<ButtonType> response =
                 AlertHandler.showAlert(
                         Alert.AlertType.CONFIRMATION,
@@ -141,38 +101,39 @@ public class TeacherExamNewController extends TeacherViewPage {
                         "You'll be able to edit the exam details later"
                 );
         if (response.isPresent() && response.get() == ButtonType.OK ) {
-            if (exam == null) {
+            if (this.exam == null) {
                 Exam exam = new Exam(
                         subject.getUnit(Integer.parseInt(unitField.getText().trim())),
                         titleField.getText().trim(),
-                        "",
-                        LocalDateTime.of(datePicker.getValue(), LocalTime.of(hourSpinner.getValue(), minuteSpinner.getValue()))
+                        "-",
+                        LocalDateTime.of(
+                                datePicker.getValue(),
+                                LocalTime.of(hourSpinner.getValue(), minuteSpinner.getValue())
+                        )
                 );
 
-                for(Question question : tableView.getItems()) {
-                    if (!exam.getQuestions().contains(question)) {
-                        exam.addQuestion(question);
-                        question.setExam(exam);
-                    }
-                }
+                updateQuestions(exam);
 
                 AlertHandler.showAlert(
                         Alert.AlertType.INFORMATION,
-                        "Exam created",
+                        "Successful submission",
                         "The exam has been submitted",
                         "Click OK to continue"
                 );
-                addExamContainer(exam);
+                createContainer(exam);
             } else {
-                addExamContainer(exam);
+                updateExam();
+                updateQuestions(exam);
+                updateContainer();
             }
-            exam = null;
+
+//            exam = null;
             Stage stage = (Stage) submitButton.getScene().getWindow();
             stage.close();
         }
     }
 
-    public void setExamTitle() {
+    @FXML private void editButtonHandler() {
 //        if (isEditing) {
 //            titleField.setVisible(false);
 //            titleLabel.setText(titleField.getText());
@@ -191,9 +152,22 @@ public class TeacherExamNewController extends TeacherViewPage {
 //            if (exam != null) updateExam();
 //        }
 //        isEditing = !isEditing;
+        switch (editButton.getText()) {
+            case "OK":
+                disableExamForm(true);
+                editButton.setText("Edit");
+                break;
+            case "Edit":
+                disableExamForm(false);
+                updateExam();
+                editButton.setText("OK");
+                break;
+            default:
+                break;
+        }
     }
 
-    public void addQuestion() {
+    @FXML private void addQuestion() {
         switch(addButton.getText()) {
             case "Add New Question":
                 try {
@@ -257,37 +231,29 @@ public class TeacherExamNewController extends TeacherViewPage {
         }
     }
 
-    private void updateQuestion(Question question) {
-        if (!question.getDescription().equals(questionField.getText().trim())) question.setDescription(questionField.getText().trim());
-//        if (!question.getAnswers().get(0).getText().equals(examOption1TF.getText().trim())) question.getAnswers().get(0).setText(examOption1TF.getText().trim());
-//        if (!question.getAnswers().get(1).getText().equals(examOption2TF.getText().trim())) question.getAnswers().get(1).setText(examOption2TF.getText().trim());
-//        if (!question.getAnswers().get(2).getText().equals(examOption3TF.getText().trim())) question.getAnswers().get(2).setText(examOption3TF.getText().trim());
-//        if (!question.getAnswers().get(3).getText().equals(examOption4TF.getText().trim())) question.getAnswers().get(3).setText(examOption4TF.getText().trim());
-        RadioButton[] radioButtons = {
-                radio1Button,
-                radio2Button,
-                radio3Button,
-                radio4Button
-        };
-        for (int i = 0; i < radioButtons.length; i++) {
-            if (!question.getAnswers().get(i).getText().equals(radioButtons[i].getText().trim())) question.getAnswers().get(i).setText(radioButtons[i].getText().trim());
-            question.getAnswers().get(i).setCorrect(radioButtons[i].isSelected());
-        }
-        tableView.refresh();
-    }
-
-    private void updateExam() {
-        if (!exam.getDescription().equals(titleField.getText().trim())) exam.setDescription(titleField.getText().trim());
-        if (!exam.getDeadline().equals(LocalDateTime.of(datePicker.getValue(), LocalTime.of(hourSpinner.getValue(), minuteSpinner.getValue()))))
-            exam.setDeadline(LocalDateTime.of(datePicker.getValue(), LocalTime.of(hourSpinner.getValue(), minuteSpinner.getValue())));
-    }
-
     @FXML private void questionSelectionHandler() {
         if (tableView.getSelectionModel().getSelectedItem() != null) {
             fillQuestionForm();
             disableQuestionForm(true);
             addButton.setText("Edit Question");
         }
+    }
+
+    public void setVBox(VBox vBox) {
+        this.vBox = vBox;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+        fillExamForm();
+        tableView.getItems().setAll(exam.getQuestions());
+        unitField.setDisable(true);
+        unitField.setEditable(true);
+        tableView.refresh();
+    }
+
+    public void setController(TeacherExamContainerController controller) {
+        this.controller = controller;
     }
 
     private void spinnerConfiguration(Spinner<Integer> spinner, int max) {
@@ -308,44 +274,29 @@ public class TeacherExamNewController extends TeacherViewPage {
         spinner.setValueFactory(valueFactory);
     }
 
-    private void validateForm() throws NotValidFormatException {
-        validateText(questionField, "Question is required");
-        validateText(answer1Field, "Option 1 is required");
-        validateText(answer2Field, "Option 2 is required");
-        validateText(answer3Field, "Option 3 is required");
-        validateText(answer4Field, "Option 4 is required");
-        if (toggleGroup.getSelectedToggle() == null) throw new NotValidFormatException("You must select one option as correct");
-    }
-
-    private void validateText(TextField field, String message) throws NotValidFormatException {
-        if (field.getText().trim().isEmpty()) throw new NotValidFormatException(message);
-    }
-
-    private void addExamContainer(Exam exam) {
+    private void createContainer(Exam exam) {
         try{
             FXMLLoader Loader = new FXMLLoader(getClass().getResource(TeacherExamContainerController.PATH));
 
             Node view = Loader.load();
 
             TeacherExamContainerController controller = Loader.getController();
-            controller.examTitleLabel.setText(exam.getTitle());
-            controller.dayOfAplicationLabel.setText(exam.getDeadline().toLocalDate().toString());
-            controller.timeLabel.setText(exam.getDeadline().toLocalTime().toString());
+            controller.titleLabel.setText(exam.getTitle());
+            controller.deadLineLabel.setText(exam.getDeadline().toLocalDate().toString());
+            controller.hourLabel.setText(exam.getDeadline().toLocalTime().toString());
             controller.durationLabel.setText("-");
-            controller.asociatedExam = exam;
-//            if (TeacherExamNewController.exam == null) {
-//                vBox.getChildren().add(view);
-//                TeacherExamController.exams.add(exam);
-//            } else {
-//                controller.asociatedExam = TeacherExamNewController.exam;
-//            }
+            controller.setAttachedExam(exam);
+
+            vBox.getChildren().add(view);
+            TeacherExamController.exams.add(exam);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void editContainer() {
-
+    private void updateContainer() {
+        if (controller == null) return;
+        controller.setAttachedExam(exam);
     }
 
     private void bindColumns() {
@@ -359,5 +310,89 @@ public class TeacherExamNewController extends TeacherViewPage {
                 "description"
         };
         AdminViewController.injectCellValues(tableColumns, properties);
+    }
+
+    private void updateExam() {
+        if (exam == null) return;
+        if (!exam.getDescription().equals(titleField.getText().trim())) exam.setTitle(titleField.getText().trim());
+        if (!exam.getDeadline().equals(LocalDateTime.of(datePicker.getValue(), LocalTime.of(hourSpinner.getValue(), minuteSpinner.getValue())))) {
+            exam.setDeadline(LocalDateTime.of(datePicker.getValue(), LocalTime.of(hourSpinner.getValue(), minuteSpinner.getValue())));
+        }
+    }
+
+    private void updateQuestion(Question question) {
+        if (question == null) return;
+        if (!question.getDescription().equals(questionField.getText().trim())) question.setDescription(questionField.getText().trim());
+        for (int i = 0; i < radioButtons.length; i++) {
+            if (!question.getAnswers().get(i).getText().equals(radioButtons[i].getText().trim())) question.getAnswers().get(i).setText(radioButtons[i].getText().trim());
+            question.getAnswers().get(i).setCorrect(radioButtons[i].isSelected());
+        }
+        tableView.refresh();
+    }
+
+    private void updateQuestions(Exam exam) {
+        for(Question question : tableView.getItems()) {
+            if (!exam.getQuestions().contains(question)) {
+                exam.addQuestion(question);
+                question.setExam(exam);
+            }
+        }
+    }
+
+    private void fillExamForm() {
+        titleField.setText(exam.getTitle());
+        unitField.setText(exam.getUnit().toString());
+        datePicker.setValue(exam.getDeadline().toLocalDate());
+        hourSpinner.getValueFactory().setValue(exam.getDeadline().getHour());
+        minuteSpinner.getValueFactory().setValue(exam.getDeadline().getMinute());
+    }
+
+    private void fillQuestionForm() {
+        Question question = tableView.getSelectionModel().getSelectedItem();
+        if (question != null) {
+            questionField.setText(question.getDescription());
+            for (int i = 0; i < answerFields.length; i++) {
+                answerFields[i].setText(question.getAnswers().get(i).getText());
+            }
+            for (Answer answer : question.getAnswers()) {
+                if (answer.isCorrect()) {
+                    toggleGroup.selectToggle(radioButtons[question.getAnswers().indexOf(answer)]);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void disableExamForm(boolean toggle) {
+        titleField.setDisable(toggle);
+        if (exam == null) unitField.setDisable(toggle);
+        datePicker.setDisable(toggle);
+        hourSpinner.setDisable(toggle);
+        minuteSpinner.setDisable(toggle);
+    }
+
+    private void disableQuestionForm(boolean toggle) {
+        questionField.setDisable(toggle);
+        for (TextField textField : answerFields) textField.setDisable(toggle);
+        for (RadioButton radioButton : radioButtons) radioButton.setDisable(toggle);
+    }
+
+    private void clearQuestionForm() {
+        questionField.clear();
+        for (TextField textField : answerFields) textField.clear();
+        toggleGroup.getSelectedToggle().setSelected(false);
+    }
+
+    private void validateForm() throws NotValidFormatException {
+        validateText(questionField, "Question is required");
+        validateText(answer1Field, "Option 1 is required");
+        validateText(answer2Field, "Option 2 is required");
+        validateText(answer3Field, "Option 3 is required");
+        validateText(answer4Field, "Option 4 is required");
+        if (toggleGroup.getSelectedToggle() == null) throw new NotValidFormatException("You must select one option as correct");
+    }
+
+    private void validateText(TextField field, String message) throws NotValidFormatException {
+        if (field.getText().trim().isEmpty()) throw new NotValidFormatException(message);
     }
 }
