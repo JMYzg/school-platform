@@ -1,10 +1,6 @@
 package com.tap.schoolplatform.controllers.teacher.pages.exam;
 
-import com.tap.schoolplatform.controllers.ViewController;
 import com.tap.schoolplatform.controllers.teacher.pages.TeacherViewPage;
-import com.tap.schoolplatform.controllers.teacher.pages.homework.TeacherHomeworkNewController;
-import com.tap.schoolplatform.models.academic.Group;
-import com.tap.schoolplatform.models.academic.Subject;
 import com.tap.schoolplatform.models.academic.tasks.Exam;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,10 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.tap.schoolplatform.controllers.ViewController.loadNewView;
 
 public class TeacherExamController extends TeacherViewPage {
 
@@ -56,11 +48,10 @@ public class TeacherExamController extends TeacherViewPage {
     }
 
     @FXML private void createNewExam(ActionEvent event) throws IOException {
-//        loadNewView(event, TeacherExamNewController.PATH, "Create new exam");
         FXMLLoader loader = new FXMLLoader(getClass().getResource(TeacherExamNewController.PATH));
         Parent root = loader.load();
         TeacherExamNewController controller = loader.getController();
-        controller.setExamContainer(this.examViewsContainer);
+        controller.setVBox(this.examViewsContainer);
         TeacherExamNewController.exam = null;
         Stage stage = new Stage();
         stage.setTitle("Add/Edit Exam");
