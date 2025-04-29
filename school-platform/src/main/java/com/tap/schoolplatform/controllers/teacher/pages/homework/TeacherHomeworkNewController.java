@@ -150,6 +150,7 @@ public class TeacherHomeworkNewController extends TeacherViewPage {
 
             TeacherHomeworkContainerController controller = Loader.getController();
             controller.setAssignment(assignment);
+
             controller.setTitle(assignment.getTitle());
             controller.setDueDate(assignment.getDeadline());
             controller.setCreationDate(assignment.getCreationDate());

@@ -29,7 +29,7 @@
                         <Insets right="210.0" />
                      </HBox.margin>
                   </Label>
-                  <Button id="btnM" fx:id="submitButton" mnemonicParsing="false" onAction="#handleSubmitExam" text="Submit Exam" />
+                  <Button id="btnM" fx:id="submitButton" mnemonicParsing="false" onAction="#submitButtonHandler" text="Submit Exam" />
                </children>
             </HBox>
             <Separator prefHeight="23.0" prefWidth="477.0" />
@@ -41,7 +41,7 @@
                         <Label fx:id="titleLabel" prefHeight="17.0" prefWidth="349.0" text="Title" visible="false" />
                      </children>
                   </StackPane>
-                  <Button id="btnplus" fx:id="editButton" mnemonicParsing="false" onAction="#setExamTitle" prefHeight="34.0" prefWidth="53.0" text="OK" />
+                  <Button id="btnplus" fx:id="editButton" mnemonicParsing="false" onAction="#editButtonHandler" prefHeight="34.0" prefWidth="53.0" text="OK" />
                </children>
             </HBox>
             <TextField fx:id="unitField" prefHeight="28.0" prefWidth="276.0" promptText="Unit">

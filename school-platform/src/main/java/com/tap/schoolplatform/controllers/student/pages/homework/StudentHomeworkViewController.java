@@ -3,13 +3,13 @@ package com.tap.schoolplatform.controllers.student.pages.homework;
 import com.tap.schoolplatform.models.academic.Subject;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
 import com.tap.schoolplatform.models.academic.tasks.Task;
-import com.tap.schoolplatform.models.academic.tasks.Unit;
 import com.tap.schoolplatform.models.users.Student;
 import com.tap.schoolplatform.services.auth.LoginService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -17,6 +17,8 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 
 import static com.tap.schoolplatform.controllers.ViewController.loadNewView;
+
+import com.tap.schoolplatform.controllers.teacher.TeacherViewController;
 
 public class StudentHomeworkViewController {
     @FXML private Button homeworkContainerButton;
@@ -32,6 +34,12 @@ public class StudentHomeworkViewController {
     }
 
     private void loadTasks() {
+        for (Subject subject : currentStudent.getSemester().getSubjects()) {
+            for (Assignment assignment : subject.getAllAssignments()) {
+
+            }
+        }
+        //        for (Unit unit : currentStudent)
 //        for (Task task : currentStudent.getGroup().getSemester().getUnits) {
 //currentStudent.getDegree().getSemester(task).get
 //        }
@@ -85,8 +93,6 @@ public class StudentHomeworkViewController {
 
     public void openHomework(ActionEvent actionEvent) throws IOException {
         loadNewView(actionEvent, "/views/student-views/student-homework-summit-view.fxml", "Homework");
+
     }
-
-
-
 }
