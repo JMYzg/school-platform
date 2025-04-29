@@ -3,6 +3,7 @@ package com.tap.schoolplatform.controllers.teacher.pages.homework;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,7 +14,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-public class TeacherHomeworkContainerController extends VBox {
+public class TeacherHomeworkContainerController {
 
     public static final String CONTAINER_PATH = "/views/teacher-views/teacher-option-homework-container-view.fxml";
 
@@ -24,11 +25,6 @@ public class TeacherHomeworkContainerController extends VBox {
     public Label deadLineLabel;
     private Assignment assignment;
 
-//    private final VBox homeworkViewsContainer;
-//
-//    public TeacherHomeworkContainerController(VBox homeworkViewsContainer) {
-//        this.homeworkViewsContainer = homeworkViewsContainer;
-//    }
     public void setAssignment(Assignment assignment) {
         this.assignment = assignment;
     }
@@ -49,20 +45,27 @@ public class TeacherHomeworkContainerController extends VBox {
         creationDateLabel.setText(creationDate.toString());
     }
 
+
     public void editHomework(ActionEvent actionEvent) {
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(TeacherHomeworkNewController.PATH));
             Parent root = loader.load();
             TeacherHomeworkNewController controller = loader.getController();
             controller.setAssignment(assignment);
+            //
+            Node source = (Node) actionEvent.getSource();
+            Stage currentStage = (Stage) source.getScene().getWindow();
+            Scene scene = currentStage.getScene();
+            VBox homeworkContainer = (VBox) scene.lookup("#homeworkViewsContainer"); // Asegúrate de que el VBox tenga un fx:id
+            TeacherHomeworkController parentController = (TeacherHomeworkController) homeworkContainer.getProperties().get("parentController");
 
-//            controller.setHomeworkViewContainer(homeworkViewsContainer);
-
+            // Pasar el containerMap al controlador de edición
+            controller.setContainerMap(parentController.getContainerMap());
+            //
             Stage stage = new Stage();
             stage.setTitle("Edit Homework");
             stage.setScene(new Scene(root));
 
-//          stage.getScene().setUserData(this.getParentController());
             stage.show();
 
         }catch (IOException e) {
@@ -71,16 +74,7 @@ public class TeacherHomeworkContainerController extends VBox {
 
     }
 
-//    private TeacherHomeworkController getParentController() {
-//        return (TeacherHomeworkController) homeworkViewsContainer.getScene().getWindow().getUserData();
-//    }
-
-//    public void updateAssignmentView(Assignment assignment) {
-//        setTitle(assignment.getTitle());
-//        setDueDate(assignment.getDeadline());
-//        setCreationDate(assignment.getCreationDate());
-//    }
-
+    //Este On action esta pendiente
     public void openHomeworkGrades(ActionEvent actionEvent) {
     }
 }

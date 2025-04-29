@@ -30,23 +30,28 @@ public class TeacherHomeworkNewController extends TeacherViewPage {
     @FXML private DatePicker datePicker;
     @FXML private Spinner<Integer> spinnerHour;
     @FXML private Spinner<Integer> spinnerMinute;
-
-    @FXML private Button
-            cleanButton,
-            cancelButton,
-            acceptButton;
-
+    @FXML private Button cleanButton, cancelButton, acceptButton;
 
     private VBox homeworkViewContainer;
     private Assignment assignment;
+    //
+    private Map<Assignment, TeacherHomeworkContainerController> containerMap;
+    //
+    public void setHomeworkViewContainer(VBox homeworkViewContainer) {
+        this.homeworkViewContainer = homeworkViewContainer;
+    }
+    public void setAssignment(Assignment assignment) {
+        this.assignment = assignment;
+        loadAssignmentData();
+    }
 
-    //Aqui comienza lo recientemente agregado
-    private Map<Assignment, FXMLLoader> assignmentLoaders = new HashMap<>();
-    private Map<Assignment, Node> assignmentNodes = new HashMap<>();
-
+    //
+    public void setContainerMap(Map<Assignment, TeacherHomeworkContainerController> containerMap) {
+        this.containerMap = containerMap;
+    }
+    //
 
     @FXML private void initialize() {
-//        loadAssignmentData();
         spinnerConfiguration(spinnerHour, 23);
         spinnerConfiguration(spinnerMinute, 59);
     }
@@ -60,7 +65,7 @@ public class TeacherHomeworkNewController extends TeacherViewPage {
         Unit unit = subject.getUnit(Integer.parseInt(unitTextField.getText().trim()));
 
 
-        if (title.isEmpty() || description.isEmpty() || hour == 0 || minute == 0 || dueDate == null) {
+        if (title.isEmpty() || description.isEmpty() || hour == 0 || dueDate == null) {
             AlertHandler.showAlert(
                     Alert.AlertType.ERROR,
                     "Empty fields",
@@ -81,7 +86,9 @@ public class TeacherHomeworkNewController extends TeacherViewPage {
                 assignment.setTitle(title);
                 assignment.setDescription(description);
                 assignment.setDeadline(dueDateTime);
+                //Origen del problema
                 updateAssignmentView(assignment);
+                //
                 //Hace falta setUnit en Task
             }
 
@@ -146,29 +153,39 @@ public class TeacherHomeworkNewController extends TeacherViewPage {
             controller.setTitle(assignment.getTitle());
             controller.setDueDate(assignment.getDeadline());
             controller.setCreationDate(assignment.getCreationDate());
-//Add map
-            assignmentLoaders.put(assignment, Loader);
-            assignmentNodes.put(assignment, taskView);
             homeworkViewContainer.getChildren().add(taskView);
+            //
+            containerMap.put(assignment, controller);
+            //
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
-private void updateAssignmentView(Assignment assignment) throws IOException {
-        FXMLLoader Loader = assignmentLoaders.get(assignment);
-        if (Loader != null) {
-            TeacherHomeworkContainerController controller = Loader.getController();
-            controller.setAssignment(assignment);
+    //Este metodo genera los problemas
+    private void updateAssignmentView(Assignment assignment) {
+        TeacherHomeworkContainerController controller = containerMap.get(assignment);
+        if (controller != null) {
             controller.setTitle(assignment.getTitle());
             controller.setDueDate(assignment.getDeadline());
+            controller.setCreationDate(assignment.getCreationDate());
         }
-//        TeacherHomeworkController parentController = (TeacherHomeworkController)
-//                homeworkViewContainer.getScene().getWindow().getUserData();
-//        parentController.updateHomeworkContainer(assignment);
-}
+    }
+    //
+
+    //Esta información que se carga en automatico se debe actualizar en el Container
+    private void loadAssignmentData() {
+        if(assignment != null){
+            titleTF.setText(assignment.getTitle());
+            descriptionTF.setText(assignment.getDescription());
+            LocalDateTime deadline = assignment.getDeadline();
+            datePicker.setValue(deadline.toLocalDate());
+            spinnerHour.getValueFactory().setValue(deadline.getHour());
+            spinnerMinute.getValueFactory().setValue(deadline.getMinute());
+            unitTextField.setText(assignment.getUnit().toString());
+        }
+    }
 
 
     private void spinnerConfiguration(Spinner<Integer> spinner, int max) {
@@ -187,29 +204,4 @@ private void updateAssignmentView(Assignment assignment) throws IOException {
         });
         spinner.setValueFactory(valueFactory);
     }
-
-
-    //Esta información que se carga en automatico se debe actualizar en el Container
-    private void loadAssignmentData() {
-        if(assignment != null){
-            titleTF.setText(assignment.getTitle());
-            descriptionTF.setText(assignment.getDescription());
-            LocalDateTime deadline = assignment.getDeadline();
-            datePicker.setValue(deadline.toLocalDate());
-            spinnerHour.getValueFactory().setValue(deadline.getHour());
-            spinnerMinute.getValueFactory().setValue(deadline.getMinute());
-            unitTextField.setText(assignment.getUnit().toString());
-        }
-    }
-
-
-    public void setHomeworkViewContainer(VBox homeworkViewContainer) {
-        this.homeworkViewContainer = homeworkViewContainer;
-    }
-
-    public void setAssignment(Assignment assignment) {
-        this.assignment = assignment;
-        loadAssignmentData();
-    }
-
 }
