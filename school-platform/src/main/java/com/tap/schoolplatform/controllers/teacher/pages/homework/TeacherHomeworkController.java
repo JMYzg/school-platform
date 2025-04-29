@@ -28,7 +28,7 @@ public class TeacherHomeworkController extends TeacherViewPage {
     public Subject subject;
 
     //
-    private Map<Assignment, TeacherHomeworkContainerController>
+    private final Map<Assignment, TeacherHomeworkContainerController>
     conatinerMap = new HashMap<>();
     //
 
@@ -44,12 +44,17 @@ public class TeacherHomeworkController extends TeacherViewPage {
         controller.setHomeworkViewContainer(homeworkViewsContainer);
         //
         controller.setContainerMap(conatinerMap);
+
+        homeworkViewsContainer.getProperties().put("Parent controller", this);
         //
 
         Stage stage = new Stage();
         stage.setTitle("Add Homework");
         stage.setScene(new Scene(root));
         stage.show();
+    }
+    public Map<Assignment, TeacherHomeworkContainerController> getContainerMap(){
+        return conatinerMap;
     }
 
     //Sin utilidad, pero espero que De aqui se pueda optener el Container original que guardara all.

@@ -3,6 +3,7 @@ package com.tap.schoolplatform.controllers.teacher.pages.homework;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -51,7 +52,16 @@ public class TeacherHomeworkContainerController {
             Parent root = loader.load();
             TeacherHomeworkNewController controller = loader.getController();
             controller.setAssignment(assignment);
+            //
+            Node source = (Node) actionEvent.getSource();
+            Stage currentStage = (Stage) source.getScene().getWindow();
+            Scene scene = currentStage.getScene();
+            VBox homeworkContainer = (VBox) scene.lookup("#homeworkViewsContainer"); // Asegúrate de que el VBox tenga un fx:id
+            TeacherHomeworkController parentController = (TeacherHomeworkController) homeworkContainer.getProperties().get("parentController");
 
+            // Pasar el containerMap al controlador de edición
+            controller.setContainerMap(parentController.getContainerMap());
+            //
             Stage stage = new Stage();
             stage.setTitle("Edit Homework");
             stage.setScene(new Scene(root));
