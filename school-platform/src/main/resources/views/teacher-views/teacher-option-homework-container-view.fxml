@@ -14,11 +14,12 @@
          </image>
       </ImageView>
       <Label id="txtbold" layoutX="83.0" layoutY="40.0" prefHeight="17.0" prefWidth="97.0" text="Date of creation" />
-      <Label id="txtbold" layoutX="299.0" layoutY="40.0" prefHeight="17.0" prefWidth="53.0" text="Deadline" />
+      <Label id="txtbold" layoutX="261.0" layoutY="40.0" prefHeight="17.0" prefWidth="53.0" text="Deadline" />
       <Button id="btnN" fx:id="editButton" layoutX="533.0" layoutY="10.0" mnemonicParsing="false" onAction="#editHomework" prefWidth="51.0" text="Edit" />
       <Button id="btnM" fx:id="gradeButton" layoutX="534.0" layoutY="45.0" mnemonicParsing="false" onAction="#openHomeworkGrades" text="Grade" />
       <Label id="txtregular" fx:id="homeworkTitle" layoutX="83.0" layoutY="14.0" prefHeight="15.0" prefWidth="148.0" text="Homework tittle Example" />
       <Label id="txtregular" fx:id="creationDateLabel" layoutX="180.0" layoutY="41.0" text="31/03/2025" />
-      <Label id="txtregular" fx:id="deadLineLabel" layoutX="358.0" layoutY="41.0" text="6/04/2025" />
+      <Label id="txtregular" fx:id="deadLineLabel" layoutX="314.0" layoutY="41.0" text="6/04/2025" />
+      <Label id="txtregular" fx:id="deadLineTimeLabel" layoutX="390.0" layoutY="41.0" text="6/04/2025" />
    </children>
 </AnchorPane>

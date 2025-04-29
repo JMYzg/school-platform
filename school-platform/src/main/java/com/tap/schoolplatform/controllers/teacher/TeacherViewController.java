@@ -67,11 +67,11 @@ public class TeacherViewController extends ViewController {
             if (newValue != null) {
                 Subject selectedSubject = (Subject) newValue.getValue();
                 System.out.println(selectedSubject);
+
                 TeacherViewPage.subject = selectedSubject;
                 currentGroups = new LinkedList<>(TeacherViewPage.subject.getSemester().getAllGroups());
                 iterator = currentGroups.listIterator();
                 subjectNameLabel.setText(selectedSubject.toString());
-//                semesterNameLabel.setText(selectedSubject.getSemester().toString()); //Solo aplicaba al principio
             }
         });
     }

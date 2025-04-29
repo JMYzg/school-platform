@@ -4,14 +4,13 @@ package com.tap.schoolplatform.controllers.teacher.pages.homework;
 import com.tap.schoolplatform.controllers.teacher.pages.TeacherViewPage;
 import com.tap.schoolplatform.models.academic.Subject;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
-import javafx.event.ActionEvent;
+import com.tap.schoolplatform.models.academic.tasks.Unit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -25,13 +24,47 @@ public class TeacherHomeworkController extends TeacherViewPage {
 
     @FXML private Button addHomeworkButton;
     @FXML private VBox homeworkViewsContainer;
-    public Subject subject;
 
-    //
+
     private final Map<Assignment, TeacherHomeworkContainerController>
     conatinerMap = new HashMap<>();
-    //
 
+
+    //
+    @FXML
+    private void initialize() {
+        homeworkViewsContainer.getProperties().put("parentController", this);
+        loadExistingAssignments();
+    }
+
+    private void loadExistingAssignments() {
+        if (subject != null) {
+            for(Unit unit : subject.getUnits()){
+                for(Assignment assignment : unit.getAssignments()){
+                    //FXML CONTAINERS re
+                    addAssignmentView(assignment);
+                }
+            }
+        }
+    }
+
+    private void addAssignmentView(Assignment assignment) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(TeacherHomeworkContainerController.CONTAINER_PATH));
+            Node taskView = loader.load();
+            TeacherHomeworkContainerController controller = loader.getController();
+            controller.setAssignment(assignment);
+            controller.setTitle(assignment.getTitle());
+            controller.setDueDate(assignment.getDeadline());
+            controller.setCreationDate(assignment.getCreationDate());
+
+            homeworkViewsContainer.getChildren().add(taskView);
+            conatinerMap.put(assignment, controller);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+     //
 
     public void setSubject(Subject subject){
         this.subject = subject;
@@ -46,7 +79,7 @@ public class TeacherHomeworkController extends TeacherViewPage {
         //
         controller.setContainerMap(conatinerMap);
 
-        homeworkViewsContainer.getProperties().put("parentController", this);
+//        homeworkViewsContainer.getProperties().put("parentController", this);
         //
 
         Stage stage = new Stage();
@@ -58,8 +91,8 @@ public class TeacherHomeworkController extends TeacherViewPage {
         return conatinerMap;
     }
 
-    //Sin utilidad, pero espero que De aqui se pueda optener el Container original que guardara all.
-    public VBox getHomeworkViewsContainer() {
-        return homeworkViewsContainer;
-    }
+//    //Sin utilidad, pero espero que De aqui se pueda optener el Container original que guardara all.
+//    public VBox getHomeworkViewsContainer() {
+//        return homeworkViewsContainer;
+//    }
 }
