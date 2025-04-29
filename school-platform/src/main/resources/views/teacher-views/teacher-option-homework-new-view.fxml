@@ -53,5 +53,6 @@
    <stylesheets>
       <URL value="@../../styles/main.css" />
       <URL value="@../../styles/buttons.css" />
+      <URL value="@../../styles/scrollPane.css" />
    </stylesheets>
 </AnchorPane>

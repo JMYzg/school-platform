@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="619.0" prefWidth="618.0" style="-fx-background-color: dedede;" stylesheets="@../../styles/main.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.student.pages.homework.StudentHomeworkViewController">
+<AnchorPane prefHeight="619.0" prefWidth="618.0" style="-fx-background-color: dedede;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.student.pages.homework.StudentHomeworkViewController">
    <children>
       <VBox prefHeight="619.0" prefWidth="618.0" spacing="15.0">
          <children>
@@ -65,4 +65,8 @@
          </padding>
       </VBox>
    </children>
+   <stylesheets>
+      <URL value="@../../styles/main.css" />
+      <URL value="@../../styles/scrollPane.css" />
+   </stylesheets>
 </AnchorPane>

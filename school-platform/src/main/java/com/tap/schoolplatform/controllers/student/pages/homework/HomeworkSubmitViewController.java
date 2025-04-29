@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -22,15 +23,16 @@ public class HomeworkSubmitViewController {
             attachButton,
             submmitButton;
 
-    @FXML private Label
+    public Label
             homeworkTitleLabel,
             deadlineLabel,
             hourLabel;
 
+    public TextFlow homeworkDescription;
+
+    public static String PATH = "/views/student-views/student-homework-summit-view.fxml";
+
     @FXML private void initialize() {
-        homeworkTitleLabel.setText("Homework title");
-        deadlineLabel.setText("Due date");
-        hourLabel.setText("Hour");
     }
 
     @FXML private void closeSubmitHomework() {
@@ -62,7 +64,7 @@ public class HomeworkSubmitViewController {
 
     @FXML private void attachFiles() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose the image");
+        fileChooser.setTitle("Choose the file to attach");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg"),
                 new FileChooser.ExtensionFilter("PNG", "*.png"),

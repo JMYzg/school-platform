@@ -53,7 +53,7 @@
             <Label id="txtbold" prefHeight="17.0" prefWidth="479.0" text="Instructions:                                                                                                      10 Points" />
             <ScrollPane fitToWidth="true" prefHeight="350.0" prefWidth="561.0">
                <content>
-                  <TextFlow prefHeight="347.0" prefWidth="557.0" />
+                  <TextFlow fx:id="homeworkDescription" prefHeight="347.0" prefWidth="557.0" />
                </content>
             </ScrollPane>
             <Button fx:id="attachButton" mnemonicParsing="false" onAction="#attachFiles" style="-fx-text-fill: #709a98;" text="Attach" textFill="#639d9e">
