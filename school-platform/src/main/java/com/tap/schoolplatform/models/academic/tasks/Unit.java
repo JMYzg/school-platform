@@ -28,6 +28,12 @@ public class Unit {
     public Subject getSubject() {
         return subject;
     }
+
+    public ObservableList<Assignment> getAssignments() {
+        ObservableList<Assignment> assignments = FXCollections.observableArrayList();
+        assignments.addAll(this.assignments.keySet());
+        return assignments;
+    }
     
     public void addAssignment(Assignment assignment) {
         assignments.put(assignment, FXCollections.observableArrayList());
