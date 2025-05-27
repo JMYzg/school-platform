@@ -6,6 +6,7 @@ import javafx.beans.property.StringProperty;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 public abstract class Task {
 
@@ -24,7 +25,7 @@ public abstract class Task {
         this.unit = unit;
         ID = new SimpleStringProperty();
         creationDate = LocalDateTime.now();
-        creationDate.format(DateTimeFormatter.BASIC_ISO_DATE);
+        creationDate.format(DateTimeFormatter.ofLocalizedDateTime( FormatStyle.MEDIUM));
         this.title = new SimpleStringProperty(title);
         this.description = new SimpleStringProperty(description);
         this.deadline = deadline;

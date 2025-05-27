@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class TeacherHomeworkContainerController {
@@ -23,6 +24,7 @@ public class TeacherHomeworkContainerController {
     public Label homeworkTitle;
     public Label creationDateLabel;
     public Label deadLineLabel;
+    public Label deadLineTimeLabel;
     private Assignment assignment;
 
     public void setAssignment(Assignment assignment) {
@@ -52,20 +54,27 @@ public class TeacherHomeworkContainerController {
             Parent root = loader.load();
             TeacherHomeworkNewController controller = loader.getController();
             controller.setAssignment(assignment);
-            //
+
             Node source = (Node) actionEvent.getSource();
             Stage currentStage = (Stage) source.getScene().getWindow();
-            Scene scene = currentStage.getScene();
-            VBox homeworkContainer = (VBox) scene.lookup("#homeworkViewsContainer"); // Asegúrate de que el VBox tenga un fx:id
-            TeacherHomeworkController parentController = (TeacherHomeworkController) homeworkContainer.getProperties().get("parentController");
-
-            // Pasar el containerMap al controlador de edición
-            controller.setContainerMap(parentController.getContainerMap());
             //
+             VBox homeworkContainer = (VBox) currentStage.getScene().lookup("#homework-container");
+             if(homeworkContainer != null) {
+                 TeacherHomeworkController parentController = (TeacherHomeworkController) homeworkContainer.getProperties().get("parentController");
+                    if(parentController != null) {
+                        // Pasar el containerMap al controlador de edición
+                        controller.setContainerMap(parentController.getContainerMap());
+
+                    } else {
+                        System.err.println("Parent controller not found");
+                    }
+             }
+            //
+
+
             Stage stage = new Stage();
             stage.setTitle("Edit Homework");
             stage.setScene(new Scene(root));
-
             stage.show();
 
         }catch (IOException e) {
