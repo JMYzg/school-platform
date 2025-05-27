@@ -12,7 +12,7 @@ public abstract class TeacherViewPage {
         return subject;
     }
     public void setSubject(Subject subject) {
-        this.subject = subject;
+        TeacherViewPage.subject = subject;
     }
 
     public Group getGroup() {
