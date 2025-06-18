@@ -1,8 +1,6 @@
 package com.tap.schoolplatform.controllers.teacher.pages;
 
 import com.tap.schoolplatform.models.academic.Group;
-import com.tap.schoolplatform.models.academic.Subject;
-import com.tap.schoolplatform.models.users.Student;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -29,9 +27,9 @@ public class TeacherGradeController extends TeacherViewPage {
     @FXML private TableColumn<Student, String> unit6TableColumn;
     @FXML private TableColumn<Student, String> unit7TableColumn;
 
-    private Subject subject;
+    private Group subject;
 
-    public void setSubject(Subject subject) {
+    public void setSubject(Group subject) {
         this.subject = subject;
         updateUI();
     }

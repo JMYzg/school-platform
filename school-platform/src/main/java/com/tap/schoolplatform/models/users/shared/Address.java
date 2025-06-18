@@ -1,84 +1,79 @@
 package com.tap.schoolplatform.models.users.shared;
 
+import jakarta.persistence.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.hibernate.annotations.GenericGenerator;
 
+@Entity
+@Table(name = "addresses")
 public class Address {
 
-    private final StringProperty street;
-    private final StringProperty postalCode;
-    private final StringProperty colony;
-    private final StringProperty city;
-    private final StringProperty state;
-    private final StringProperty country;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int ID;
+    private String street;
+    private String postalCode;
+    private String colony;
+    private String city;
+    private String state;
+    private String country;
+
+    public Address() {}
 
     public Address(String street, String postalCode, String colony, String city, String state, String country) {
-        this.street = new SimpleStringProperty(street);
-        this.postalCode = new SimpleStringProperty(postalCode);
-        this.colony = new SimpleStringProperty(colony);
-        this.city = new SimpleStringProperty(city);
-        this.state = new SimpleStringProperty(state);
-        this.country = new SimpleStringProperty(country);
+        this.street = street;
+        this.postalCode = postalCode;
+        this.colony = colony;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+    }
+
+    public int getID() {
+        return ID;
     }
 
     public String getStreet() {
-        return street.get();
-    }
-    public StringProperty streetProperty() {
         return street;
     }
     public void setStreet(String street) {
-        this.street.set(street);
+        this.street = street;
     }
 
     public String getPostalCode() {
-        return postalCode.get();
-    }
-    public StringProperty postalCodeProperty() {
         return postalCode;
     }
     public void setPostalCode(String postalCode) {
-        this.postalCode.set(postalCode);
+        this.postalCode = postalCode;
     }
 
     public String getColony() {
-        return colony.get();
-    }
-    public StringProperty colonyProperty() {
         return colony;
     }
     public void setColony(String colony) {
-        this.colony.set(colony);
+        this.colony = colony;
     }
 
     public String getCity() {
-        return city.get();
-    }
-    public StringProperty cityProperty() {
         return city;
     }
     public void setCity(String city) {
-        this.city.set(city);
+        this.city = city;
     }
 
     public String getState() {
-        return state.get();
-    }
-    public StringProperty stateProperty() {
         return state;
     }
     public void setState(String state) {
-        this.state.set(state);
+        this.state = state;
     }
 
     public String getCountry() {
-        return country.get();
-    }
-    public StringProperty countryProperty() {
         return country;
     }
     public void setCountry(String country) {
-        this.country.set(country);
+        this.country = country;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.tap.schoolplatform.controllers.teacher.pages.homework;
 
-import com.tap.schoolplatform.models.academic.tasks.Assignment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,7 +11,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class TeacherHomeworkContainerController {

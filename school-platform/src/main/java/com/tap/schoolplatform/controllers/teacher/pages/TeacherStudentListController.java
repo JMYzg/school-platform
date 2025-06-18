@@ -1,14 +1,9 @@
 package com.tap.schoolplatform.controllers.teacher.pages;
 
 import com.tap.schoolplatform.controllers.admin.AdminViewController;
-import com.tap.schoolplatform.models.academic.Group;
-import com.tap.schoolplatform.models.academic.Subject;
-import com.tap.schoolplatform.models.users.Student;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
-import java.util.LinkedList;
 
 public class TeacherStudentListController extends TeacherViewPage {
 

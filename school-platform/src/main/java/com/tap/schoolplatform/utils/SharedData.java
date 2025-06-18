@@ -6,17 +6,10 @@
 
 package com.tap.schoolplatform.utils;
 
-import com.tap.schoolplatform.models.academic.Degree;
 import com.tap.schoolplatform.models.academic.Group;
-import com.tap.schoolplatform.models.academic.Semester;
-import com.tap.schoolplatform.models.academic.Subject;
 import com.tap.schoolplatform.models.academic.enums.Shift;
-import com.tap.schoolplatform.models.users.Admin;
-import com.tap.schoolplatform.models.users.Student;
-import com.tap.schoolplatform.models.users.Teacher;
 import com.tap.schoolplatform.models.users.User;
 import com.tap.schoolplatform.models.users.enums.Gender;
-import com.tap.schoolplatform.models.users.enums.Role;
 import com.tap.schoolplatform.models.users.shared.Address;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -64,12 +57,12 @@ public class SharedData {
         Degree SE = new Degree("Software Engineering", 9);
         Semester first = SE.getSemester(1);
         Semester third = SE.getSemester(3);
-        new Subject(third, "Object Oriented Programming", 5);
+        new Group(third, "Object Oriented Programming", 5);
         Group G1M = new Group(first, Shift.MORNINGS);
         Group G2M = new Group(first, Shift.MORNINGS);
         //Make Changes
-        Subject IC = new Subject(first, "Integral Calculus", 5);
-        Subject POO = new Subject(first, "Political Communication", 5);
+        Group IC = new Group(first, "Integral Calculus", 5);
+        Group POO = new Group(first, "Political Communication", 5);
         degrees.add(SE);
 
         Teacher teacher = getTeacher();

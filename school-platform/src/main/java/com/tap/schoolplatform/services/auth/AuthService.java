@@ -1,7 +1,6 @@
 package com.tap.schoolplatform.services.auth;
 
 import com.tap.schoolplatform.models.users.User;
-import com.tap.schoolplatform.models.users.enums.Role;
 import com.tap.schoolplatform.services.Service;
 import com.tap.schoolplatform.utils.exceptions.UserNotFoundException;
 

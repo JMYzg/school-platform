@@ -2,9 +2,6 @@ package com.tap.schoolplatform.controllers.teacher.pages.homework;
 
 import com.tap.schoolplatform.controllers.alerts.AlertHandler;
 import com.tap.schoolplatform.controllers.teacher.pages.TeacherViewPage;
-import com.tap.schoolplatform.models.academic.tasks.Assignment;
-import com.tap.schoolplatform.models.academic.tasks.Unit;
-import com.tap.schoolplatform.models.users.Teacher;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,7 +14,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 

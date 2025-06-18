@@ -1,10 +1,7 @@
 package com.tap.schoolplatform.controllers.teacher.pages.exam;
 
 import com.tap.schoolplatform.controllers.teacher.pages.TeacherViewPage;
-import com.tap.schoolplatform.models.academic.tasks.Exam;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

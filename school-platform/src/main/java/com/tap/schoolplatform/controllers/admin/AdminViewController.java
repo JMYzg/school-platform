@@ -2,15 +2,9 @@ package com.tap.schoolplatform.controllers.admin;
 
 import com.tap.schoolplatform.controllers.ViewController;
 import com.tap.schoolplatform.controllers.alerts.AlertHandler;
-import com.tap.schoolplatform.models.academic.Degree;
 import com.tap.schoolplatform.models.academic.Group;
-import com.tap.schoolplatform.models.academic.Semester;
-import com.tap.schoolplatform.models.academic.Subject;
-import com.tap.schoolplatform.models.users.Student;
-import com.tap.schoolplatform.models.users.Teacher;
 import com.tap.schoolplatform.models.users.User;
 import com.tap.schoolplatform.models.users.enums.Gender;
-import com.tap.schoolplatform.models.users.enums.Role;
 import com.tap.schoolplatform.models.users.shared.Address;
 import com.tap.schoolplatform.services.auth.LoginService;
 import com.tap.schoolplatform.utils.Validation;
@@ -23,7 +17,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -133,7 +126,7 @@ public class AdminViewController extends ViewController {
 
     @FXML private ComboBox<Gender> teacherGenderComboBox;
     @FXML private ComboBox<Degree> teacherDegreeComboBox;
-    @FXML private ComboBox<Subject>
+    @FXML private ComboBox<Group>
             teacherAssignSubjectComboBox,
     teacherUnassignSubjectComboBox;
     @FXML private ComboBox<Semester>
@@ -526,7 +519,7 @@ public class AdminViewController extends ViewController {
                     "Please enter a subject to continue"
             );
         } else {
-            new Subject(teacherSubjectSemesterComboBox.getSelectionModel().getSelectedItem(), teacherSubjectField.getText(), 5);
+            new Group(teacherSubjectSemesterComboBox.getSelectionModel().getSelectedItem(), teacherSubjectField.getText(), 5);
             AlertHandler.showAlert(
                     Alert.AlertType.INFORMATION,
                     "Create subject",

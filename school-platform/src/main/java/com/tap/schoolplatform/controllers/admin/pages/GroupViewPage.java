@@ -1,19 +1,13 @@
 package com.tap.schoolplatform.controllers.admin.pages;
 
 import com.tap.schoolplatform.controllers.alerts.AlertHandler;
-import com.tap.schoolplatform.models.academic.Degree;
-import com.tap.schoolplatform.models.academic.Group;
-import com.tap.schoolplatform.models.academic.Semester;
 import com.tap.schoolplatform.models.academic.enums.Shift;
 import com.tap.schoolplatform.utils.SharedData;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 
 import java.util.Optional;
 

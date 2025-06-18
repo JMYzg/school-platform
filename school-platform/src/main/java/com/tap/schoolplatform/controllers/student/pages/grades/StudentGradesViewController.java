@@ -1,7 +1,6 @@
 package com.tap.schoolplatform.controllers.student.pages.grades;
 
-import com.tap.schoolplatform.models.academic.Subject;
-import com.tap.schoolplatform.models.users.Student;
+import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.services.auth.LoginService;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -9,15 +8,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class StudentGradesViewController {
-    @FXML private TableView<Subject> gradesTable;
-    @FXML private  TableColumn<Subject, String> subjectsTableColumn;
-    @FXML private  TableColumn<Subject, String> unit1TableColumn;
-    @FXML private  TableColumn<Subject, String> unit2TableColumn;
-    @FXML private  TableColumn<Subject, String> unit3TableColumn;
-    @FXML private  TableColumn<Subject, String> unit4TableColumn;
-    @FXML private  TableColumn<Subject, String> unit5TableColumn;
-    @FXML private  TableColumn<Subject, String> unit6TableColumn;
-    @FXML private  TableColumn<Subject, String> unit7TableColumn;
+    @FXML private TableView<Group> gradesTable;
+    @FXML private  TableColumn<Group, String> subjectsTableColumn;
+    @FXML private  TableColumn<Group, String> unit1TableColumn;
+    @FXML private  TableColumn<Group, String> unit2TableColumn;
+    @FXML private  TableColumn<Group, String> unit3TableColumn;
+    @FXML private  TableColumn<Group, String> unit4TableColumn;
+    @FXML private  TableColumn<Group, String> unit5TableColumn;
+    @FXML private  TableColumn<Group, String> unit6TableColumn;
+    @FXML private  TableColumn<Group, String> unit7TableColumn;
 
     Student currentStudent = (Student) LoginService.getCurrentUser();
 

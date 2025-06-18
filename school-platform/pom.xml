@@ -7,7 +7,7 @@
     <groupId>com.tap</groupId>
     <artifactId>school-platform</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>school-platfom</name>
+    <name>school-platform</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -19,6 +19,16 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>17.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.1.7.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.32</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -64,7 +74,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.tap.schoolplatfom/com.tap.schoolplatform.MainApplication</mainClass>
+                            <mainClass>com.tap.schoolplatform/com.tap.schoolplatform.MainApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

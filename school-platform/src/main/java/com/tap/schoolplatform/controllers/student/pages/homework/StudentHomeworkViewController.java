@@ -1,9 +1,6 @@
 package com.tap.schoolplatform.controllers.student.pages.homework;
 
-import com.tap.schoolplatform.models.academic.Subject;
-import com.tap.schoolplatform.models.academic.tasks.Assignment;
-import com.tap.schoolplatform.models.academic.tasks.Exam;
-import com.tap.schoolplatform.models.users.Student;
+import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.services.auth.LoginService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,7 +47,7 @@ public class StudentHomeworkViewController {
     }
 
     private void loadAssignments() {
-        for (Subject subject : currentStudent.getSemester().getSubjects()) {
+        for (Group subject : currentStudent.getSemester().getSubjects()) {
             for (Assignment assignment : subject.getAllAssignments()) {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(HomeworkContainerViewController.PATH));
@@ -69,7 +66,7 @@ public class StudentHomeworkViewController {
     }
 
     private void loadExams() {
-        for (Subject subject : currentStudent.getSemester().getSubjects()) {
+        for (Group subject : currentStudent.getSemester().getSubjects()) {
             for (Exam exam : subject.getAllExams()) {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(HomeworkContainerViewController.PATH));

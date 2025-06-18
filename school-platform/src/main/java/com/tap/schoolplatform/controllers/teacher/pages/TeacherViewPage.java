@@ -1,17 +1,16 @@
 package com.tap.schoolplatform.controllers.teacher.pages;
 
 import com.tap.schoolplatform.models.academic.Group;
-import com.tap.schoolplatform.models.academic.Subject;
 
 public abstract class TeacherViewPage {
 
-    public static Subject subject;
+    public static Group subject;
     private Group group;
 
-    public Subject getSubject() {
+    public Group getSubject() {
         return subject;
     }
-    public void setSubject(Subject subject) {
+    public void setSubject(Group subject) {
         TeacherViewPage.subject = subject;
     }
 

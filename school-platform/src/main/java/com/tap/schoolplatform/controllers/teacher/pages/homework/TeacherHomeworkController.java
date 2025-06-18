@@ -2,9 +2,7 @@ package com.tap.schoolplatform.controllers.teacher.pages.homework;
 
 
 import com.tap.schoolplatform.controllers.teacher.pages.TeacherViewPage;
-import com.tap.schoolplatform.models.academic.Subject;
-import com.tap.schoolplatform.models.academic.tasks.Assignment;
-import com.tap.schoolplatform.models.academic.tasks.Unit;
+import com.tap.schoolplatform.models.academic.Group;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -39,7 +37,7 @@ public class TeacherHomeworkController extends TeacherViewPage {
 
     private void loadExistingAssignments() {
         if (subject != null) {
-            for(Unit unit : subject.getUnits()){
+            for(Unit unit : subject.getMembers()){
                 for(Assignment assignment : unit.getAssignments()){
                     //FXML CONTAINERS re
                     addAssignmentView(assignment);
@@ -66,7 +64,7 @@ public class TeacherHomeworkController extends TeacherViewPage {
     }
      //
 
-    public void setSubject(Subject subject){
+    public void setSubject(Group subject){
         this.subject = subject;
     }
 

@@ -1,6 +1,5 @@
 package com.tap.schoolplatform.controllers.student.pages.data;
 
-import com.tap.schoolplatform.models.users.Student;
 import com.tap.schoolplatform.services.auth.LoginService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

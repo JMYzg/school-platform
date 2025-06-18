@@ -1,8 +1,6 @@
 package com.tap.schoolplatform.controllers.admin.pages;
 
 import com.tap.schoolplatform.controllers.alerts.AlertHandler;
-import com.tap.schoolplatform.models.academic.Degree;
-import com.tap.schoolplatform.services.users.AdminService;
 import com.tap.schoolplatform.utils.SharedData;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

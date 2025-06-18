@@ -4,7 +4,8 @@ module com.tap.schoolplatform {
 
     requires org.controlsfx.controls;
     requires java.management;
-    requires java.xml;
+    requires jakarta.persistence;
+    requires org.hibernate.orm.core;
 
     opens com.tap.schoolplatform to javafx.fxml;
     exports com.tap.schoolplatform;

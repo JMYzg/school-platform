@@ -8,8 +8,6 @@ import com.tap.schoolplatform.controllers.teacher.pages.TeacherGradeController;
 import com.tap.schoolplatform.controllers.teacher.pages.homework.TeacherHomeworkController;
 import com.tap.schoolplatform.controllers.teacher.pages.TeacherStudentListController;
 import com.tap.schoolplatform.models.academic.Group;
-import com.tap.schoolplatform.models.academic.Subject;
-import com.tap.schoolplatform.models.users.Teacher;
 import com.tap.schoolplatform.services.auth.LoginService;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,7 +24,7 @@ import java.util.Optional;
 
 public class TeacherViewController extends ViewController {
 
-    @FXML public TreeView<Subject> treeView;
+    @FXML public TreeView<Group> treeView;
 
     @FXML private Label
             subjectNameLabel,
@@ -49,7 +47,7 @@ public class TeacherViewController extends ViewController {
             nextButton;
 
     public TeacherStudentListController currentStudentList;
-    public static Subject currentSubject;
+    public static Group currentSubject;
     public LinkedList<Group> currentGroups;
     ListIterator<Group> iterator;
 
@@ -65,7 +63,7 @@ public class TeacherViewController extends ViewController {
         // Listener
         treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                Subject selectedSubject = (Subject) newValue.getValue();
+                Group selectedSubject = (Group) newValue.getValue();
                 System.out.println(selectedSubject);
 
                 TeacherViewPage.subject = selectedSubject;
@@ -78,12 +76,12 @@ public class TeacherViewController extends ViewController {
 
     public void setTreeView() {
         Teacher currentTeacher = (Teacher) LoginService.getCurrentUser();
-        TreeItem<Subject> rootItem = new TreeItem<>(null);
+        TreeItem<Group> rootItem = new TreeItem<>(null);
         rootItem.setExpanded(true);
 
-        ObservableList<Subject> subjects = currentTeacher.getSubjects();
-        for (Subject subject : subjects) {
-            TreeItem<Subject> subjectItem = new TreeItem<>(subject);
+        ObservableList<Group> subjects = currentTeacher.getSubjects();
+        for (Group subject : subjects) {
+            TreeItem<Group> subjectItem = new TreeItem<>(subject);
             subjectItem.setExpanded(true);
             rootItem.getChildren().add(subjectItem);
         }
@@ -99,7 +97,7 @@ public class TeacherViewController extends ViewController {
         if (this.iterator.hasPrevious()) {
             Group previous = this.iterator.previous();
             currentStudentList.table.setItems(previous.getStudents());
-            groupName.setText(previous.getID());
+            groupName.setText(previous.getId());
             semesterGroup.setText(previous.getSemester().toString());
             groupShift.setText(previous.getShift().toString());
             currentStudentList.table.refresh();
@@ -110,7 +108,7 @@ public class TeacherViewController extends ViewController {
         if (this.iterator.hasNext()) {
             Group next = this.iterator.next();
             currentStudentList.table.setItems(next.getStudents());
-            groupName.setText(next.getID());
+            groupName.setText(next.getId());
             semesterGroup.setText(next.getSemester().toString());
             groupShift.setText(next.getShift().toString());
             currentStudentList.table.refresh();
@@ -159,7 +157,7 @@ public class TeacherViewController extends ViewController {
         }
     }
 
-    public void loadPageStudentList(String pageName, BorderPane borderPane, Subject subject) {
+    public void loadPageStudentList(String pageName, BorderPane borderPane, Group subject) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(pageName));
             Parent root = loader.load();
@@ -231,7 +229,7 @@ public class TeacherViewController extends ViewController {
         }
     }
 
-    public void loadPage(String path, BorderPane pane, Subject subject, Group group) {
+    public void loadPage(String path, BorderPane pane, Group subject, Group group) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
             Object controller = loader.getController();
