@@ -44,7 +44,7 @@
                <children>
                   <Button id="btnM" layoutX="648.0" layoutY="8.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Create" />
                   <Button id="btnH" layoutX="771.0" layoutY="8.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" text="Join" />
-                  <Button fx:id="exitButton" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#closeSubmitHomework">
+                  <Button fx:id="exitButton" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#closeSubmitHomework" visible="false">
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -61,9 +61,9 @@
                <children>
                   <HBox prefHeight="475.0" prefWidth="586.0" spacing="10.0">
                      <children>
-                        <VBox prefHeight="475.0" prefWidth="230.0" spacing="10.0">
+                        <VBox prefHeight="475.0" prefWidth="246.0" spacing="10.0">
                            <children>
-                              <AnchorPane prefHeight="216.0" prefWidth="263.0" style="-fx-background-color: f6f6f6; -fx-background-radius: 5;">
+                              <AnchorPane prefHeight="216.0" prefWidth="248.0" style="-fx-background-color: f6f6f6; -fx-background-radius: 5;">
                                  <padding>
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                  </padding>
@@ -209,7 +209,7 @@
                                     <Insets top="5.0" />
                                  </FlowPane.margin>
                               </Label>
-                              <Label id="txtregular" fx:id="state" prefHeight="15.0" prefWidth="118.0" text="Baja California Sur">
+                              <Label id="txtregular" fx:id="state" prefHeight="15.0" prefWidth="117.0" text="Baja California Sur">
                                  <FlowPane.margin>
                                     <Insets top="5.0" />
                                  </FlowPane.margin>
@@ -219,7 +219,7 @@
                                     <Insets top="5.0" />
                                  </FlowPane.margin>
                               </Label>
-                              <Label id="txtregular" fx:id="country" prefHeight="15.0" prefWidth="73.0" text="México">
+                              <Label id="txtregular" fx:id="country" prefHeight="15.0" prefWidth="49.0" text="México">
                                  <FlowPane.margin>
                                     <Insets top="5.0" />
                                  </FlowPane.margin>
@@ -234,7 +234,41 @@
                         </FlowPane>
                      </children>
                   </HBox>
-                  <VBox prefHeight="495.0" prefWidth="389.0" />
+                  <VBox prefHeight="495.0" prefWidth="389.0" spacing="10.0">
+                     <children>
+                        <Label id="TitleRegister" text="Groups" />
+                        <Button id="BtnTest" alignment="CENTER" graphicTextGap="3.0" mnemonicParsing="false" prefHeight="119.0" prefWidth="263.0" style="-fx-background-radius: 5; -fx-background-color: transparent;">
+                           <graphic>
+                              <HBox id="Difuminado" prefHeight="114.0" prefWidth="253.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 5;">
+                                 <children>
+                                    <AnchorPane id="BtnclassColor" prefHeight="100.0" prefWidth="103.0" style="-fx-background-color: #91d414;" />
+                                    <Label id="txtbold" prefHeight="107.0" prefWidth="133.0" text="Organic Chemistry" />
+                                 </children>
+                              </HBox>
+                           </graphic>
+                           <stylesheets>
+                              <URL value="@../../styles/main.css" />
+                              <URL value="@../../styles/buttons.css" />
+                           </stylesheets>
+                        </Button>
+                        <Button id="BtnTest" alignment="CENTER" graphicTextGap="3.0" mnemonicParsing="false" prefHeight="119.0" prefWidth="263.0" style="-fx-background-radius: 5; -fx-background-color: transparent;">
+                           <graphic>
+                              <HBox id="Difuminado" prefHeight="114.0" prefWidth="253.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 5;">
+                                 <children>
+                                    <AnchorPane id="BtnclassColor" prefHeight="100.0" prefWidth="103.0" style="-fx-background-color: #91d414;" />
+                                    <Label id="txtbold" prefHeight="107.0" prefWidth="133.0" text="Organic Chemistry" />
+                                 </children>
+                              </HBox>
+                           </graphic>
+                           <stylesheets>
+                              <URL value="@../../styles/main.css" />
+                              <URL value="@../../styles/buttons.css" />
+                           </stylesheets>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding></VBox>
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
