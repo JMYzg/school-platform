@@ -3,9 +3,10 @@ package com.tap.schoolplatform.controllers.login;
 import com.tap.schoolplatform.controllers.ViewController;
 import com.tap.schoolplatform.controllers.alerts.AlertHandler;
 import com.tap.schoolplatform.models.users.User;
+import com.tap.schoolplatform.models.users.enums.Type;
 import com.tap.schoolplatform.services.auth.AuthService;
 import com.tap.schoolplatform.services.auth.LoginService;
-import com.tap.schoolplatform.utils.Validation;
+import com.tap.schoolplatform.utils.PatternValidator;
 import com.tap.schoolplatform.utils.exceptions.NotValidFormatException;
 import com.tap.schoolplatform.utils.exceptions.UserNotFoundException;
 import javafx.fxml.FXML;
@@ -32,16 +33,12 @@ public class LoginViewController extends ViewController {
         String email = emailField.getText().trim();
         String password = passwordField.getText().trim();
         try {
-            if (!Validation.ofEmail(email)) throw new NotValidFormatException("Not a valid email");
-//            if (!Validation.ofPassword(password)) throw new NotValidFormatException("Not a valid password");
+            if (!PatternValidator.ofEmail(email)) throw new NotValidFormatException("Not a valid email");
+//            if (!PatternValidator.ofPassword(password)) throw new NotValidFormatException("Not a valid password");
             User user = AuthService.login(email, password);
             LoginService.setCurrentUser(user);
-            String view = switch(user.getRole()) {
-                case ADMIN -> ADMIN_VIEW;
-                case TEACHER -> TEACHER_VIEW;
-                default -> STUDENT_VIEW;
-            };
-            toView(view, user.getRole().toString(), loginButton);
+            String view = (user.getType() == Type.ADMIN) ? ADMIN_VIEW : USER_VIEW;
+            toView(view, user.getType().toString(), loginButton);
         } catch (NotValidFormatException e) {
             AlertHandler.showAlert(
                     Alert.AlertType.ERROR,

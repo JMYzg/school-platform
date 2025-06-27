@@ -1,7 +1,10 @@
 package com.tap.schoolplatform.models.academic;
 
-import com.tap.schoolplatform.models.users.User;
+import com.tap.schoolplatform.models.academic.tasks.Assignment;
+import com.tap.schoolplatform.models.users.shared.Membership;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,29 +17,33 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private byte[] icon;
+    private String color;
 
+    @NotBlank
     private String name;
+
+    @NotBlank
+    @Size(max = 100)
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private User owner;
-
-    @ManyToMany
-    @JoinTable(
-            name = "group_members",
-            joinColumns = @JoinColumn(name = "group_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+    @OneToMany(
+            mappedBy = "group",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
-    private final List<User> members = new ArrayList<>();
+    private List<Membership> memberships = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "group",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private final List<Assignment> assignments = new ArrayList<>();
 
     public Group() {}
 
-    public Group(User owner, String name, String description) {
-        this.owner = owner;
+    public Group(String name, String description) {
         this.name = name;
         this.description = description;
     }
@@ -45,11 +52,11 @@ public class Group {
         return id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getColor() {
+        return color;
     }
-    public void setDescription(String description) {
-        this.description = description;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getName() {
@@ -59,15 +66,15 @@ public class Group {
         this.name = name;
     }
 
-    public User getOwner() {
-        return owner;
+    public String getDescription() {
+        return description;
     }
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public List<User> getMembers() {
-        return members;
+    public List<Membership> getMemberships() {
+        return memberships;
     }
 
     @Override

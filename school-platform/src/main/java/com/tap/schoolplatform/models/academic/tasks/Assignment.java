@@ -1,7 +1,9 @@
 package com.tap.schoolplatform.models.academic.tasks;
 
+import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.academic.tasks.enums.Status;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
 
@@ -15,21 +17,37 @@ public class Assignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private LocalDateTime creationDate;
+
+    @NotBlank
     private String title;
+
+    @NotBlank
+    @Size(max = 1000)
     private String description;
+
+    @NotNull
+    @Future
     private LocalDateTime deadline;
 
+    @NotNull
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_id")
+    private Group group;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Status status;
 
     public Assignment() {}
 
-    public Assignment(String title, String description, LocalDateTime deadline) {
-        this.creationDate = LocalDateTime.now();
+    public Assignment(String title, String desc, LocalDateTime deadline, Group group) {
         this.title = title;
-        this.description = description;
-        this.status = deadline.isAfter(creationDate) ? Status.ACTIVE : Status.INACTIVE;
+        this.description = desc;
+        this.deadline = deadline;
+        this.group = group;
+        this.status = deadline.isAfter(LocalDateTime.now()) ? Status.ACTIVE : Status.INACTIVE;
     }
 
     public int getId() {
@@ -62,11 +80,18 @@ public class Assignment {
         this.status = deadline.isAfter(LocalDateTime.now()) ? Status.ACTIVE : Status.INACTIVE;
     }
 
+    public Group getGroup() {
+        return group;
+    }
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
     public Status getStatus() {
         return status;
     }
-    public void setStatus(Status status) {
-        this.status = status;
+    protected void setStatus(Status status) {
+        this.status = deadline.isAfter(LocalDateTime.now()) ? Status.ACTIVE : Status.INACTIVE;
     }
 
     @PrePersist

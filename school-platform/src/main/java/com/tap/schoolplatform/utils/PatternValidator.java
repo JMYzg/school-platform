@@ -1,11 +1,9 @@
 package com.tap.schoolplatform.utils;
 
-import com.tap.schoolplatform.utils.exceptions.NotValidFormatException;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Validation {
+public class PatternValidator {
 
     public static boolean ofEmail(String email) {
         String regex = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,}$";

@@ -1,9 +1,7 @@
 package com.tap.schoolplatform.models.users.shared;
 
 import jakarta.persistence.*;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "addresses")
@@ -11,12 +9,24 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private int id;
+
+    @NotBlank
     private String street;
+
+    @NotBlank
     private String postalCode;
+
+    @NotBlank
     private String colony;
+
+    @NotBlank
     private String city;
+
+    @NotBlank
     private String state;
+
+    @NotBlank
     private String country;
 
     public Address() {}
@@ -30,8 +40,8 @@ public class Address {
         this.country = country;
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
     public String getStreet() {
@@ -87,5 +97,10 @@ public class Address {
                 city.equals(address.city) &&
                 state.equals(address.state) &&
                 country.equals(address.country);
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);
     }
 }
