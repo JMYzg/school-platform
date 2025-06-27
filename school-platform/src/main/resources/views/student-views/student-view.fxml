@@ -38,16 +38,6 @@
                         <Button id="btnOptions" fx:id="classesTab" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" onMouseClicked="#openClassTab" prefHeight="31.0" prefWidth="193.0" text="Classes" />
                         <Button id="btnOptions" fx:id="homeworkTab" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" onMouseClicked="#openHomeworkTab" prefHeight="31.0" prefWidth="193.0" text="Homework" />
                         <Button id="btnOptions" fx:id="gradesButton" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" onMouseClicked="#openGradesTab" prefHeight="31.0" prefWidth="193.0" text="Grades" />
-                        <Button id="btnLogout" fx:id="logOutButton" mnemonicParsing="false" onMouseClicked="#exitStudentView" text="Log out">
-                           <graphic>
-                              <ImageView fitHeight="15" fitWidth="15">
-                                 <Image url="https://static-00.iconduck.com/assets.00/logout-icon-2048x2046-yqonjwjv.png" />
-                              </ImageView>
-                           </graphic>
-                           <VBox.margin>
-                              <Insets top="190.0" />
-                           </VBox.margin>
-                        </Button>
                      </children>
                   </VBox>
                </children>
