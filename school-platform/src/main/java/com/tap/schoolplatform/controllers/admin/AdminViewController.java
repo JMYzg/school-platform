@@ -7,7 +7,7 @@ import com.tap.schoolplatform.models.users.User;
 import com.tap.schoolplatform.models.users.enums.Gender;
 import com.tap.schoolplatform.models.users.shared.Address;
 import com.tap.schoolplatform.services.auth.LoginService;
-import com.tap.schoolplatform.utils.Validation;
+import com.tap.schoolplatform.utils.PatternValidator;
 import com.tap.schoolplatform.utils.exceptions.NotValidFormatException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -414,6 +414,9 @@ public class AdminViewController extends ViewController {
                 "lastName",
                 "email",
                 "phone",
+                "degree",
+                "semester",
+                "group",
                 "gender",
                 "birthDate",
                 "age"

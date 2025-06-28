@@ -6,6 +6,7 @@ module com.tap.schoolplatform {
     requires java.management;
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
+    requires jakarta.validation;
 
     opens com.tap.schoolplatform to javafx.fxml;
     exports com.tap.schoolplatform;

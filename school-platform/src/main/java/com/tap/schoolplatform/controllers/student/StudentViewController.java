@@ -1,3 +1,4 @@
+//Will be erase
 package com.tap.schoolplatform.controllers.student;
 
 import com.tap.schoolplatform.controllers.ViewController;
