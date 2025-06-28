@@ -1,3 +1,4 @@
+//Depurating
 package com.tap.schoolplatform.controllers;
 
 import com.tap.schoolplatform.utils.SharedData;
@@ -18,7 +19,9 @@ public abstract class ViewController {
     protected final SharedData data = SharedData.getInstance();
 
     protected static final String LOGIN_VIEW = "/views/new-interface/login-view.fxml";
+    protected static final String USER_VIEW = "/views/new-interface/user-view.fxml";
     protected static final String ADMIN_VIEW = "/views/admin-views/admin-view.fxml";
+
     protected static final String TEACHER_VIEW = "/views/teacher-views/teacher-view.fxml";
     protected static final String STUDENT_VIEW = "/views/student-views/student-view.fxml";
 

@@ -1,3 +1,4 @@
+//Depurating
 package com.tap.schoolplatform.controllers.login;
 
 import com.tap.schoolplatform.controllers.ViewController;
@@ -36,10 +37,17 @@ public class LoginViewController extends ViewController {
 //            if (!Validation.ofPassword(password)) throw new NotValidFormatException("Not a valid password");
             User user = AuthService.login(email, password);
             LoginService.setCurrentUser(user);
+            if (user == null) {
+
+            }
+            else{
+
+            }
             String view = switch(user.getRole()) {
                 case ADMIN -> ADMIN_VIEW;
-                case TEACHER -> TEACHER_VIEW;
-                default -> STUDENT_VIEW;
+                //case TEACHER -> TEACHER_VIEW;
+                //default -> STUDENT_VIEW;
+                default -> USER_VIEW;
             };
             toView(view, user.getRole().toString(), loginButton);
         } catch (NotValidFormatException e) {
