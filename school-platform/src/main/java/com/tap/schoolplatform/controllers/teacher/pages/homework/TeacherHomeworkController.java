@@ -37,7 +37,7 @@ public class TeacherHomeworkController extends TeacherViewPage {
 
     private void loadExistingAssignments() {
         if (subject != null) {
-            for(Unit unit : subject.getMembers()){
+            for(Unit unit : subject.getMemberships()){
                 for(Assignment assignment : unit.getAssignments()){
                     //FXML CONTAINERS re
                     addAssignmentView(assignment);

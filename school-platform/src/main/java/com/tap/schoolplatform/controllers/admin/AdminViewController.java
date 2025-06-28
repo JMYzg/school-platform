@@ -8,7 +8,7 @@ import com.tap.schoolplatform.models.users.User;
 import com.tap.schoolplatform.models.users.enums.Gender;
 import com.tap.schoolplatform.models.users.shared.Address;
 import com.tap.schoolplatform.services.auth.LoginService;
-import com.tap.schoolplatform.utils.Validation;
+import com.tap.schoolplatform.utils.PatternValidator;
 import com.tap.schoolplatform.utils.exceptions.NotValidFormatException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -1154,10 +1154,10 @@ public class AdminViewController extends ViewController {
         requireNotNull(studentGroupComboBox.getSelectionModel().getSelectedItem(), "Group is required.");
         requireNotNull(studentImageView.getImage(), "Image is required.");
 
-        validateFieldFormat(Validation.ofName(studentNameField.getText()), "Not a valid name.");
-        validateFieldFormat(Validation.ofName(studentLastNameField.getText()), "Not a valid last name.");
-        validateFieldFormat(Validation.ofPhone(studentPhoneField.getText()), "Not a valid phone number.");
-        validateFieldFormat(Validation.ofEmail(studentEmailField.getText()), "Not a valid email address.");
+        validateFieldFormat(PatternValidator.ofName(studentNameField.getText()), "Not a valid name.");
+        validateFieldFormat(PatternValidator.ofName(studentLastNameField.getText()), "Not a valid last name.");
+        validateFieldFormat(PatternValidator.ofPhone(studentPhoneField.getText()), "Not a valid phone number.");
+        validateFieldFormat(PatternValidator.ofEmail(studentEmailField.getText()), "Not a valid email address.");
     }
 
     private void checkRequirements(
@@ -1321,11 +1321,11 @@ public class AdminViewController extends ViewController {
         requireNotNull(teacherDatePicker.getValue(), "Birthdate is required.");
         requireNotNull(teacherDegreeComboBox.getSelectionModel().getSelectedItem(), "Degree is required.");
 
-        validateFieldFormat(Validation.ofName(teacherNameField.getText()), "Not a valid name.");
-        validateFieldFormat(Validation.ofName(teacherLastNameField.getText()), "Not a valid last name.");
-        validateFieldFormat(Validation.ofName(teacherSpecializationField.getText()), "Not a valid specialization name.");
-        validateFieldFormat(Validation.ofPhone(teacherPhoneField.getText()), "Not a valid phone number.");
-        validateFieldFormat(Validation.ofEmail(teacherEmailField.getText()), "Not a valid email address.");
+        validateFieldFormat(PatternValidator.ofName(teacherNameField.getText()), "Not a valid name.");
+        validateFieldFormat(PatternValidator.ofName(teacherLastNameField.getText()), "Not a valid last name.");
+        validateFieldFormat(PatternValidator.ofName(teacherSpecializationField.getText()), "Not a valid specialization name.");
+        validateFieldFormat(PatternValidator.ofPhone(teacherPhoneField.getText()), "Not a valid phone number.");
+        validateFieldFormat(PatternValidator.ofEmail(teacherEmailField.getText()), "Not a valid email address.");
     }
 
 

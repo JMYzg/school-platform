@@ -3,9 +3,11 @@ package com.tap.schoolplatform.models.academic.tasks;
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.users.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 
-import java.io.File;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Table(name = "submissions", uniqueConstraints = {
@@ -17,36 +19,43 @@ public class Submission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     private User user;
 
+    @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "assignment_id")
     private Assignment assignment;
 
+    @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "group_id")
     private Group group;
 
-    private LocalDateTime submittedAt;
+    @Past
+    private Instant submittedAt;
 
+    @NotNull
     private double score;
 
+    @NotNull
     @Lob
-    private File content;
+    private byte[] content;
 
+    @NotBlank
     private String feedback;
 
     public Submission() {
     }
 
-    public Submission(User user, Assignment assignment, Group group, File content) {
+    public Submission(User user, Assignment assignment, Group group, byte[] content) {
         this.user = user;
         this.assignment = assignment;
         this.group = group;
         this.content = content;
-        this.submittedAt = LocalDateTime.now();
+        this.submittedAt = Instant.now();
         this.score = -1;
     }
 
@@ -66,10 +75,21 @@ public class Submission {
         return group;
     }
 
-    public File getContent() {
+    public Instant getSubmittedAt() {
+        return submittedAt;
+    }
+
+    public double getScore() {
+        return score;
+    }
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public byte[] getContent() {
         return content;
     }
-    public void setContent(File content) {
+    public void setContent(byte[] content) {
         this.content = content;
     }
 

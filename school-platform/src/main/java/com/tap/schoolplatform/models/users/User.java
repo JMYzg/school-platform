@@ -1,11 +1,16 @@
 package com.tap.schoolplatform.models.users;
 
+import com.tap.schoolplatform.models.users.enums.Type;
 import com.tap.schoolplatform.models.users.shared.Address;
 import com.tap.schoolplatform.models.users.enums.Gender;
+import com.tap.schoolplatform.models.users.shared.Membership;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -14,25 +19,55 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotBlank
+    @Size(min = 2, max = 30)
     private String name;
+
+    @NotBlank
+    @Size(min = 2, max = 30)
     private String lastName;
+
+    @NotBlank
+    @Email
     private String email;
+
+    @NotBlank
+    @Size(min = 8)
     private String password;
+
+    @NotBlank
+    @Pattern(regexp = "\\d{10}")
     private String phone;
 
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
+
+    @Past
     private LocalDate birthDate;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Membership> memberships = new ArrayList<>();
 
     public User() {
 
     }
 
-    public User(String name, String lastName, String email, String password, String phone, Address address, LocalDate birthDate, Gender gender) {
+    public User(String name, String lastName, String email, String password, String phone, Address address, LocalDate birthDate, Gender gender, Type type) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
@@ -41,6 +76,7 @@ public class User {
         this.address = address;
         this.birthDate = birthDate;
         this.gender = gender;
+        this.type = type;
     }
 
     public int getId() {
@@ -105,6 +141,13 @@ public class User {
     }
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public Type getType() {
+        return type;
+    }
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override
