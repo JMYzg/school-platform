@@ -26,7 +26,7 @@
             <padding>
                <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
             </padding>
-            <ImageView fx:id="studentPhoto" fitHeight="98.0" fitWidth="98.0" layoutX="11.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="userPhoto" fitHeight="98.0" fitWidth="98.0" layoutX="11.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                <Image url="https://happydemic.com/img/artist/amrut.png" />
             </ImageView>
             <Label id="txtbold" layoutX="116.0" layoutY="43.0" text="Last name:" />
@@ -185,7 +185,7 @@
       <Button id="BtnTest" alignment="CENTER" graphicTextGap="3.0" mnemonicParsing="false" prefHeight="119.0" prefWidth="263.0" style="-fx-background-radius: 5; -fx-background-color: transparent;">
          <graphic>
             <HBox id="Difuminado" prefHeight="114.0" prefWidth="253.0" spacing="5.0" style="-fx-background-color: white; -fx-background-radius: 5;">
-               <AnchorPane id="BtnclassColor" prefHeight="100.0" prefWidth="103.0" style="-fx-background-color: #91d414;" />
+               <AnchorPane id="BtnclassColor" fx:id="groupIcon" prefHeight="100.0" prefWidth="103.0" style="-fx-background-color: #91d414;" />
                <Label id="txtbold" prefHeight="107.0" prefWidth="133.0" text="Organic Chemistry" />
             </HBox>
          </graphic>

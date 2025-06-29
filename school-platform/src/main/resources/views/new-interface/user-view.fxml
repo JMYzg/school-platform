@@ -32,9 +32,9 @@
    <BorderPane prefHeight="537.0" prefWidth="917.0">
       <top>
          <AnchorPane prefHeight="40.0" prefWidth="893.0" BorderPane.alignment="CENTER">
-            <Button id="btnM" fx:id="createButtom" layoutX="648.0" layoutY="8.0" mnemonicParsing="false" onAction="#createAction" prefHeight="25.0" prefWidth="105.0" text="Create" />
-            <Button id="btnH" fx:id="joinButtom" layoutX="771.0" layoutY="8.0" mnemonicParsing="false" onAction="#joinAction" prefHeight="25.0" prefWidth="102.0" text="Join" />
-            <Button fx:id="backButtom" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#back">
+            <Button id="btnM" fx:id="createButton" layoutX="648.0" layoutY="8.0" mnemonicParsing="false" onAction="#createAction" prefHeight="25.0" prefWidth="105.0" text="Create" />
+            <Button id="btnH" fx:id="joinButton" layoutX="771.0" layoutY="8.0" mnemonicParsing="false" onAction="#joinAction" prefHeight="25.0" prefWidth="102.0" text="Join" />
+            <Button fx:id="backButton" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#back">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                      <Image url="@../../images/arrowL.png" />

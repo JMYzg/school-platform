@@ -11,25 +11,24 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label id="TitleRegister" text="Creation group" />
       <Separator prefWidth="200.0" />
       <Label text="Write a name for the group:" />
-      <TextField />
+      <TextField fx:id="groupNameField" />
       <Label text="Make a description:" />
-      <TextArea prefHeight="151.0" prefWidth="580.0" />
+      <TextArea fx:id="descriptionField" prefHeight="151.0" prefWidth="580.0" />
       <Label text="Choose a color:" />
       <HBox prefHeight="29.0" prefWidth="600.0" spacing="10.0">
          <children>
-            <ColorPicker />
-            <Button id="btnM" mnemonicParsing="false" text="Create">
+            <ColorPicker fx:id="colorPicker" />
+            <Button id="btnM" fx:id="createButton" mnemonicParsing="false" onAction="#createGroup" text="Create">
                <HBox.margin>
                   <Insets left="300.0" />
                </HBox.margin>
             </Button>
-            <Button id="btnN" mnemonicParsing="false" text="Cancel" />
+            <Button id="btnN" fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelCreation" text="Cancel" />
          </children>
       </HBox>
    </children>

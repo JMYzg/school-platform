@@ -23,7 +23,7 @@
                               <TableColumn fx:id="lastNameTableColumn" prefWidth="107.0" text="Last name" />
                               <TableColumn fx:id="nameTableColumn" prefWidth="117.0" text="Name" />
                               <TableColumn fx:id="emailTableColumn" minWidth="0.0" prefWidth="171.0" text="Email" />
-                              <TableColumn prefWidth="79.0" text="Role" />
+                              <TableColumn fx:id="roleTabbleColumn" prefWidth="79.0" text="Role" />
                            </columns>
                         </TableView>
                      </children>
