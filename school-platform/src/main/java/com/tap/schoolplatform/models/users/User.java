@@ -152,6 +152,10 @@ public class User {
         this.type = type;
     }
 
+    public List<Membership> getMemberships() {
+        return memberships;
+    }
+
     @Override
     public String toString() {
         return name + " " + lastName;
