@@ -2,12 +2,13 @@ package com.tap.schoolplatform.controllers.admin;
 
 import com.tap.schoolplatform.controllers.ViewController;
 import com.tap.schoolplatform.controllers.alerts.AlertHandler;
-import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.users.User;
 import com.tap.schoolplatform.models.users.enums.Gender;
+import com.tap.schoolplatform.models.users.enums.Type;
 import com.tap.schoolplatform.models.users.shared.Address;
+import com.tap.schoolplatform.services.Service;
+import com.tap.schoolplatform.utils.ValidationManager;
 import com.tap.schoolplatform.services.auth.LoginService;
-import com.tap.schoolplatform.utils.PatternValidator;
 import com.tap.schoolplatform.utils.exceptions.NotValidFormatException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,7 +36,7 @@ public class AdminViewController extends ViewController {
 
     // StudentTab
     @FXML private Button
-    newButton,
+    registerButton,
     editButton,
     acceptButton,
     cancelButton,
@@ -107,7 +108,87 @@ public class AdminViewController extends ViewController {
     }
 
     // StudentTab
-    @FXML private void newButtonHandler() {
+    @FXML private void registerButtonHandler() {
+        if (registerButton.getText().equals("Register")) {
+            Optional<ButtonType> response =
+                    AlertHandler.showAlert(
+                            Alert.AlertType.CONFIRMATION,
+                            "Please confirm",
+                            "Register new user",
+                            "Do you want to register a new user?"
+                    );
+            if (response.isPresent() && response.get() == ButtonType.OK) {
+                try {
+                    validateForm();
+                    User user = new User(
+                            nameField.getText(),
+                            lastNameField.getText(),
+                            emailField.getText(),
+                            "789",
+                            phoneField.getText(),
+                            new Address(
+                                    streetField.getText(),
+                                    pcField.getText(),
+                                    colonyField.getText(),
+                                    cityField.getText(),
+                                    stateField.getText(),
+                                    countryField.getText()
+                            ),
+                            datePicker.getValue(),
+                            genderComboBox.getValue(),
+                            Type.USER
+                    );
+                    //user.setProfilePicture(imageView.getImage());
+
+                    Service.add(user);
+
+                    AlertHandler.showAlert(
+                            Alert.AlertType.INFORMATION,
+                            "Create user",
+                            "Successful operation",
+                            "The user has been created!"
+                    );
+                    clearForm();
+                } catch (NotValidFormatException e) {
+                    AlertHandler.showAlert(
+                            Alert.AlertType.ERROR,
+                            "Error",
+                            "Not a valid format",
+                            e.getMessage()
+                    );
+                }
+            }
+        } else {
+            Optional<ButtonType> response =
+                    AlertHandler.showAlert(
+                            Alert.AlertType.CONFIRMATION,
+                            "Please confirm",
+                            "Delete user",
+                            "This action will delete the user, do you want to continue?"
+                    );
+            if (response.isPresent() && response.get() == ButtonType.OK) {
+                User user = searchTableView.getSelectionModel().getSelectedItem();
+                if (user != null) {
+                    clearForm();
+                    searchTableView.refresh();
+                    searchTableView.getSelectionModel().clearSelection();
+                    searchTableView.setDisable(false);
+                    disableButtons(false, filterButton, acceptButton);
+                    disableButtons(true, editButton, cancelButton, registerButton);
+                    disableTextFields(false, searchField);
+                    disableForm(false);
+                    registerButton.setText("Register");
+                    AlertHandler.showAlert(
+                            Alert.AlertType.INFORMATION,
+                            "Delete student",
+                            "Successful operation",
+                            "The student has been deleted!"
+                    );
+                }
+            }
+        }
+
+        /*
         if (newButton.getText().equals("New")) {
             Optional<ButtonType> response =
                     AlertHandler.showAlert(
@@ -155,7 +236,7 @@ public class AdminViewController extends ViewController {
                     );
                 }
             }
-        }
+        } */
     }
 
     @FXML private Image uploadImageClick() {
@@ -166,7 +247,7 @@ public class AdminViewController extends ViewController {
                 new FileChooser.ExtensionFilter("PNG", "*.png"),
                 new FileChooser.ExtensionFilter("JPEG", "*.jpg", "*.jpeg")
         );
-        File image = fileChooser.showOpenDialog(newButton.getScene().getWindow());
+        File image = fileChooser.showOpenDialog(registerButton.getScene().getWindow());
         if (image != null) {
             try {
                 String imagePath = image.toURI().toString();
@@ -185,18 +266,10 @@ public class AdminViewController extends ViewController {
         return null;
     }
 
-    @FXML private void onStudentManageDegreeClick(ActionEvent event) throws IOException {
-        loadNewView(event, "/views/admin-views/degree-view.fxml", "Degree management");
-    }
-
-    @FXML private void onStudentManageGroupClick(ActionEvent event) throws IOException {
-        loadNewView(event, "/views/admin-views/group-view.fxml", "Group management");
-    }
-
-    @FXML private void studentEditButtonHandler() {
+    @FXML private void editButtonHandler() {
         fillForm(searchTableView.getSelectionModel().getSelectedItem());
         disableForm(false);
-        disableButtons(false, newButton, acceptButton);
+        disableButtons(false, registerButton, acceptButton);
         disableButtons(true, editButton, filterButton);
         disableTextFields(true, searchField);
         searchTableView.setDisable(true);
@@ -206,80 +279,49 @@ public class AdminViewController extends ViewController {
     // Move this
 
     @FXML private void acceptButtonHandler() {
-        switch (acceptButton.getText()) {
-            case "Create":
-                try {
-                    validateForm();
-                    User user = new User (
-                            nameField.getText(),
-                            lastNameField.getText(),
-                            emailField.getText(),
-                            "789",
-                            phoneField.getText(),
-                            new Address(
-                                    streetField.getText(),
-                                    pcField.getText(),
-                                    colonyField.getText(),
-                                    cityField.getText(),
-                                    stateField.getText(),
-                                    countryField.getText()
-                            ),
-                            datePicker.getValue(),
-                            genderComboBox.getValue()
-                    );
-                    //user.setProfilePicture(imageView.getImage());
-                    AlertHandler.showAlert(
-                            Alert.AlertType.INFORMATION,
-                            "Create student",
-                            "Successful operation",
-                            "The student has been created!"
-                    );
-                    clearForm();
-                } catch (NotValidFormatException e) {
-                    AlertHandler.showAlert(
-                            Alert.AlertType.ERROR,
-                            "Error",
-                            "Not a valid format",
-                            e.getMessage()
-                    );
-                }
-                break;
-            case "Update":
-                try {
-                    validateForm();
-                    User user = searchTableView.getSelectionModel().getSelectedItem();
+        Optional<ButtonType> response =
+                AlertHandler.showAlert(
+                        Alert.AlertType.CONFIRMATION,
+                        "Confirm",
+                        "Edit user",
+                        "Are you sure you want to confirm editing user?"
+                );
+        if (response.isPresent() && response.get() == ButtonType.OK) {
+            try {
+                validateForm();
+                User user = searchTableView.getSelectionModel().getSelectedItem();
 
-                    updateUser(user);
-                    clearForm();
-                    disableForm(true);
-                    searchTableView.refresh();
+                Service.update(searchTableView.getSelectionModel().getSelectedItem());
+//            updateUser(user);
+                clearForm();
+                disableForm(true);
+                searchTableView.refresh();
 
-                    disableButtons(true, newButton, acceptButton);
-                    disableButtons(false, editButton);
+                disableButtons(true, registerButton, acceptButton);
+                disableButtons(false, editButton);
 
-                    searchTableView.setDisable(false);
+                searchTableView.setDisable(false);
 
-                    disableTextFields(false, searchField);
-                    disableButtons(false, filterButton);
+                disableTextFields(false, searchField);
+                disableButtons(false, filterButton);
 
-                    AlertHandler.showAlert(
-                            Alert.AlertType.INFORMATION,
-                            "Update student",
-                            "Successful operation",
-                            "The student has been updated!"
-                    );
-                } catch (NotValidFormatException e) {
-                    AlertHandler.showAlert(
-                            Alert.AlertType.ERROR,
-                            "Error",
-                            "Not a valid format",
-                            e.getMessage()
-                    );
-                }
-                break;
-            default:
-                break;
+
+                AlertHandler.showAlert(
+                        Alert.AlertType.INFORMATION,
+                        "Update user",
+                        "Successful operation",
+                        "The user has been updated!"
+                );
+            } catch (NotValidFormatException e) {
+                AlertHandler.showAlert(
+                        Alert.AlertType.ERROR,
+                        "Error",
+                        "Not a valid format",
+                        e.getMessage()
+                );
+            }
         }
+
     }
     // Move this
 
@@ -302,35 +344,36 @@ public class AdminViewController extends ViewController {
             //if (user.getProfilePicture() == null || !user.getProfilePicture().equals(imageView.getImage())) user.setProfilePicture(imageView.getImage());
         }
     }
-    @FXML private void studentCancelButtonHandler() {
-        switch (cancelButton.getText()) {
+
+    @FXML private void cancelButtonHandler() {
+/*        switch (cancelButton.getText()) {
             case "Cancel":
-                studentSelectionHandler();
+                selectionHandler();
                 break;
-            case "Unselect":
+            case "Unselect":*/
                 clearForm();
                 disableForm(false);
-                disableButtons(true, newButton,
+                disableButtons(true, registerButton,
                         editButton,
                         cancelButton
                 );
                 disableButtons(false, acceptButton, filterButton);
                 disableTextFields(false, searchField);
-                newButton.setText("New");
+/*                registerButton.setText("New");
                 acceptButton.setText("Create");
                 cancelButton.setText("Cancel");
                 break;
             default:
                 break;
-        }
+        }*/
         searchTableView.setDisable(false);
     }
 
-    @FXML private void onStudentFilterClick() {
+    @FXML private void filterClick() {
 //        searchTableView.setItems(findUsers(searchField.getText(), ));
     }
 
-    @FXML private void studentSelectionHandler() {
+    @FXML private void selectionHandler() {
 //        if (!studentAcceptButton.isDisabled() && studentAcceptButton.getText().equals("Update")) {
 //            AlertHandler.showAlert(
 //                    Alert.AlertType.ERROR,
@@ -344,16 +387,14 @@ public class AdminViewController extends ViewController {
         fillForm(searchTableView.getSelectionModel().getSelectedItem());
         disableForm(true);
         disableButtons(false,
-                newButton,
+                registerButton,
                 editButton,
                 cancelButton,
                 filterButton
         );
-        disableButtons(true, newButton, acceptButton);
+        disableButtons(true, registerButton, acceptButton);
         disableTextFields(false, searchField);
-        newButton.setText("Delete");
-        cancelButton.setText("Unselect");
-        acceptButton.setText("Update");
+        registerButton.setText("Delete");
     }
 
     // Utils
@@ -448,7 +489,7 @@ public class AdminViewController extends ViewController {
         setListeners();
 
         disableButtons(true,
-                newButton,
+                acceptButton,
                 editButton,
                 cancelButton
         );
@@ -456,7 +497,6 @@ public class AdminViewController extends ViewController {
 
         datePicker.setEditable(false);
 
-        acceptButton.setText("Create");
     }
 
     private void setListeners() {
@@ -689,10 +729,10 @@ public class AdminViewController extends ViewController {
         requireNotNull(datePicker.getValue(), "Date of birth is required.");
         requireNotNull(imageView.getImage(), "Image is required.");
 
-        validateFieldFormat(Validation.ofName(nameField.getText()), "Not a valid name.");
+        /*validateFieldFormat(Validation.ofName(nameField.getText()), "Not a valid name.");
         validateFieldFormat(Validation.ofName(lastNameField.getText()), "Not a valid last name.");
         validateFieldFormat(Validation.ofPhone(phoneField.getText()), "Not a valid phone number.");
-        validateFieldFormat(Validation.ofEmail(emailField.getText()), "Not a valid email address.");
+        validateFieldFormat(Validation.ofEmail(emailField.getText()), "Not a valid email address.");*/
     }
 
     private void checkRequirements(

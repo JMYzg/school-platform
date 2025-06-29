@@ -28,8 +28,8 @@
                         <Insets left="15.0" right="15.0" />
                      </padding>
                   </Separator>
-                  <Button id="btnOptions" fx:id="studentDataButton" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" onMouseClicked="#openStudentDataTab" prefHeight="31.0" prefWidth="193.0" text="Integrants" />
-                  <Button id="btnOptions" fx:id="classesTab" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" onMouseClicked="#openClassTab" prefHeight="31.0" prefWidth="193.0" text="Assignments" />
+                  <Button id="btnOptions" fx:id="membersButton" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#loadMembers" onMouseClicked="#openStudentDataTab" prefHeight="31.0" prefWidth="193.0" text="Members" />
+                  <Button id="btnOptions" fx:id="assignmentsButton" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#loadAssignments" onMouseClicked="#openClassTab" prefHeight="31.0" prefWidth="193.0" text="Assignments" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />

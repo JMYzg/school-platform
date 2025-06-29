@@ -9,16 +9,16 @@ public class TeacherStudentListController extends TeacherViewPage {
 
     public static String PATH = "/views/teacher-views/teacher-option-student-list-view.fxml";
 
-    @FXML public TableView<Student> table;
-    @FXML private TableColumn<Student, String>
-            idTableColumn,
-            lastNameTableColumn,
-            nameTableColumn,
-            emailTableColumn;
+//    @FXML public TableView<Student> table;
+//    @FXML private TableColumn<Student, String>
+//            idTableColumn,
+//            lastNameTableColumn,
+//            nameTableColumn,
+//            emailTableColumn;
 
-    @FXML private void initialize() {
-        bindTable();
-    }
+//    @FXML private void initialize() {
+//        bindTable();
+//    }
 //    private void updateUI(){
 ////        String nameGroup = group.getID();
 ////        groupName.setText(nameGroup);
@@ -31,6 +31,7 @@ public class TeacherStudentListController extends TeacherViewPage {
 ////        bindTable();
 //    }
 
+/*
     private void bindTable() {
 
         TableColumn<?, ?>[] tableColumns = {
@@ -47,5 +48,6 @@ public class TeacherStudentListController extends TeacherViewPage {
                 "email"
         };
         AdminViewController.injectCellValues(tableColumns, attributes);
-    }
+    }*/
 }
+

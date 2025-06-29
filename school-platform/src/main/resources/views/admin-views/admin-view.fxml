@@ -114,7 +114,7 @@
                                     </FlowPane.margin>
                                  </DatePicker>
                                  <Label prefHeight="17.0" prefWidth="61.0" />
-                                 <Button id="btnM" fx:id="newButton" mnemonicParsing="false" onAction="#newButtonHandler" prefHeight="29.0" prefWidth="147.0" text="Register">
+                                 <Button id="btnM" fx:id="registerButton" mnemonicParsing="false" onAction="#registerButtonHandler" prefHeight="29.0" prefWidth="147.0" text="Register">
                                     <FlowPane.margin>
                                        <Insets top="7.0" />
                                     </FlowPane.margin>
@@ -172,7 +172,7 @@
                </AnchorPane>
                <ScrollPane prefHeight="435.0" prefWidth="524.0">
                   <content>
-                     <TableView id="studentTableView" fx:id="searchTableView" onMouseClicked="#studentSelectionHandler" prefHeight="460.0" prefWidth="1447.0" style="-fx-background-color: white; -fx-background-radius: 5;">
+                     <TableView id="studentTableView" fx:id="searchTableView" onMouseClicked="#selectionHandler" prefHeight="460.0" prefWidth="1447.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                         <columns>
                            <TableColumn id="studentIDTableColumn" fx:id="idTableColumn" text="ID" />
                            <TableColumn id="studentNameTableColumn" fx:id="nameTableColumn" prefWidth="100.0" text="Name" />

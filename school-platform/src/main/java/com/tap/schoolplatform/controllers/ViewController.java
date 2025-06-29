@@ -1,7 +1,6 @@
 package com.tap.schoolplatform.controllers;
 
 import com.tap.schoolplatform.services.auth.LoginService;
-import com.tap.schoolplatform.utils.SharedData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -19,6 +18,7 @@ public abstract class ViewController {
 
     protected static final String LOGIN_VIEW = "/views/admin-views/login-view.fxml";
     protected static final String ADMIN_VIEW = "/views/admin-views/admin-view.fxml";
+    protected static final String USER_VIEW = "views/new-interface/user-view.fxml";
 
 
     public void toView(String view, String title, Control control) throws IOException {
