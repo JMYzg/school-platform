@@ -124,9 +124,9 @@
                                  <Insets />
                               </HBox.margin>
                            </FlowPane>
-                           <Button mnemonicParsing="false" prefHeight="112.0" prefWidth="106.0" style="-fx-background-color: dedede;">
+                           <Button fx:id="uploadImageButton" mnemonicParsing="false" onAction="#uploadImageClick" prefHeight="112.0" prefWidth="106.0" style="-fx-background-color: dedede;">
                               <graphic>
-                                 <ImageView fx:id="imageView" fitHeight="104.0" fitWidth="118.0" onMouseClicked="#uploadImageClick" pickOnBounds="true" preserveRatio="true">
+                                 <ImageView fx:id="imageView" fitHeight="104.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                        <Image url="@../../images/roblox.png" />
                                     </image>
@@ -172,7 +172,7 @@
                </AnchorPane>
                <ScrollPane prefHeight="435.0" prefWidth="524.0">
                   <content>
-                     <TableView id="studentTableView" fx:id="searchTableView" onMouseClicked="#selectionHandler" prefHeight="460.0" prefWidth="1447.0" style="-fx-background-color: white; -fx-background-radius: 5;">
+                     <TableView id="studentTableView" fx:id="tableView" onMouseClicked="#selectionHandler" prefHeight="460.0" prefWidth="1447.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                         <columns>
                            <TableColumn id="studentIDTableColumn" fx:id="idTableColumn" text="ID" />
                            <TableColumn id="studentNameTableColumn" fx:id="nameTableColumn" prefWidth="100.0" text="Name" />

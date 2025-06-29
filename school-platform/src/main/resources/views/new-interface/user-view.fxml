@@ -29,7 +29,7 @@
          </graphic>
       </Button>
    </AnchorPane>
-   <BorderPane prefHeight="537.0" prefWidth="917.0">
+   <BorderPane fx:id="mainBorderPane" prefHeight="537.0" prefWidth="917.0">
       <top>
          <AnchorPane prefHeight="40.0" prefWidth="893.0" BorderPane.alignment="CENTER">
             <Button id="btnM" fx:id="createButton" layoutX="648.0" layoutY="8.0" mnemonicParsing="false" onAction="#createAction" prefHeight="25.0" prefWidth="105.0" text="Create" />

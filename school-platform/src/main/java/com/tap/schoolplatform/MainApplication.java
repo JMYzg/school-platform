@@ -1,9 +1,12 @@
 package com.tap.schoolplatform;
 
+import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.users.User;
 import com.tap.schoolplatform.models.users.enums.Gender;
+import com.tap.schoolplatform.models.users.enums.Role;
 import com.tap.schoolplatform.models.users.enums.Type;
 import com.tap.schoolplatform.models.users.shared.Address;
+import com.tap.schoolplatform.models.users.shared.Membership;
 import com.tap.schoolplatform.services.Service;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -81,11 +84,19 @@ public class MainApplication extends Application {
                 Gender.MALE,
                 Type.USER
         );
+
+        Group group = new Group("Programación", "Este grupo se enfoca en la creación de un programa CRUD con varios miembros");
+        Service.add(group);
         Service.add(admin);
         System.out.println("Usuario añadido: " + admin.getEmail());
         Service.add(user);
         System.out.println("Usuario añadido: " + user.getEmail());
         Service.add(user2);
+        Membership membership = new Membership(user, group, Role.OWNER);
+        Service.add(membership);
+        Membership membership2 = new Membership(user2, group, Role.MEMBER);
+
+
 
     }
 
