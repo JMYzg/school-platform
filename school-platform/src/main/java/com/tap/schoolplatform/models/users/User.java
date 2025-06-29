@@ -22,22 +22,21 @@ public class User {
 
     @NotBlank
     @Size(min = 2, max = 30)
-    private String name;
+    private String name; //name
 
     @NotBlank
     @Size(min = 2, max = 30)
     private String lastName;
 
+    @Column(unique = true)
     @NotBlank
     @Email
     private String email;
 
     @NotBlank
-    @Size(min = 8)
-    private String password;
+    private String password; // password
 
     @NotBlank
-    @Pattern(regexp = "\\d{10}")
     private String phone;
 
     @NotNull
@@ -45,6 +44,7 @@ public class User {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
+    @NotNull
     @Past
     private LocalDate birthDate;
 
@@ -59,7 +59,8 @@ public class User {
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
     )
     private List<Membership> memberships = new ArrayList<>();
 
@@ -132,6 +133,7 @@ public class User {
         this.birthDate = birthDate;
     }
 
+    @Transient
     public int getAge() {
         return Period.between(birthDate, LocalDate.now()).getYears();
     }
