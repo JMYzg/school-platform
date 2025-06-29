@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public abstract class ViewController {
 
-    protected static final String LOGIN_VIEW = "/views/admin-views/login-view.fxml";
+    protected static final String LOGIN_VIEW = "/views/new-interface/login-view.fxml";
     protected static final String ADMIN_VIEW = "/views/admin-views/admin-view.fxml";
     protected static final String USER_VIEW = "/views/new-interface/user-view.fxml";
 

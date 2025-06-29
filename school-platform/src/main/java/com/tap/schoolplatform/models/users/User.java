@@ -20,6 +20,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Lob
+    private byte[] profilePicture;
+
     @NotBlank
     @Size(min = 2, max = 30)
     private String name; //name
@@ -82,6 +85,13 @@ public class User {
 
     public int getId() {
         return id;
+    }
+
+    public byte[] getProfilePicture() {
+        return profilePicture;
+    }
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public String getName() {
@@ -150,6 +160,10 @@ public class User {
     }
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public List<Membership> getMemberships() {
+        return memberships;
     }
 
     @Override

@@ -7,12 +7,11 @@ import com.tap.schoolplatform.models.users.enums.Gender;
 import com.tap.schoolplatform.models.users.enums.Type;
 import com.tap.schoolplatform.models.users.shared.Address;
 import com.tap.schoolplatform.services.Service;
-import com.tap.schoolplatform.utils.ValidationManager;
 import com.tap.schoolplatform.services.auth.LoginService;
 import com.tap.schoolplatform.utils.exceptions.NotValidFormatException;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -40,7 +39,8 @@ public class AdminViewController extends ViewController {
     editButton,
     acceptButton,
     cancelButton,
-    filterButton;
+    filterButton,
+    uploadImageButton;
 
     @FXML private TextField
     nameField,
@@ -61,7 +61,7 @@ public class AdminViewController extends ViewController {
     @FXML private DatePicker datePicker;
     @FXML private ImageView imageView;
 
-    @FXML private TableView<User> searchTableView;
+    @FXML private TableView<User> tableView;
     @FXML private TableColumn<User, String>
     idTableColumn,
     nameTableColumn,
@@ -79,6 +79,8 @@ public class AdminViewController extends ViewController {
 
     @FXML private TableColumn<User, Integer> ageTableColumn;
     @FXML private TableColumn<User, LocalDate> birthDateTableColumn;
+
+    private final ObservableList<User> users = FXCollections.observableArrayList();
 
     // Methods
     @FXML private void initialize() {
@@ -138,9 +140,10 @@ public class AdminViewController extends ViewController {
                             genderComboBox.getValue(),
                             Type.USER
                     );
-                    //user.setProfilePicture(imageView.getImage());
+//                    user.setProfilePicture(imageView.getImage());
 
                     Service.add(user);
+                    users.add(user);
 
                     AlertHandler.showAlert(
                             Alert.AlertType.INFORMATION,
@@ -167,12 +170,14 @@ public class AdminViewController extends ViewController {
                             "This action will delete the user, do you want to continue?"
                     );
             if (response.isPresent() && response.get() == ButtonType.OK) {
-                User user = searchTableView.getSelectionModel().getSelectedItem();
+                User user = tableView.getSelectionModel().getSelectedItem();
                 if (user != null) {
                     clearForm();
-                    searchTableView.refresh();
-                    searchTableView.getSelectionModel().clearSelection();
-                    searchTableView.setDisable(false);
+                    Service.delete(user);
+                    users.remove(user);
+                    tableView.refresh();
+                    tableView.getSelectionModel().clearSelection();
+                    tableView.setDisable(false);
                     disableButtons(false, filterButton, acceptButton);
                     disableButtons(true, editButton, cancelButton, registerButton);
                     disableTextFields(false, searchField);
@@ -267,12 +272,12 @@ public class AdminViewController extends ViewController {
     }
 
     @FXML private void editButtonHandler() {
-        fillForm(searchTableView.getSelectionModel().getSelectedItem());
+        fillForm(tableView.getSelectionModel().getSelectedItem());
         disableForm(false);
         disableButtons(false, registerButton, acceptButton);
         disableButtons(true, editButton, filterButton);
         disableTextFields(true, searchField);
-        searchTableView.setDisable(true);
+        tableView.setDisable(true);
         cancelButton.setText("Cancel");
     }
 
@@ -289,18 +294,16 @@ public class AdminViewController extends ViewController {
         if (response.isPresent() && response.get() == ButtonType.OK) {
             try {
                 validateForm();
-                User user = searchTableView.getSelectionModel().getSelectedItem();
-
-                Service.update(searchTableView.getSelectionModel().getSelectedItem());
-//            updateUser(user);
+                User user = tableView.getSelectionModel().getSelectedItem();
+                Service.update(user);
                 clearForm();
                 disableForm(true);
-                searchTableView.refresh();
+                tableView.refresh();
 
                 disableButtons(true, registerButton, acceptButton);
                 disableButtons(false, editButton);
 
-                searchTableView.setDisable(false);
+                tableView.setDisable(false);
 
                 disableTextFields(false, searchField);
                 disableButtons(false, filterButton);
@@ -351,26 +354,31 @@ public class AdminViewController extends ViewController {
                 selectionHandler();
                 break;
             case "Unselect":*/
-                clearForm();
-                disableForm(false);
-                disableButtons(true, registerButton,
-                        editButton,
-                        cancelButton
-                );
-                disableButtons(false, acceptButton, filterButton);
-                disableTextFields(false, searchField);
-/*                registerButton.setText("New");
-                acceptButton.setText("Create");
+        clearForm();
+        disableForm(false);
+        disableButtons(true, registerButton,
+                editButton,
+                cancelButton,
+                acceptButton
+        );
+        disableButtons(false, registerButton, filterButton);
+        disableTextFields(false, searchField);
+        registerButton.setText("Register");
+
+        ImageView image = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("@../../images/roblox.png"))));
+        imageView.setImage(image.getImage());
+/*                acceptButton.setText("Create");
                 cancelButton.setText("Cancel");
                 break;
             default:
                 break;
         }*/
-        searchTableView.setDisable(false);
+        tableView.setDisable(false);
     }
 
     @FXML private void filterClick() {
-//        searchTableView.setItems(findUsers(searchField.getText(), ));
+        Function<User, List<String>> nameExtractor = user -> List.of(user.getName());
+        tableView.setItems(findUsers(searchField.getText(), Service.getEvery(User.class), nameExtractor));
     }
 
     @FXML private void selectionHandler() {
@@ -384,7 +392,7 @@ public class AdminViewController extends ViewController {
 //        } else {
 //
 //        }
-        fillForm(searchTableView.getSelectionModel().getSelectedItem());
+        fillForm(tableView.getSelectionModel().getSelectedItem());
         disableForm(true);
         disableButtons(false,
                 registerButton,
@@ -418,27 +426,24 @@ public class AdminViewController extends ViewController {
         if (!user.getLastName().equals(lastNameField.getText())) user.setLastName(lastNameField.getText());
         if (!user.getPhone().equals(phoneField.getText())) user.setPhone(phoneField.getText());
         if (!user.getEmail().equals(emailField.getText())) user.setEmail(emailField.getText());
-        if (!user.getAddress().getStreet().equals(streetField.getText()))
-            user.getAddress().setStreet(streetField.getText());
-        if (!user.getAddress().getPostalCode().equals(PCField.getText()))
-            user.getAddress().setPostalCode(PCField.getText());
-        if (!user.getAddress().getColony().equals(colonyField.getText()))
-            user.getAddress().setColony(colonyField.getText());
+        if (!user.getAddress().getStreet().equals(streetField.getText())) user.getAddress().setStreet(streetField.getText());
+        if (!user.getAddress().getPostalCode().equals(PCField.getText())) user.getAddress().setPostalCode(PCField.getText());
+        if (!user.getAddress().getColony().equals(colonyField.getText())) user.getAddress().setColony(colonyField.getText());
         if (!user.getAddress().getCity().equals(cityField.getText())) user.getAddress().setCity(cityField.getText());
-        if (!user.getAddress().getState().equals(stateField.getText()))
-            user.getAddress().setState(stateField.getText());
-        if (!user.getAddress().getCountry().equals(countryField.getText()))
-            user.getAddress().setCountry(countryField.getText());
+        if (!user.getAddress().getState().equals(stateField.getText())) user.getAddress().setState(stateField.getText());
+        if (!user.getAddress().getCountry().equals(countryField.getText())) user.getAddress().setCountry(countryField.getText());
         if (!user.getGender().equals(genderComboBox.getValue())) user.setGender(genderComboBox.getValue());
         if (!user.getBirthDate().equals(datePicker.getValue())) user.setBirthDate(datePicker.getValue());
     }
 
-    private void bindTableViews() {
-        //tableView.setItems(data.getUsers()); LOAD DATA FROM DATA BASE
+    private void bindTableView() {
+        users.clear();
+        users.setAll(Service.getEvery(User.class));
+        tableView.setItems(users);
     }
 
     private void bindTableColumns() {
-        TableColumn<?, ?>[] studentTableColumns = {
+        TableColumn<?, ?>[] tableColumns = {
                 idTableColumn,
                 nameTableColumn,
                 lastNameTableColumn,
@@ -450,19 +455,16 @@ public class AdminViewController extends ViewController {
         };
 
         String[] properties = {
-                "ID",
+                "id",
                 "name",
                 "lastName",
                 "email",
                 "phone",
-                "degree",
-                "semester",
-                "group",
                 "gender",
                 "birthDate",
                 "age"
         };
-        injectCellValues(studentTableColumns, properties);
+        injectCellValues(tableColumns, properties);
 
         bindAddressTableColumns(
                 streetTableColumn,
@@ -481,7 +483,7 @@ public class AdminViewController extends ViewController {
     }
 
     private void initializeTabs() {
-        bindTableViews();
+        bindTableView();
         bindTableColumns();
         bindComboBoxes();
         makeComboBoxesNotEditable();
@@ -494,9 +496,7 @@ public class AdminViewController extends ViewController {
                 cancelButton
         );
 
-
         datePicker.setEditable(false);
-
     }
 
     private void setListeners() {
@@ -659,12 +659,12 @@ public class AdminViewController extends ViewController {
             TableColumn<T, String> stateTableColumn,
             TableColumn<T, String> countryTableColumn) {
 
-/*        streetTableColumn.setCellValueFactory(cell -> cell.getValue().getAddress());
-        PCTableColumn.setCellValueFactory(cell -> cell.getValue().getAddress().postalCodeProperty());
-        colonyTableColumn.setCellValueFactory(cell -> cell.getValue().getAddress().colonyProperty());
-        cityTableColumn.setCellValueFactory(cell -> cell.getValue().getAddress().cityProperty());
-        stateTableColumn.setCellValueFactory(cell -> cell.getValue().getAddress().stateProperty());
-        countryTableColumn.setCellValueFactory(cell -> cell.getValue().getAddress().countryProperty());*/
+        streetTableColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getAddress().getStreet()));
+        PCTableColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getAddress().getPostalCode()));
+        colonyTableColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getAddress().getColony()));
+        cityTableColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getAddress().getCity()));
+        stateTableColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getAddress().getState()));
+        countryTableColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getAddress().getCountry()));
     }
 
     private void disableForm(boolean toggle) {
