@@ -27,9 +27,8 @@ public class UserButtonGroupController {
     public Group getGroup() {
         return group;
     }
-    public void enterGroupView(ActionEvent actionEvent) {
-
-    }
-
+//    public void enterGroupView(ActionEvent actionEvent) {
+//
+//    }
 
 }

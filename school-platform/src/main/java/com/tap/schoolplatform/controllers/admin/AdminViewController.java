@@ -18,7 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-import javafx.embed.
+import javafx.embed
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
