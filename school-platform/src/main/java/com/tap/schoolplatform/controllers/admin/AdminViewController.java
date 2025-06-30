@@ -332,13 +332,15 @@ public class AdminViewController extends ViewController {
                         "Not a valid format",
                         e.getMessage()
                 );
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
 
     }
     // Move this
 
-    private void updateUser(User user) {
+    private void updateUser(User user) throws IOException {
         updateUser(user,
                 nameField,
                 lastNameField,
@@ -351,10 +353,11 @@ public class AdminViewController extends ViewController {
                 stateField,
                 countryField,
                 genderComboBox,
-                datePicker
+                datePicker,
+                imageView
         );
         if (imageView.getImage() != null) {
-            //if (user.getProfilePicture() == null || !user.getProfilePicture().equals(imageView.getImage())) user.setProfilePicture(imageView.getImage());
+//            if (user.getProfilePicture() == null || !user.getProfilePicture().equals(imageView.getImage())) user.setProfilePicture(imageView.getImage());
         }
     }
 
@@ -450,8 +453,9 @@ public class AdminViewController extends ViewController {
             TextField stateField,
             TextField countryField,
             ComboBox<Gender> genderComboBox,
-            DatePicker datePicker
-    ) {
+            DatePicker datePicker,
+            ImageView imageView
+    ) throws IOException {
         if (!user.getName().equals(nameField.getText())) user.setName(nameField.getText());
         if (!user.getLastName().equals(lastNameField.getText())) user.setLastName(lastNameField.getText());
         if (!user.getPhone().equals(phoneField.getText())) user.setPhone(phoneField.getText());
@@ -464,7 +468,13 @@ public class AdminViewController extends ViewController {
         if (!user.getAddress().getCountry().equals(countryField.getText())) user.getAddress().setCountry(countryField.getText());
         if (!user.getGender().equals(genderComboBox.getValue())) user.setGender(genderComboBox.getValue());
         if (!user.getBirthDate().equals(datePicker.getValue())) user.setBirthDate(datePicker.getValue());
-//        if (!user.getProfilePictureImage().equals(image.getImage())) user.setProfilePicture(new Image(new ByteArrayInputStream(image.getImage().)));
+        if (imageView != null) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            BufferedImage bufferedImage = SwingFXUtils.fromFXImage(imageView.getImage(), null);
+            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
+            byte[] bytes = byteArrayOutputStream.toByteArray();
+            user.setProfilePicture(bytes);
+        }
     }
 
     private void bindTableView() {
