@@ -12,14 +12,15 @@ import com.tap.schoolplatform.utils.exceptions.NotValidFormatException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-import javafx.embed.
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.time.LocalDate;
@@ -34,7 +35,7 @@ public class AdminViewController extends ViewController {
     @FXML private Label adminNameLabel;
     @FXML private Button logoutButton;
 
-    // StudentTab
+    // mainTab
     @FXML private Button
     registerButton,
     editButton,
@@ -110,7 +111,6 @@ public class AdminViewController extends ViewController {
         }
     }
 
-    // StudentTab
     @FXML private void registerButtonHandler() {
         if (registerButton.getText().equals("Register")) {
             Optional<ButtonType> response =
@@ -127,7 +127,7 @@ public class AdminViewController extends ViewController {
                             nameField.getText(),
                             lastNameField.getText(),
                             emailField.getText(),
-                            "789",
+                            "000",
                             phoneField.getText(),
                             new Address(
                                     streetField.getText(),
@@ -143,11 +143,12 @@ public class AdminViewController extends ViewController {
                     );
                     Image profilePicture = imageView.getImage();
                     if (profilePicture != null) {
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        BufferedImage bufferedImage = javafx.embed.swing.SwingFXUtils.fromFXImage(profilePicture, null);
-                        ImageIO.write(profilePicture, "png", baos);
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(profilePicture, null);
+                        ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
+                        byte[] bytes = byteArrayOutputStream.toByteArray();
+                        user.setProfilePicture(bytes);
                     }
-                    user.setProfilePicture(imageView.getImage());
 
                     Service.add(user);
                     users.add(user);
@@ -166,6 +167,8 @@ public class AdminViewController extends ViewController {
                             "Not a valid format",
                             e.getMessage()
                     );
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
         } else {
@@ -261,12 +264,12 @@ public class AdminViewController extends ViewController {
         );
         File image = fileChooser.showOpenDialog(registerButton.getScene().getWindow());
         if (image != null) {
-            try {
+            try (InputStream inputStream = new FileInputStream(image)) {
                 String imagePath = image.toURI().toString();
                 Image pfp = new Image(imagePath);
                 imageView.setImage(pfp);
                 return pfp;
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | IOException e) {
                 AlertHandler.showAlert(
                   Alert.AlertType.ERROR,
                   "Error",
