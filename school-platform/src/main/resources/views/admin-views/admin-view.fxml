@@ -89,12 +89,12 @@
                               </GridPane.margin>
                            </TextField>
                            <TextField id="studentCityField" fx:id="cityField" prefHeight="40.0" prefWidth="135.0" promptText="City" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                           <TextField id="studentStateField" fx:id="stateField" prefHeight="40.0" prefWidth="136.0" promptText="State" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <TextField id="studentStateField" fx:id="stateField" prefHeight="38.0" prefWidth="160.0" promptText="State" GridPane.columnIndex="1" GridPane.rowIndex="2">
                               <GridPane.margin>
                                  <Insets right="5.0" />
                               </GridPane.margin>
                            </TextField>
-                           <TextField id="studentCountryField" fx:id="countryField" prefHeight="40.0" prefWidth="136.0" promptText="Country" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                           <TextField id="studentCountryField" fx:id="countryField" prefHeight="34.0" prefWidth="144.0" promptText="Country" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         </children>
                      </GridPane>
                      <HBox prefHeight="93.0" prefWidth="348.0" spacing="15.0">
@@ -126,7 +126,7 @@
                            </FlowPane>
                            <Button fx:id="uploadImageButton" mnemonicParsing="false" onAction="#uploadImageClick" prefHeight="112.0" prefWidth="106.0" style="-fx-background-color: dedede;">
                               <graphic>
-                                 <ImageView fx:id="imageView" fitHeight="104.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
+                                 <ImageView fx:id="imageView" fitHeight="113.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                        <Image url="@../../images/roblox.png" />
                                     </image>

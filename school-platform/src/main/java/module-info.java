@@ -8,6 +8,7 @@ module com.tap.schoolplatform {
     requires jakarta.validation;
     requires org.hibernate.validator;
     requires java.sql;
+    requires java.desktop;
 
     opens com.tap.schoolplatform to javafx.fxml;
     exports com.tap.schoolplatform;

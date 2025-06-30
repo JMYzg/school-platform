@@ -14,7 +14,6 @@
         <class>com.tap.schoolplatform.models.academic.tasks.Assignment</class>
         <class>com.tap.schoolplatform.models.academic.tasks.Submission</class>
 
-
         <properties>
             <!-- Database connection-->
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

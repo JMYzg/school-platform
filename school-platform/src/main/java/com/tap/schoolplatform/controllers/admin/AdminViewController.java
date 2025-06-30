@@ -18,9 +18,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
-
-import java.io.File;
-import java.io.IOException;
+import javafx.embed.
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Function;
@@ -140,7 +141,13 @@ public class AdminViewController extends ViewController {
                             genderComboBox.getValue(),
                             Type.USER
                     );
-//                    user.setProfilePicture(imageView.getImage());
+                    Image profilePicture = imageView.getImage();
+                    if (profilePicture != null) {
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        BufferedImage bufferedImage = javafx.embed.swing.SwingFXUtils.fromFXImage(profilePicture, null);
+                        ImageIO.write(profilePicture, "png", baos);
+                    }
+                    user.setProfilePicture(imageView.getImage());
 
                     Service.add(user);
                     users.add(user);
@@ -274,7 +281,7 @@ public class AdminViewController extends ViewController {
     @FXML private void editButtonHandler() {
         fillForm(tableView.getSelectionModel().getSelectedItem());
         disableForm(false);
-        disableButtons(false, registerButton, acceptButton);
+        disableButtons(false, uploadImageButton, registerButton, acceptButton);
         disableButtons(true, editButton, filterButton);
         disableTextFields(true, searchField);
         tableView.setDisable(true);
@@ -295,12 +302,13 @@ public class AdminViewController extends ViewController {
             try {
                 validateForm();
                 User user = tableView.getSelectionModel().getSelectedItem();
+                updateUser(user);
                 Service.update(user);
                 clearForm();
                 disableForm(true);
                 tableView.refresh();
 
-                disableButtons(true, registerButton, acceptButton);
+                disableButtons(true, uploadImageButton, registerButton, acceptButton);
                 disableButtons(false, editButton);
 
                 tableView.setDisable(false);
@@ -361,11 +369,11 @@ public class AdminViewController extends ViewController {
                 cancelButton,
                 acceptButton
         );
-        disableButtons(false, registerButton, filterButton);
+        disableButtons(false, uploadImageButton, registerButton, filterButton);
         disableTextFields(false, searchField);
         registerButton.setText("Register");
 
-        ImageView image = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("@../../images/roblox.png"))));
+        ImageView image = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/roblox.png"))));
         imageView.setImage(image.getImage());
 /*                acceptButton.setText("Create");
                 cancelButton.setText("Cancel");
@@ -377,8 +385,28 @@ public class AdminViewController extends ViewController {
     }
 
     @FXML private void filterClick() {
-        Function<User, List<String>> nameExtractor = user -> List.of(user.getName());
+        Function<User, List<String>> nameExtractor = getUserListFunction();
         tableView.setItems(findUsers(searchField.getText(), Service.getEvery(User.class), nameExtractor));
+    }
+
+    private static Function<User, List<String>> getUserListFunction() {
+        Function<User, List<String>> nameExtractor = user -> Arrays.asList(
+                Integer.toString(user.getId()),
+                user.getName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getGender().toString(),
+                Integer.toString(user.getAge()),
+                user.getBirthDate().toString(),
+                Objects.requireNonNull(safeGet(() -> user.getAddress().getStreet())),
+                Objects.requireNonNull(safeGet(() -> user.getAddress().getPostalCode())),
+                Objects.requireNonNull(safeGet(() -> user.getAddress().getColony())),
+                Objects.requireNonNull(safeGet(() -> user.getAddress().getCity())),
+                Objects.requireNonNull(safeGet(() -> user.getAddress().getState())),
+                Objects.requireNonNull(safeGet(() -> user.getAddress().getCountry()))
+                );
+        return nameExtractor;
     }
 
     @FXML private void selectionHandler() {
@@ -400,7 +428,7 @@ public class AdminViewController extends ViewController {
                 cancelButton,
                 filterButton
         );
-        disableButtons(true, registerButton, acceptButton);
+        disableButtons(true, uploadImageButton, registerButton, acceptButton);
         disableTextFields(false, searchField);
         registerButton.setText("Delete");
     }
@@ -434,6 +462,7 @@ public class AdminViewController extends ViewController {
         if (!user.getAddress().getCountry().equals(countryField.getText())) user.getAddress().setCountry(countryField.getText());
         if (!user.getGender().equals(genderComboBox.getValue())) user.setGender(genderComboBox.getValue());
         if (!user.getBirthDate().equals(datePicker.getValue())) user.setBirthDate(datePicker.getValue());
+//        if (!user.getProfilePictureImage().equals(image.getImage())) user.setProfilePicture(new Image(new ByteArrayInputStream(image.getImage().)));
     }
 
     private void bindTableView() {
@@ -825,8 +854,10 @@ public class AdminViewController extends ViewController {
                 .with(datePicker, user.getBirthDate())
                 .fill();
 
-        // imageView.setImage(user.getProfilePicture()); User getProfilePicture method needed
+         imageView.setImage(user.getProfilePictureImage()); //User getProfilePicture method needed
     }
+
+
 
     private static class FormFiller {
         private final Map<TextField, String> textMap = new LinkedHashMap<>();
