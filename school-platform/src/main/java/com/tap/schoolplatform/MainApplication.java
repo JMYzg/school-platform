@@ -95,14 +95,10 @@ public class MainApplication extends Application {
         Membership membership = new Membership(user, group, Role.OWNER);
         Service.add(membership);
         Membership membership2 = new Membership(user2, group, Role.MEMBER);
-
-
-
     }
 
     public static void main(String[] args) {
         dataInjection();
         launch();
-
     }
 }
