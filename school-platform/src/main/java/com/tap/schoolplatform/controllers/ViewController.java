@@ -29,6 +29,7 @@ public abstract class ViewController {
         newStage.setResizable(false);
     }
 
+    //pendiente de usar
     public static void loadNewView(ActionEvent event, String view, String title) throws IOException {
         Stage ownerStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Stage primaryStage = new Stage();

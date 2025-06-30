@@ -7,25 +7,26 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Button id="btninfo" fx:id="assignmentButton" alignment="CENTER" graphicTextGap="3.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="556.0" style="-fx-background-radius: 5; -fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.studentControllers.sudentHomeworkViewControllers.HomeworkContainerStudentController">
+<Button id="btninfo" fx:id="assignmentButton" alignment="CENTER" graphicTextGap="3.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="556.0" style="-fx-background-radius: 5; -fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.user.subs.UserButtonAssignmentController">
    <graphic>
       <AnchorPane id="HomeworkContainer" prefHeight="80.0" prefWidth="560.0" stylesheets="@../../styles/main.css">
-         <children>
-            <ImageView fitHeight="49.0" fitWidth="49.0" layoutX="20.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../images/Homework.png" />
-               </image>
-            </ImageView>
-            <Label id="txtbold" layoutX="81.0" layoutY="40.0" prefHeight="17.0" prefWidth="59.0" text="Deadline:" />
-            <Label id="txtbold" layoutX="227.0" layoutY="40.0" prefHeight="17.0" prefWidth="97.0" text="Date of creation:" />
-            <Label id="txtregular" fx:id="homeworkTitle" layoutX="81.0" layoutY="14.0" prefHeight="15.0" prefWidth="194.0" text="Homework tittle Example" />
-            <Label id="txtregular" fx:id="homeworkDeadline" layoutX="145.0" layoutY="41.0" text="31/03/2025" />
-            <AnchorPane id="btnhomeworkcolor" layoutX="546.0" prefHeight="80.0" prefWidth="13.0" style="-fx-background-color: #ffb6c1;" />
-            <Label id="txtregular" layoutX="491.0" layoutY="40.0" prefHeight="15.0" prefWidth="41.0" />
-            <Label id="txtregular" fx:id="points" layoutX="418.0" layoutY="41.0" prefHeight="15.0" prefWidth="19.0" text="20" />
-            <Label id="txtregular" layoutX="437.0" layoutY="41.0" prefHeight="15.0" prefWidth="41.0" text="Points" />
-            <Label id="txtregular" fx:id="creationDate" layoutX="331.0" layoutY="41.0" text="31/03/2025" />
-         </children>
+         <ImageView fitHeight="49.0" fitWidth="49.0" layoutX="20.0" layoutY="16.0" pickOnBounds="true"
+                    preserveRatio="true">
+            <Image url="@../../images/Homework.png"/>
+         </ImageView>
+         <Label id="txtbold" layoutX="81.0" layoutY="40.0" prefHeight="17.0" prefWidth="59.0" text="Deadline:"/>
+         <Label id="txtbold" layoutX="227.0" layoutY="40.0" prefHeight="17.0" prefWidth="97.0"
+                text="Date of creation:"/>
+         <Label id="txtregular" fx:id="homeworkTitle" layoutX="81.0" layoutY="14.0" prefHeight="15.0" prefWidth="194.0"
+                text="Homework tittle Example"/>
+         <Label id="txtregular" fx:id="homeworkDeadline" layoutX="145.0" layoutY="41.0" text="31/03/2025"/>
+         <AnchorPane id="btnhomeworkcolor" layoutX="546.0" prefHeight="80.0" prefWidth="13.0"
+                     style="-fx-background-color: #ffb6c1;"/>
+         <Label id="txtregular" layoutX="491.0" layoutY="40.0" prefHeight="15.0" prefWidth="41.0"/>
+         <Label id="txtregular" fx:id="points" layoutX="418.0" layoutY="41.0" prefHeight="15.0" prefWidth="19.0"
+                text="20"/>
+         <Label id="txtregular" layoutX="437.0" layoutY="41.0" prefHeight="15.0" prefWidth="41.0" text="Points"/>
+         <Label id="txtregular" fx:id="creationDate" layoutX="331.0" layoutY="41.0" text="31/03/2025"/>
       </AnchorPane>
    </graphic>
    <stylesheets>
