@@ -1,5 +1,6 @@
 package com.tap.schoolplatform.models.users;
 
+import com.mysql.cj.protocol.ColumnDefinition;
 import com.tap.schoolplatform.models.users.enums.Type;
 import com.tap.schoolplatform.models.users.shared.Address;
 import com.tap.schoolplatform.models.users.enums.Gender;
@@ -24,6 +25,7 @@ public class User {
     private int id;
 
     @Lob
+    @Column(name = "profile_picture", columnDefinition = "LONGBLOB")
     private byte[] profilePicture;
 
     @NotBlank
