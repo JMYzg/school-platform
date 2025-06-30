@@ -6,11 +6,14 @@ import com.tap.schoolplatform.models.users.enums.Gender;
 import com.tap.schoolplatform.models.users.shared.Membership;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import javafx.scene.image.Image;
 
+import java.io.ByteArrayInputStream;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -90,6 +93,15 @@ public class User {
     public byte[] getProfilePicture() {
         return profilePicture;
     }
+
+    public Image getProfilePictureImage() {
+        if (profilePicture == null || profilePicture.length == 0) {
+            return null;
+        } else {
+            return new Image(new ByteArrayInputStream(profilePicture));
+        }
+    }
+
     public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }

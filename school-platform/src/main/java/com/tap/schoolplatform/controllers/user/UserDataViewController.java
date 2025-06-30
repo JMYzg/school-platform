@@ -36,7 +36,7 @@ public class UserDataViewController {
     List<Group> userGroups = Service.find(LoginService.getCurrentUser().getId(), User.class)
             .getMemberships().stream()
             .map(Membership::getGroup)
-            .collect(Collectors.toList()):;
+            .collect(Collectors.toList());
 
     void initialize() {
 
