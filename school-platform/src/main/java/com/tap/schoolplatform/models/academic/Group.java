@@ -37,7 +37,7 @@ public class Group {
             mappedBy = "group",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     private final List<Assignment> assignments = new ArrayList<>();
 
@@ -77,6 +77,9 @@ public class Group {
         return memberships;
     }
 
+    public List<Assignment> getAssignments() {
+        return assignments;
+    }
     @Override
     public String toString() {
         return name;
@@ -94,4 +97,6 @@ public class Group {
     public int hashCode() {
         return Integer.hashCode(id);
     }
+
+
 }

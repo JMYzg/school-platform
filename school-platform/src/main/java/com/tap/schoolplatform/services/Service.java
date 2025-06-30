@@ -51,6 +51,18 @@ public class Service {
         return model;
     }
 
+    public static <T> T findWithMemberships(int id, Class<T> clazz) {
+        EntityManager em = Hibernate.getEntityManagerFactory().createEntityManager();
+        try {
+            String jpql = "SELECT u FROM User u LEFT JOIN FETCH u.memberships WHERE u.id = :id";
+            return em.createQuery(jpql, clazz)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+
     public static <T> List<T> getEvery(Class<T> entity) {
         EntityManagerFactory emf = Hibernate.getEntityManagerFactory();
         EntityManager em = emf.createEntityManager();
