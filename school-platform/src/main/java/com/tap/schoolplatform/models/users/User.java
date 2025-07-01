@@ -24,6 +24,7 @@ public class User {
     private int id;
 
     @Lob
+    @Column(name = "profile_picture", columnDefinition = "LONGBLOB")
     private byte[] profilePicture;
 
     @NotBlank
