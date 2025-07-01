@@ -38,11 +38,11 @@ public class UserDataViewController {
             country;
     @FXML public AnchorPane groupIcon;
     @FXML public VBox vboxGroups;
+
     private UserViewController mainController;
 
 
     public void setMainController(UserViewController mainController) {
-
         this.mainController = mainController;
     }
 
@@ -61,10 +61,8 @@ public class UserDataViewController {
                 controller.setGroup(group);
 
                 controller.setOnClick(() -> {
-                    UserViewController.currentGroup = group;
+                    UserViewController.setCurrentGroup(group);
                     try {
-
-                       //aqui esta el error
                         mainController.loadCenter("views/new-interface/user-group-borderPane-view.fxml");
                     } catch (IOException e) {
                         AlertHandler.showAlert(

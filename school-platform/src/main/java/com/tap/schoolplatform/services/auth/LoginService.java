@@ -6,7 +6,6 @@ import com.tap.schoolplatform.services.Service;
 public class LoginService extends Service {
 
     private static User CURRENT_USER;
-
     public static User getCurrentUser() {
         return CURRENT_USER;
     }

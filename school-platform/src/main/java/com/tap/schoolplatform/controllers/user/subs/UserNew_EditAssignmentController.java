@@ -1,12 +1,17 @@
 package com.tap.schoolplatform.controllers.user.subs;
 
 import com.tap.schoolplatform.controllers.alerts.AlertHandler;
+import com.tap.schoolplatform.controllers.user.UserGroupBorderPaneViewController;
+import com.tap.schoolplatform.controllers.user.UserViewController;
+import com.tap.schoolplatform.interfaces.AssignmentCreatedListener;
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
+import com.tap.schoolplatform.services.Service;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -30,6 +35,19 @@ public class UserNew_EditAssignmentController {
     private VBox AssignmentContainer;
     private Assignment assignment;
     private Group group;
+    private AssignmentCreatedListener assignmentCreatedListener;
+//    public UserGroupBorderPaneViewController mainController;
+//
+//
+    public UserGroupBorderPaneViewController mainController;
+
+    public void setMainController(UserGroupBorderPaneViewController mainController) {
+        this.mainController = mainController;
+    }
+
+    public void setAssignmentCreatedListener(AssignmentCreatedListener Listener) {
+        this.assignmentCreatedListener = Listener;
+    }
 
     public void setGroup(Group group) {
         this.group = group;
@@ -73,14 +91,21 @@ public class UserNew_EditAssignmentController {
                 //If the assign is new
                 assignment = new Assignment(title,description,dueDateTime, group);
                 addAssignmentView(assignment); //Cuando es nuevo lo añade, pero  debemos hacer que cuando no es nuevo lo actualice
-            }else{
-                //If you are just editing
-                assignment.setTitle(title);
-                assignment.setDescription(description);
-                assignment.setDeadline(dueDateTime);
-                //Origen del problema
-                updateAssignmentView(assignment);
+                Service.add(assignment);
+
+                if (assignmentCreatedListener != null) {
+                    assignmentCreatedListener.onAssignmentCreated(assignment);
+                }
+
             }
+//            else{
+//                //If you are just editing
+//                assignment.setTitle(title);
+//                assignment.setDescription(description);
+//                assignment.setDeadline(dueDateTime);
+//                //Origen del problema
+//                updateAssignmentView(assignment);
+//            }
             Stage stage = (Stage) acceptButton.getScene().getWindow();
             stage.close();
         }
@@ -88,16 +113,29 @@ public class UserNew_EditAssignmentController {
 
     private void addAssignmentView(Assignment assignment) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("views/new-interface/user-homework-container.fxml"));
-            Node taskView = loader.load();
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/new-interface/user-homework-container.fxml"));
+            Parent taskView = loader.load();
             UserButtonAssignmentController controller = loader.getController();
             controller.setAssigment(assignment);
-
             controller.setHomeworkTitle(assignment.getTitle());
-            controller.setCreationDate(assignment.getCreationDate().toString());
-            controller.setHomeworkDeadline(assignment.getDeadline().toString());
+//            controller.setCreationDate(assignment.getCreationDate().toString());
+//            controller.setHomeworkDeadline(assignment.getDeadline().toString());
             //falta agregar el dia de creación, color y puntos
+
+            controller.setOnClick(()->{
+                UserViewController.setCurrentAssignment(assignment);
+                try{
+                    //Aqui es nulo, quiero obtener la función que esta en UserGroupBorderPaneViewController "SetloadCenter"
+                    mainController.setloadCenter("/views/new-interface/user-homework-view.fxml");
+                } catch (Exception e) {
+                    AlertHandler.showAlert(
+                            Alert.AlertType.ERROR,
+                            "Error",
+                            "Resource not found",
+                            e.getMessage()
+                    );
+                }
+            });
 
             AssignmentContainer.getChildren().add(taskView);
 

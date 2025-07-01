@@ -4,6 +4,7 @@ import com.tap.schoolplatform.controllers.ViewController;
 import com.tap.schoolplatform.controllers.alerts.AlertHandler;
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
+import com.tap.schoolplatform.models.users.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,9 +27,23 @@ public class UserViewController extends ViewController {
     @FXML private Button backButton;
     @FXML private BorderPane mainBorderPane;
 
-    static public Group currentGroup;
-    static public Assignment currentaAssignment;
+    static public Group CURRENT_GROUP;
+    static public Assignment CURRENT_ASSIGNMENT;
     private UserViewController userViewController;
+
+    public static Group getCurrentGroup() {
+        return CURRENT_GROUP;
+    }
+    public static void setCurrentGroup(Group group) {CURRENT_GROUP = group;}
+    public static void clearCurrentGroup() {CURRENT_GROUP = null;}
+
+    public static Assignment getCurrentAssignment() {
+        return CURRENT_ASSIGNMENT;
+    }
+    public static void setCurrentAssignment(Assignment assignment) {CURRENT_ASSIGNMENT = assignment;}
+    public static void clearCurrentaAssignment() {
+        CURRENT_ASSIGNMENT = null;
+    }
 
     @FXML
     public void initialize() throws IOException {
@@ -64,7 +79,6 @@ public class UserViewController extends ViewController {
             }
             mainBorderPane.setCenter(view);
     }
-
 
     private void openInNewWindow(String fxmlPath, String title) {
         try {
