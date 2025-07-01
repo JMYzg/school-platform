@@ -20,7 +20,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.time.LocalDate;
@@ -153,6 +152,8 @@ public class AdminViewController extends ViewController {
                     Service.add(user);
                     users.add(user);
 
+                    bindTableView();
+
                     AlertHandler.showAlert(
                             Alert.AlertType.INFORMATION,
                             "Create user",
@@ -160,6 +161,7 @@ public class AdminViewController extends ViewController {
                             "The user has been created!"
                     );
                     clearForm();
+                    tableView.refresh();
                 } catch (NotValidFormatException e) {
                     AlertHandler.showAlert(
                             Alert.AlertType.ERROR,
@@ -181,18 +183,28 @@ public class AdminViewController extends ViewController {
                     );
             if (response.isPresent() && response.get() == ButtonType.OK) {
                 User user = tableView.getSelectionModel().getSelectedItem();
-                if (user != null) {
+                if (!user.getMemberships().isEmpty()) {
+                    AlertHandler.showAlert(
+                            Alert.AlertType.ERROR,
+                            "Error",
+                            "Can't delete user",
+                            "This user is a member or administrator of a group."
+                    );
+                } else {
                     clearForm();
-                    Service.delete(user);
                     users.remove(user);
+                    Service.delete(user);
                     tableView.refresh();
                     tableView.getSelectionModel().clearSelection();
                     tableView.setDisable(false);
-                    disableButtons(false, filterButton, acceptButton);
-                    disableButtons(true, editButton, cancelButton, registerButton);
+                    disableButtons(false, registerButton, filterButton, acceptButton);
+                    disableButtons(true, acceptButton, editButton, cancelButton);
                     disableTextFields(false, searchField);
                     disableForm(false);
+                    ImageView image = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/roblox.png"))));
+                    imageView.setImage(image.getImage());
                     registerButton.setText("Register");
+                    bindTableView();
                     AlertHandler.showAlert(
                             Alert.AlertType.INFORMATION,
                             "Delete student",
@@ -254,6 +266,7 @@ public class AdminViewController extends ViewController {
         } */
     }
 
+
     @FXML private Image uploadImageClick() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose the image");
@@ -310,15 +323,16 @@ public class AdminViewController extends ViewController {
                 clearForm();
                 disableForm(true);
                 tableView.refresh();
-
-                disableButtons(true, uploadImageButton, registerButton, acceptButton);
-                disableButtons(false, editButton);
+                bindTableView();
+                disableButtons(true, uploadImageButton, acceptButton);
+                disableButtons(false, registerButton, editButton);
 
                 tableView.setDisable(false);
 
                 disableTextFields(false, searchField);
                 disableButtons(false, filterButton);
 
+                registerButton.setText("Register");
 
                 AlertHandler.showAlert(
                         Alert.AlertType.INFORMATION,
@@ -391,8 +405,18 @@ public class AdminViewController extends ViewController {
     }
 
     @FXML private void filterClick() {
-        Function<User, List<String>> nameExtractor = getUserListFunction();
-        tableView.setItems(findUsers(searchField.getText(), Service.getEvery(User.class), nameExtractor));
+        if (searchField.getText().isEmpty()) {
+            bindTableView();
+        } else {
+            Function<User, List<String>> nameExtractor = getUserListFunction();
+            tableView.setItems(findUsers(
+                    searchField.getText(),
+                    Service.getEvery(User.class)
+                            .stream()
+                            .filter(user -> user.getType() != Type.ADMIN)
+                            .toList(),
+                    nameExtractor));
+        }
     }
 
     private static Function<User, List<String>> getUserListFunction() {
@@ -480,7 +504,12 @@ public class AdminViewController extends ViewController {
 
     private void bindTableView() {
         users.clear();
-        users.setAll(Service.getEvery(User.class));
+        users.setAll(
+                Service.getEvery(User.class)
+                        .stream()
+                        .filter(user -> user.getType() != Type.ADMIN)
+                        .toList()
+        );
         tableView.setItems(users);
     }
 
@@ -527,10 +556,8 @@ public class AdminViewController extends ViewController {
     private void initializeTabs() {
         bindTableView();
         bindTableColumns();
-        bindComboBoxes();
-        makeComboBoxesNotEditable();
-
-        setListeners();
+        genderComboBox.getItems().setAll(Gender.values());
+        genderComboBox.setEditable(false);
 
         disableButtons(true,
                 acceptButton,
@@ -751,7 +778,8 @@ public class AdminViewController extends ViewController {
         );
 
         datePicker.setValue(null);
-        imageView.setImage(null);
+        ImageView image = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/roblox.png"))));
+        imageView.setImage(image.getImage());
     }
 
     private void validateForm() throws NotValidFormatException {

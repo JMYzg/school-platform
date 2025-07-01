@@ -98,5 +98,4 @@ public class Group {
         return Integer.hashCode(id);
     }
 
-
 }
