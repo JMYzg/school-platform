@@ -1,13 +1,15 @@
 package com.tap.schoolplatform.controllers.user.subs;
 
+import com.tap.schoolplatform.controllers.ViewController;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.io.IOException;
 
-
-public class UserButtonAssignmentController {
+public class UserButtonAssignmentController extends ViewController {
     @FXML public Button assignmentButton;
     @FXML public Label
             homeworkTitle,
@@ -17,6 +19,10 @@ public class UserButtonAssignmentController {
 
     private Assignment assignment;
     private Runnable OnClick;
+
+    @FXML
+    public void initialize() {
+    }
 
     public void setAssigment(Assignment assignment) {
         this.assignment = assignment;
@@ -41,4 +47,7 @@ public class UserButtonAssignmentController {
         return assignment;
     }
 
+    public void openAssignment(ActionEvent actionEvent) throws IOException {
+        loadNewView(actionEvent, "/views/new-interface/user-homework-edit_new.fxml", "Assignment");
+    }
 }

@@ -29,7 +29,8 @@ public class Group {
     @OneToMany(
             mappedBy = "group",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
     private List<Membership> memberships = new ArrayList<>();
 
@@ -80,6 +81,7 @@ public class Group {
     public List<Assignment> getAssignments() {
         return assignments;
     }
+
     @Override
     public String toString() {
         return name;

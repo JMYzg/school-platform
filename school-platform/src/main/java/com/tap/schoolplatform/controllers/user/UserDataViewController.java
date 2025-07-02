@@ -1,12 +1,12 @@
 package com.tap.schoolplatform.controllers.user;
 
+import com.tap.schoolplatform.controllers.ViewController;
 import com.tap.schoolplatform.controllers.alerts.AlertHandler;
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.users.User;
 import com.tap.schoolplatform.models.users.shared.Membership;
 import com.tap.schoolplatform.services.Service;
 import com.tap.schoolplatform.services.auth.LoginService;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,9 +18,8 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class UserDataViewController {
+public class UserDataViewController extends ViewController {
     @FXML public ImageView userPhoto;
     @FXML public Label
             lastName,
@@ -38,6 +37,7 @@ public class UserDataViewController {
             country;
     @FXML public AnchorPane groupIcon;
     @FXML public VBox vboxGroups;
+    @FXML public ImageView profilePicture;
 
     private UserViewController mainController;
 
@@ -47,7 +47,11 @@ public class UserDataViewController {
     }
 
     public void initialize() {
+        loadUserData();
+        loadGroups();
+    }
 
+    private void loadGroups() {
         List<Group> userGroups = Service.find(LoginService.getCurrentUser().getId(), User.class)
                 .getMemberships().stream()
                 .map(Membership::getGroup)
@@ -80,5 +84,21 @@ public class UserDataViewController {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void loadUserData() {
+        profilePicture.setImage(LoginService.getCurrentUser().getProfilePictureImage());
+        lastName.setText(LoginService.getCurrentUser().getLastName());
+        name.setText(LoginService.getCurrentUser().getName());
+        id.setText(Integer.toString(LoginService.getCurrentUser().getId()));
+        gender.setText(LoginService.getCurrentUser().getGender().toString());
+        telephone.setText(LoginService.getCurrentUser().getPhone());
+        email.setText(LoginService.getCurrentUser().getEmail());
+        street.setText(LoginService.getCurrentUser().getAddress().getStreet());
+        colony.setText(LoginService.getCurrentUser().getAddress().getColony());
+        city.setText(LoginService.getCurrentUser().getAddress().getCity());
+        state.setText(LoginService.getCurrentUser().getAddress().getState());
+        country.setText(LoginService.getCurrentUser().getAddress().getCountry());
+        pc.setText(LoginService.getCurrentUser().getAddress().getPostalCode());
     }
 }

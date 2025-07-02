@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Button id="btninfo" fx:id="assignmentButton" alignment="CENTER" graphicTextGap="3.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="556.0" style="-fx-background-radius: 5; -fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.user.subs.UserButtonAssignmentController">
+<Button id="btninfo" fx:id="assignmentButton" alignment="CENTER" graphicTextGap="3.0" mnemonicParsing="false" onAction="#openAssignment" prefHeight="81.0" prefWidth="556.0" style="-fx-background-radius: 5; -fx-background-color: transparent;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.user.subs.UserButtonAssignmentController">
    <graphic>
       <AnchorPane id="HomeworkContainer" prefHeight="80.0" prefWidth="560.0" stylesheets="@../../styles/main.css">
          <ImageView fitHeight="49.0" fitWidth="49.0" layoutX="20.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">

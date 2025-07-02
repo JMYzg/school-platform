@@ -26,17 +26,22 @@ public class UserNew_EditAssignmentController {
 
     @FXML
     TextField titleTF;
-    @FXML TextArea descriptionTF;
-    @FXML DatePicker datePicker;
-    @FXML Spinner<Integer> spinnerHour;
-    @FXML Spinner<Integer>  spinnerMinute;
-    @FXML public Button cleanButton, cancelButton, acceptButton;
+    @FXML
+    TextArea descriptionTF;
+    @FXML
+    DatePicker datePicker;
+    @FXML
+    Spinner<Integer> spinnerHour;
+    @FXML
+    Spinner<Integer> spinnerMinute;
+    @FXML
+    public Button cleanButton, cancelButton, acceptButton;
 
     private VBox AssignmentContainer;
     private Assignment assignment;
     private Group group;
     private AssignmentCreatedListener assignmentCreatedListener;
-//    public UserGroupBorderPaneViewController mainController;
+    //    public UserGroupBorderPaneViewController mainController;
 //
 //
     public UserGroupBorderPaneViewController mainController;
@@ -59,14 +64,13 @@ public class UserNew_EditAssignmentController {
 
     @FXML
     public void initialize() {
-
         spinnerConfiguration(spinnerHour, 23);
         spinnerConfiguration(spinnerMinute, 59);
 
         acceptButton.setOnAction(event ->
                 //pendiente agregar alerta de confirmación
                 handleCreateAssignment()
-                );
+        );
 
     }
 
@@ -85,11 +89,15 @@ public class UserNew_EditAssignmentController {
                     "Please enter all the fields correctly"
             );
         } else {
-
-            LocalDateTime dueDateTime = LocalDateTime.of(date, LocalTime.of(hour,minute));
+            LocalDateTime dueDateTime = LocalDateTime.of(date, LocalTime.of(hour, minute));
             if (assignment == null) {
                 //If the assign is new
-                assignment = new Assignment(title,description,dueDateTime, group);
+                assignment = new Assignment(
+                        title,
+                        description,
+                        dueDateTime,
+                        group
+                );
                 addAssignmentView(assignment); //Cuando es nuevo lo añade, pero  debemos hacer que cuando no es nuevo lo actualice
                 Service.add(assignment);
 
@@ -106,6 +114,13 @@ public class UserNew_EditAssignmentController {
 //                //Origen del problema
 //                updateAssignmentView(assignment);
 //            }
+            AlertHandler.showAlert(
+                    Alert.AlertType.INFORMATION,
+                    "Create assignment",
+                    "Successfully created assignment",
+                    "The assignment was successfully created"
+            );
+
             Stage stage = (Stage) acceptButton.getScene().getWindow();
             stage.close();
         }
@@ -122,9 +137,9 @@ public class UserNew_EditAssignmentController {
 //            controller.setHomeworkDeadline(assignment.getDeadline().toString());
             //falta agregar el dia de creación, color y puntos
 
-            controller.setOnClick(()->{
+            controller.setOnClick(() -> {
                 UserViewController.setCurrentAssignment(assignment);
-                try{
+                try {
                     //Aqui es nulo, quiero obtener la función que esta en UserGroupBorderPaneViewController "SetloadCenter"
                     mainController.setloadCenter("/views/new-interface/user-homework-view.fxml");
                 } catch (Exception e) {
@@ -139,7 +154,7 @@ public class UserNew_EditAssignmentController {
 
             AssignmentContainer.getChildren().add(taskView);
 
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -159,7 +174,7 @@ public class UserNew_EditAssignmentController {
     public void createHomework(ActionEvent actionEvent) {
     }
 
-        private void spinnerConfiguration(Spinner<Integer> spinner, int max) {
+    private void spinnerConfiguration(Spinner<Integer> spinner, int max) {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, max);
         valueFactory.setValue(0);
 
