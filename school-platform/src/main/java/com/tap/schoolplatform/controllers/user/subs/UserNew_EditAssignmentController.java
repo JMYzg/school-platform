@@ -37,13 +37,13 @@ public class UserNew_EditAssignmentController {
     @FXML
     public Button cleanButton, cancelButton, acceptButton;
 
-    private VBox AssignmentContainer;
+
     private Assignment assignment;
     private Group group;
+
     private AssignmentCreatedListener assignmentCreatedListener;
-    //    public UserGroupBorderPaneViewController mainController;
-//
-//
+    private VBox AssignmentContainer;
+
     public UserGroupBorderPaneViewController mainController;
 
     public void setMainController(UserGroupBorderPaneViewController mainController) {
@@ -64,13 +64,14 @@ public class UserNew_EditAssignmentController {
 
     @FXML
     public void initialize() {
+
         spinnerConfiguration(spinnerHour, 23);
         spinnerConfiguration(spinnerMinute, 59);
 
         acceptButton.setOnAction(event ->
                 //pendiente agregar alerta de confirmación
                 handleCreateAssignment()
-        );
+                );
 
     }
 
@@ -133,13 +134,10 @@ public class UserNew_EditAssignmentController {
             UserButtonAssignmentController controller = loader.getController();
             controller.setAssigment(assignment);
             controller.setHomeworkTitle(assignment.getTitle());
-//            controller.setCreationDate(assignment.getCreationDate().toString());
-//            controller.setHomeworkDeadline(assignment.getDeadline().toString());
-            //falta agregar el dia de creación, color y puntos
 
-            controller.setOnClick(() -> {
+            controller.setOnClick(()->{
                 UserViewController.setCurrentAssignment(assignment);
-                try {
+                try{
                     //Aqui es nulo, quiero obtener la función que esta en UserGroupBorderPaneViewController "SetloadCenter"
                     mainController.setloadCenter("/views/new-interface/user-homework-view.fxml");
                 } catch (Exception e) {
@@ -151,10 +149,9 @@ public class UserNew_EditAssignmentController {
                     );
                 }
             });
-
             AssignmentContainer.getChildren().add(taskView);
 
-        } catch (IOException e) {
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
@@ -174,7 +171,7 @@ public class UserNew_EditAssignmentController {
     public void createHomework(ActionEvent actionEvent) {
     }
 
-    private void spinnerConfiguration(Spinner<Integer> spinner, int max) {
+        private void spinnerConfiguration(Spinner<Integer> spinner, int max) {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, max);
         valueFactory.setValue(0);
 

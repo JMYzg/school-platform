@@ -17,6 +17,7 @@ public class UserButtonGroupController {
     public void setGroup(Group group) {
         this.group = group;
         groupName.setText(group.getName());
+
         groupButton.setOnAction(e -> {
             if (onClick != null) onClick.run();
         });

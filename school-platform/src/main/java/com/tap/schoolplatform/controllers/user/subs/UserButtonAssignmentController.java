@@ -28,6 +28,7 @@ public class UserButtonAssignmentController extends ViewController {
         this.assignment = assignment;
         homeworkTitle.setText(assignment.getTitle());
         homeworkDeadline.setText(assignment.getDeadline().toString());
+
         assignmentButton.setOnAction(event -> {
             if(OnClick != null) OnClick.run();
         });

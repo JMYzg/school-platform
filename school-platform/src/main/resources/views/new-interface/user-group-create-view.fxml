@@ -29,11 +29,11 @@
    <Label text="Choose a color:" />
    <HBox prefHeight="29.0" prefWidth="600.0" spacing="10.0">
       <ColorPicker fx:id="colorPicker" />
-      <Button id="btnM" fx:id="createButton" mnemonicParsing="false" onAction="#createGroup" text="Create">
+      <Button id="btnM" fx:id="createButton" mnemonicParsing="false" text="Create">
          <HBox.margin>
             <Insets left="300.0" />
          </HBox.margin>
       </Button>
-      <Button id="btnN" fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelCreation" text="Cancel" />
+      <Button id="btnN" fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
    </HBox>
 </VBox>

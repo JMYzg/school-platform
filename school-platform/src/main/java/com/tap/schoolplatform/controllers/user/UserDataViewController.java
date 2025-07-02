@@ -1,12 +1,12 @@
 package com.tap.schoolplatform.controllers.user;
 
-import com.tap.schoolplatform.controllers.ViewController;
 import com.tap.schoolplatform.controllers.alerts.AlertHandler;
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.users.User;
 import com.tap.schoolplatform.models.users.shared.Membership;
 import com.tap.schoolplatform.services.Service;
 import com.tap.schoolplatform.services.auth.LoginService;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,8 +18,9 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class UserDataViewController extends ViewController {
+public class UserDataViewController {
     @FXML public ImageView userPhoto;
     @FXML public Label
             lastName,
@@ -47,11 +48,12 @@ public class UserDataViewController extends ViewController {
     }
 
     public void initialize() {
+        generateGroupStack();
         loadUserData();
-        loadGroups();
+        generateGroupStack();
     }
 
-    private void loadGroups() {
+    public void generateGroupStack() {
         List<Group> userGroups = Service.find(LoginService.getCurrentUser().getId(), User.class)
                 .getMemberships().stream()
                 .map(Membership::getGroup)
