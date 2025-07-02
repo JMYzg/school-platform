@@ -24,21 +24,22 @@ import java.util.List;
 
 public class UserNew_EditAssignmentController {
 
-    @FXML
-    TextField titleTF;
+    @FXML TextField titleTF;
     @FXML TextArea descriptionTF;
     @FXML DatePicker datePicker;
+
     @FXML Spinner<Integer> spinnerHour;
     @FXML Spinner<Integer>  spinnerMinute;
+
     @FXML public Button cleanButton, cancelButton, acceptButton;
 
-    private VBox AssignmentContainer;
+
     private Assignment assignment;
     private Group group;
+
     private AssignmentCreatedListener assignmentCreatedListener;
-//    public UserGroupBorderPaneViewController mainController;
-//
-//
+    private VBox AssignmentContainer;
+
     public UserGroupBorderPaneViewController mainController;
 
     public void setMainController(UserGroupBorderPaneViewController mainController) {
@@ -118,9 +119,6 @@ public class UserNew_EditAssignmentController {
             UserButtonAssignmentController controller = loader.getController();
             controller.setAssigment(assignment);
             controller.setHomeworkTitle(assignment.getTitle());
-//            controller.setCreationDate(assignment.getCreationDate().toString());
-//            controller.setHomeworkDeadline(assignment.getDeadline().toString());
-            //falta agregar el dia de creación, color y puntos
 
             controller.setOnClick(()->{
                 UserViewController.setCurrentAssignment(assignment);
@@ -136,7 +134,6 @@ public class UserNew_EditAssignmentController {
                     );
                 }
             });
-
             AssignmentContainer.getChildren().add(taskView);
 
         } catch (IOException e){

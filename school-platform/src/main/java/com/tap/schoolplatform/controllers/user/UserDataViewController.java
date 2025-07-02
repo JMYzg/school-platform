@@ -9,6 +9,7 @@ import com.tap.schoolplatform.services.auth.LoginService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -47,7 +48,10 @@ public class UserDataViewController {
     }
 
     public void initialize() {
+        generateGroupStack();
+    }
 
+    public void generateGroupStack() {
         List<Group> userGroups = Service.find(LoginService.getCurrentUser().getId(), User.class)
                 .getMemberships().stream()
                 .map(Membership::getGroup)
@@ -81,4 +85,5 @@ public class UserDataViewController {
             }
         }
     }
+
 }

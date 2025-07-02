@@ -19,13 +19,8 @@
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost/school-platform?useSSL=false"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
-<<<<<<< HEAD
             <property name="jakarta.persistence.jdbc.password" value="chuletaGatacalculadora06:46"/>
-            <!-- Jeremy: B3bs!patitA$69, Brisa: ..., Gary: ...-->
-=======
-            <property name="jakarta.persistence.jdbc.password" value="23436"/>
-            <!-- Jeremy: B3bs!patitA$69, Brisa: ..., Gary: 23436-->
->>>>>>> 8110270b8042f758583f0a9663c894744c1d41af
+
 
             <!-- Hibernate configuration -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>

@@ -33,6 +33,7 @@ public class UserListAssignmentsController {
     }
 
     public void initialize() {
+        //get Group to optain their assignment
         Group currentGroup = UserViewController.getCurrentGroup();
         if (currentGroup != null) {
             List<Assignment> assignments = currentGroup.getAssignments();
@@ -68,6 +69,7 @@ public class UserListAssignmentsController {
 
             }
         }
+
         addHomeworkButton.setOnAction(event ->
                 openInNewWindow("views/new-interface/user-homework-edit_new.fxml", "Create a Assignment"));
     }
@@ -80,7 +82,7 @@ public class UserListAssignmentsController {
             Parent root = loader.load();
 
             UserNew_EditAssignmentController controller = loader.getController();
-
+            controller.setMainController(mainController);
             //pass current group
             controller.setGroup(UserViewController.getCurrentGroup());
             controller.setAssignmentContainer(homeworkViewsContainer);
