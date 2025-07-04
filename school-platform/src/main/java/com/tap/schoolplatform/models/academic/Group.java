@@ -29,7 +29,8 @@ public class Group {
     @OneToMany(
             mappedBy = "group",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
     private List<Membership> memberships = new ArrayList<>();
 

@@ -1,6 +1,5 @@
 package com.tap.schoolplatform.models.users;
 
-import com.mysql.cj.protocol.ColumnDefinition;
 import com.tap.schoolplatform.models.users.enums.Type;
 import com.tap.schoolplatform.models.users.shared.Address;
 import com.tap.schoolplatform.models.users.enums.Gender;
@@ -14,7 +13,6 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "users")
