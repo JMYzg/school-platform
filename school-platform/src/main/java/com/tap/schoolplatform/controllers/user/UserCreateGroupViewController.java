@@ -36,6 +36,7 @@ public class UserCreateGroupViewController {
             //agregar alertas de confirmación
             handleCreateGroup();
         });
+        //falta el de cancel y clear
     }
     public void handleCreateGroup() {
         String groupName = groupNameField.getText();
@@ -57,10 +58,10 @@ public class UserCreateGroupViewController {
             if(mainController != null){
                 mainController.generateGroupStack();
             }
-
             if (listener != null) {
                 listener.onGroupCreated(group);
             }
+
             mainController.generateGroupStack();
         }
 

@@ -49,7 +49,7 @@ public class UserDataViewController {
     public void initialize() {
         generateGroupStack();
         loadUserData();
-        generateGroupStack();
+//        generateGroupStack();
     }
 
     public void generateGroupStack() {

@@ -30,14 +30,11 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label id="titleOptions" fx:id="homeworkTitleLabel" prefHeight="25.0" prefWidth="289.0" text="1.3 Example Title Homework" />
-      <Button id="btnM" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Create" visible="false" />
-      <Button id="btnN" fx:id="studentEditButton" mnemonicParsing="false" onAction="#studentEditButtonHandler" prefHeight="30.0" prefWidth="81.0" text="Edit" />
+      <Label id="titleOptions" fx:id="homeworkTitleLabel" prefHeight="25.0" prefWidth="369.0" text="1.3 Example Title Homework" />
+      <Button id="btnN" fx:id="editButton" mnemonicParsing="false" onAction="#editButtonHandler" prefHeight="30.0" prefWidth="81.0" text="Edit" />
       <StackPane prefHeight="34.0" prefWidth="87.0">
-         <children>
-            <Button id="btnH" fx:id="gradeButton" mnemonicParsing="false" onAction="#submitHomework" prefHeight="30.0" prefWidth="80.0" text="Grade" />
-            <Button id="btnH" fx:id="submmitButton1" mnemonicParsing="false" onAction="#submitHomework" prefHeight="30.0" prefWidth="80.0" text="Submmit" visible="false" />
-         </children>
+         <Button id="btnH" fx:id="gradeButton" mnemonicParsing="false" onAction="#submitHomework" prefHeight="30.0" prefWidth="80.0" text="Grade" />
+         <Button id="btnH" fx:id="submmitButton" mnemonicParsing="false" onAction="#submitHomework" prefHeight="30.0" prefWidth="80.0" text="Submmit" visible="false" />
       </StackPane>
    </HBox>
    <Separator prefHeight="17.0" prefWidth="570.0">

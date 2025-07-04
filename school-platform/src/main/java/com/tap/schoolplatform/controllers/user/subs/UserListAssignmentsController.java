@@ -5,8 +5,6 @@ import com.tap.schoolplatform.controllers.user.UserGroupBorderPaneViewController
 import com.tap.schoolplatform.controllers.user.UserViewController;
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
-import com.tap.schoolplatform.services.Service;
-import com.tap.schoolplatform.services.auth.LoginService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,17 +29,17 @@ public class UserListAssignmentsController {
     }
 
     public void initialize() {
-        loadAssignment();
+        generateAssignmentStack();
         addHomeworkButton.setOnAction(event ->
-                openInNewWindow("views/new-interface/user-homework-edit_new.fxml", "Create a Assignment"));
+                openCreateAssignView("views/new-interface/user-homework-edit_new.fxml", "Create a Assignment"));
     }
 
-    public void loadAssignment() {
-        Group currentGroup = UserViewController.getCurrentGroup();
-        if (currentGroup != null) {
+    public void generateAssignmentStack() {
+        homeworkViewsContainer.getChildren().clear();
 
+        Group currentGroup = UserViewController.getCurrentGroup();
             List<Assignment> assignments = currentGroup.getAssignments();
-            homeworkViewsContainer.getChildren().clear();
+
             for (Assignment assignment : assignments) {
                 try{
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/new-interface/user-homework-container.fxml"));
@@ -55,6 +53,7 @@ public class UserListAssignmentsController {
                             //esto debe estar para que funcione ver la tarea
                             mainController.setloadCenter("/views/new-interface/user-homework-view.fxml");
                             mainController.setUserListAssignmentsController(this);
+
                         } catch (Exception e) {
                             AlertHandler.showAlert(
                                     Alert.AlertType.ERROR,
@@ -64,23 +63,25 @@ public class UserListAssignmentsController {
                             );
                         }
                     });
+
                     homeworkViewsContainer.getChildren().add(button);
                 } catch (Exception e){
                     e.printStackTrace();
                 }
             }
-        }
+
     }
 
 
 
-    private void openInNewWindow(String fxmlPath, String title) {
+    private void openCreateAssignView(String fxmlPath, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlPath));
             Parent root = loader.load();
 
             UserNew_EditAssignmentController controller = loader.getController();
             controller.setMainController(mainController);
+//            controller.setUserListAssignmentsController(this);
             //pass current group
             controller.setGroup(UserViewController.getCurrentGroup());
             controller.setAssignmentContainer(homeworkViewsContainer);

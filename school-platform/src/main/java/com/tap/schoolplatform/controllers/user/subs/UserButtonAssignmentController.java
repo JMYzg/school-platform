@@ -48,7 +48,4 @@ public class UserButtonAssignmentController extends ViewController {
         return assignment;
     }
 
-    public void openAssignment(ActionEvent actionEvent) throws IOException {
-        loadNewView(actionEvent, "/views/new-interface/user-homework-edit_new.fxml", "Assignment");
-    }
 }

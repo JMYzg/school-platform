@@ -23,56 +23,43 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class UserNew_EditAssignmentController {
-
-    @FXML
-    TextField titleTF;
-    @FXML
-    TextArea descriptionTF;
-    @FXML
-    DatePicker datePicker;
-    @FXML
-    Spinner<Integer> spinnerHour;
-    @FXML
-    Spinner<Integer> spinnerMinute;
-    @FXML
-    public Button cleanButton, cancelButton, acceptButton;
-
+    @FXML TextField titleTF;
+    @FXML TextArea descriptionTF;
+    @FXML DatePicker datePicker;
+    @FXML Spinner<Integer> spinnerHour;
+    @FXML Spinner<Integer> spinnerMinute;
+    @FXML public Button cleanButton, cancelButton, acceptButton;
 
     private Assignment assignment;
     private Group group;
-
-    private AssignmentCreatedListener assignmentCreatedListener;
     private VBox AssignmentContainer;
-
+    private AssignmentCreatedListener assignmentCreatedListener;
+    private UserListAssignmentsController userListAssignmentsController;
     public UserGroupBorderPaneViewController mainController;
 
+    public void setUserListAssignmentsController(UserListAssignmentsController userListAssignmentsController) {
+        this.userListAssignmentsController = userListAssignmentsController;
+    }
     public void setMainController(UserGroupBorderPaneViewController mainController) {
         this.mainController = mainController;
     }
-
     public void setAssignmentCreatedListener(AssignmentCreatedListener Listener) {
         this.assignmentCreatedListener = Listener;
     }
-
     public void setGroup(Group group) {
         this.group = group;
     }
-
     public void setAssignmentContainer(VBox AssignmentContainer) {
         this.AssignmentContainer = AssignmentContainer;
     }
-
     @FXML
     public void initialize() {
-
         spinnerConfiguration(spinnerHour, 23);
         spinnerConfiguration(spinnerMinute, 59);
-
         acceptButton.setOnAction(event ->
                 //pendiente agregar alerta de confirmación
                 handleCreateAssignment()
                 );
-
     }
 
     public void handleCreateAssignment() {
@@ -99,34 +86,34 @@ public class UserNew_EditAssignmentController {
                         dueDateTime,
                         group
                 );
+                //Asegurarme que se agreguen al grupo actual
+                UserViewController.CURRENT_GROUP.getAssignments().add(assignment);
                 addAssignmentView(assignment); //Cuando es nuevo lo añade, pero  debemos hacer que cuando no es nuevo lo actualice
                 Service.add(assignment);
+
+                if (userListAssignmentsController != null) {
+                    userListAssignmentsController.generateAssignmentStack();
+                }
 
                 if (assignmentCreatedListener != null) {
                     assignmentCreatedListener.onAssignmentCreated(assignment);
                 }
+                userListAssignmentsController.generateAssignmentStack();
+            }
+            else{
+                //If you are just editing
 
             }
-//            else{
-//                //If you are just editing
-//                assignment.setTitle(title);
-//                assignment.setDescription(description);
-//                assignment.setDeadline(dueDateTime);
-//                //Origen del problema
-//                updateAssignmentView(assignment);
-//            }
             AlertHandler.showAlert(
                     Alert.AlertType.INFORMATION,
                     "Create assignment",
                     "Successfully created assignment",
                     "The assignment was successfully created"
             );
-
             Stage stage = (Stage) acceptButton.getScene().getWindow();
             stage.close();
         }
     }
-
     private void addAssignmentView(Assignment assignment) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/new-interface/user-homework-container.fxml"));
@@ -134,11 +121,13 @@ public class UserNew_EditAssignmentController {
             UserButtonAssignmentController controller = loader.getController();
             controller.setAssigment(assignment);
             controller.setHomeworkTitle(assignment.getTitle());
-
             controller.setOnClick(()->{
                 UserViewController.setCurrentAssignment(assignment);
                 try{
-                    //Aqui es nulo, quiero obtener la función que esta en UserGroupBorderPaneViewController "SetloadCenter"
+
+                    UserViewController.setCurrentAssignment(assignment);
+                    //aqui
+                    loadAssignmentData();
                     mainController.setloadCenter("/views/new-interface/user-homework-view.fxml");
                 } catch (Exception e) {
                     AlertHandler.showAlert(
@@ -150,14 +139,21 @@ public class UserNew_EditAssignmentController {
                 }
             });
             AssignmentContainer.getChildren().add(taskView);
-
         } catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    private void updateAssignmentView(Assignment assignment) {
+    public void loadAssignmentData() {
+        if (assignment != null) {
+            titleTF.setText(assignment.getTitle());
+            descriptionTF.setText(assignment.getDescription());
 
+            LocalDateTime deadline = assignment.getDeadline();
+            datePicker.setValue(deadline.toLocalDate());
+            spinnerHour.getValueFactory().setValue(deadline.getHour());
+            spinnerMinute.getValueFactory().setValue(deadline.getMinute());
+        }
     }
 
 

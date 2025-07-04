@@ -77,6 +77,7 @@ public class UserViewController extends ViewController {
             FXMLLoader loader = new FXMLLoader(UserViewController.class.getClassLoader().getResource(fxmlPath));
             Parent view = loader.load();
             Object controller = loader.getController();
+
             if (controller instanceof UserDataViewController userDataViewController) {
                 userDataViewController.setMainController(this);
                 this.userDataViewController = userDataViewController;
@@ -89,11 +90,8 @@ public class UserViewController extends ViewController {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlPath));
             Parent root = loader.load();
 
-
             UserCreateGroupViewController controller = loader.getController();
             controller.setMainController(userDataViewController);
-
-
 
             Stage stage = new Stage();
             stage.setTitle(title);
@@ -109,7 +107,6 @@ public class UserViewController extends ViewController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlPath));
             Parent root = loader.load();
-
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(new Scene(root));

@@ -18,7 +18,15 @@ public class UserGroupBorderPaneViewController {
 
     @FXML public Button membersButton, assignmentsButton;
     @FXML private BorderPane groupBorderPaneContainer;
+
     private UserAssignmentController userAssignmentController;
+
+    private UserNew_EditAssignmentController userNew_EditAssignmentController;
+
+    public void setCreateEditAssignmentController(UserNew_EditAssignmentController userNew_EditAssignmentController) {
+        this.userNew_EditAssignmentController = userNew_EditAssignmentController;
+    }
+
     private UserListAssignmentsController userListAssignmentsController;
 
     public void setUserListAssignmentsController(UserListAssignmentsController userListAssignmentsController) {
@@ -87,12 +95,15 @@ public class UserGroupBorderPaneViewController {
         FXMLLoader fxmlLoader = new FXMLLoader(UserGroupBorderPaneViewController.class.getResource(fxmlPath));
         Parent view = fxmlLoader.load();
         Object controller = fxmlLoader.getController();
+
         if (controller instanceof UserListAssignmentsController userListAssignmentsController) {
+            userListAssignmentsController.generateAssignmentStack();
             userListAssignmentsController.setMainController(this);
-            //esto agregué
-            userListAssignmentsController.loadAssignment();
+            this.userListAssignmentsController = userListAssignmentsController;
+
         } else if (controller instanceof UserNew_EditAssignmentController userNew_EditAssignmentControlle) {
             userNew_EditAssignmentControlle.setMainController(this);
+            userNew_EditAssignmentControlle.setUserListAssignmentsController(userListAssignmentsController);
         }
         else if (controller instanceof UserAssignmentController userAssignmentController) {
 //            userAssignmentController.setUserListAssignmentsController(userListAssignmentsController);

@@ -38,7 +38,6 @@
 //    }
 //    public void setAssignment(Assignment assignment) {
 //        this.assignment = assignment;
-//        loadAssignmentData();
 //    }
 //
 //    //
