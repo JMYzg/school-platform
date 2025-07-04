@@ -25,19 +25,23 @@ public class UserListAssignmentsController {
     @FXML Button addHomeworkButton;
     @FXML VBox homeworkViewsContainer;
 
-    //por que en privado no se puede acceder
     public UserGroupBorderPaneViewController mainController;
-
     public void setMainController(UserGroupBorderPaneViewController mainController) {
         this.mainController = mainController;
     }
 
     public void initialize() {
-        //get Group to optain their assignment
+        loadAssignment();
+        addHomeworkButton.setOnAction(event ->
+                openInNewWindow("views/new-interface/user-homework-edit_new.fxml", "Create a Assignment"));
+    }
+
+    public void loadAssignment() {
         Group currentGroup = UserViewController.getCurrentGroup();
         if (currentGroup != null) {
-            List<Assignment> assignments = currentGroup.getAssignments();
 
+            List<Assignment> assignments = currentGroup.getAssignments();
+            homeworkViewsContainer.getChildren().clear();
             for (Assignment assignment : assignments) {
                 try{
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/new-interface/user-homework-container.fxml"));
@@ -48,7 +52,9 @@ public class UserListAssignmentsController {
                     controller.setOnClick(() -> {
                         UserViewController.setCurrentAssignment(assignment);
                         try{
+                            //esto debe estar para que funcione ver la tarea
                             mainController.setloadCenter("/views/new-interface/user-homework-view.fxml");
+                            mainController.setUserListAssignmentsController(this);
                         } catch (Exception e) {
                             AlertHandler.showAlert(
                                     Alert.AlertType.ERROR,
@@ -57,21 +63,13 @@ public class UserListAssignmentsController {
                                     e.getMessage()
                             );
                         }
-
                     });
-
                     homeworkViewsContainer.getChildren().add(button);
-
                 } catch (Exception e){
                     e.printStackTrace();
                 }
-
-
             }
         }
-
-        addHomeworkButton.setOnAction(event ->
-                openInNewWindow("views/new-interface/user-homework-edit_new.fxml", "Create a Assignment"));
     }
 
 

@@ -46,6 +46,8 @@ public class UserViewController extends ViewController {
         CURRENT_ASSIGNMENT = null;
     }
 
+
+
     @FXML
     public void initialize() throws IOException {
         // Cargar user-data-view.fxml en el centro al iniciar
@@ -76,7 +78,6 @@ public class UserViewController extends ViewController {
             Parent view = loader.load();
             Object controller = loader.getController();
             if (controller instanceof UserDataViewController userDataViewController) {
-
                 userDataViewController.setMainController(this);
                 this.userDataViewController = userDataViewController;
             }
@@ -88,7 +89,7 @@ public class UserViewController extends ViewController {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlPath));
             Parent root = loader.load();
 
-            //desisti de este metodo
+
             UserCreateGroupViewController controller = loader.getController();
             controller.setMainController(userDataViewController);
 

@@ -41,11 +41,10 @@ public class UserDataViewController {
     @FXML public VBox vboxGroups;
 
     private UserViewController mainController;
-
-
     public void setMainController(UserViewController mainController) {
         this.mainController = mainController;
     }
+
 
     public void initialize() {
         generateGroupStack();
