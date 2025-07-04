@@ -195,4 +195,5 @@ public class User {
     public int hashCode() {
         return email.hashCode();
     }
+
 }

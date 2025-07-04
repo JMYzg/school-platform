@@ -1,55 +1,51 @@
 package com.tap.schoolplatform.controllers.user.subs;
 
+import com.tap.schoolplatform.controllers.ViewController;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-public class UserButtonAssignmentController {
+import java.io.IOException;
+
+public class UserButtonAssignmentController extends ViewController {
     @FXML public Button assignmentButton;
     @FXML public Label
             homeworkTitle,
             homeworkDeadline,
             points,
             creationDate;
+
     private Assignment assignment;
+    private Runnable OnClick;
+
+    @FXML
+    public void initialize() {
+    }
 
     public void setAssigment(Assignment assignment) {
         this.assignment = assignment;
+        homeworkTitle.setText(assignment.getTitle());
+        homeworkDeadline.setText(assignment.getDeadline().toString());
+
+        assignmentButton.setOnAction(event -> {
+            if(OnClick != null) OnClick.run();
+        });
+        //agregar resto
+        //creationDate.setText(assignment.getCreationDate().toString());
+    }
+
+    public void setHomeworkTitle(String title) {
+        homeworkTitle.setText(title);
+    }
+
+    public void setOnClick(Runnable onClick) {
+        this.OnClick = onClick;
     }
 
     public Assignment getAssignment() {
         return assignment;
-    }
-
-    public void setHomeworkTitle(String homeworkTitle) {
-        this.homeworkTitle.setText(homeworkTitle);
-    }
-    public String getHomeworkTitle() {
-        return homeworkTitle.getText();
-    }
-
-    public void setHomeworkDeadline(String homeworkDeadline) {
-        this.homeworkDeadline.setText(homeworkDeadline);
-    }
-
-    public String getHomeworkDeadline() {
-        return homeworkDeadline.getText();
-    }
-
-    public void setPoints(String points) {
-        this.points.setText(points);
-    }
-    public String getPoints() {
-        return points.getText();
-    }
-
-    public void setCreationDate(String creationDate) {
-        this.creationDate.setText(creationDate);
-    }
-
-    public String getCreationDate() {
-        return creationDate.getText();
     }
 
 }

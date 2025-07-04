@@ -81,6 +81,7 @@ public class Group {
     public List<Assignment> getAssignments() {
         return assignments;
     }
+
     @Override
     public String toString() {
         return name;
@@ -98,6 +99,5 @@ public class Group {
     public int hashCode() {
         return Integer.hashCode(id);
     }
-
 
 }

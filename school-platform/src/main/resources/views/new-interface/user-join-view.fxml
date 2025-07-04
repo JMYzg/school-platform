@@ -16,14 +16,14 @@
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
-   <Label id="txtbold" text="Ingrese a code group: " />
-   <TextField />
+   <Label id="txtbold" text="Type in a group code:" />
+   <TextField fx:id="idField" />
    <HBox prefHeight="33.0" prefWidth="600.0" spacing="10.0">
-      <Button id="btnM" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Join">
+      <Button id="btnM" fx:id="joinButton" mnemonicParsing="false" onAction="#joinGroupAction" prefHeight="25.0" prefWidth="60.0" text="Join">
          <HBox.margin>
             <Insets left="400.0" />
          </HBox.margin>
       </Button>
-      <Button id="btnH" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Cancel" />
+      <Button id="btnH" fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="60.0" text="Cancel" />
    </HBox>
 </VBox>

@@ -1,12 +1,17 @@
 package com.tap.schoolplatform.controllers.user.subs;
 
 import com.tap.schoolplatform.controllers.alerts.AlertHandler;
+import com.tap.schoolplatform.controllers.user.UserGroupBorderPaneViewController;
+import com.tap.schoolplatform.controllers.user.UserViewController;
+import com.tap.schoolplatform.interfaces.AssignmentCreatedListener;
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
+import com.tap.schoolplatform.services.Service;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -18,38 +23,43 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class UserNew_EditAssignmentController {
-
-    @FXML
-    TextField titleTF;
+    @FXML TextField titleTF;
     @FXML TextArea descriptionTF;
     @FXML DatePicker datePicker;
     @FXML Spinner<Integer> spinnerHour;
-    @FXML Spinner<Integer>  spinnerMinute;
+    @FXML Spinner<Integer> spinnerMinute;
     @FXML public Button cleanButton, cancelButton, acceptButton;
 
-    private VBox AssignmentContainer;
     private Assignment assignment;
     private Group group;
+    private VBox AssignmentContainer;
+    private AssignmentCreatedListener assignmentCreatedListener;
+    private UserListAssignmentsController userListAssignmentsController;
+    public UserGroupBorderPaneViewController mainController;
 
+    public void setUserListAssignmentsController(UserListAssignmentsController userListAssignmentsController) {
+        this.userListAssignmentsController = userListAssignmentsController;
+    }
+    public void setMainController(UserGroupBorderPaneViewController mainController) {
+        this.mainController = mainController;
+    }
+    public void setAssignmentCreatedListener(AssignmentCreatedListener Listener) {
+        this.assignmentCreatedListener = Listener;
+    }
     public void setGroup(Group group) {
         this.group = group;
     }
-
     public void setAssignmentContainer(VBox AssignmentContainer) {
         this.AssignmentContainer = AssignmentContainer;
     }
-
     @FXML
     public void initialize() {
-
         spinnerConfiguration(spinnerHour, 23);
         spinnerConfiguration(spinnerMinute, 59);
-
         acceptButton.setOnAction(event ->
                 //pendiente agregar alerta de confirmación
                 handleCreateAssignment()
                 );
-
     }
 
     public void handleCreateAssignment() {
@@ -67,47 +77,83 @@ public class UserNew_EditAssignmentController {
                     "Please enter all the fields correctly"
             );
         } else {
-
-            LocalDateTime dueDateTime = LocalDateTime.of(date, LocalTime.of(hour,minute));
+            LocalDateTime dueDateTime = LocalDateTime.of(date, LocalTime.of(hour, minute));
             if (assignment == null) {
                 //If the assign is new
-                assignment = new Assignment(title,description,dueDateTime, group);
+                assignment = new Assignment(
+                        title,
+                        description,
+                        dueDateTime,
+                        group
+                );
+                //Asegurarme que se agreguen al grupo actual
+                UserViewController.CURRENT_GROUP.getAssignments().add(assignment);
                 addAssignmentView(assignment); //Cuando es nuevo lo añade, pero  debemos hacer que cuando no es nuevo lo actualice
-            }else{
-                //If you are just editing
-                assignment.setTitle(title);
-                assignment.setDescription(description);
-                assignment.setDeadline(dueDateTime);
-                //Origen del problema
-                updateAssignmentView(assignment);
+                Service.add(assignment);
+
+                if (userListAssignmentsController != null) {
+                    userListAssignmentsController.generateAssignmentStack();
+                }
+
+                if (assignmentCreatedListener != null) {
+                    assignmentCreatedListener.onAssignmentCreated(assignment);
+                }
+                userListAssignmentsController.generateAssignmentStack();
             }
+            else{
+                //If you are just editing
+
+            }
+            AlertHandler.showAlert(
+                    Alert.AlertType.INFORMATION,
+                    "Create assignment",
+                    "Successfully created assignment",
+                    "The assignment was successfully created"
+            );
             Stage stage = (Stage) acceptButton.getScene().getWindow();
             stage.close();
         }
     }
-
     private void addAssignmentView(Assignment assignment) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("views/new-interface/user-homework-container.fxml"));
-            Node taskView = loader.load();
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/new-interface/user-homework-container.fxml"));
+            Parent taskView = loader.load();
             UserButtonAssignmentController controller = loader.getController();
             controller.setAssigment(assignment);
-
             controller.setHomeworkTitle(assignment.getTitle());
-            controller.setCreationDate(assignment.getCreationDate().toString());
-            controller.setHomeworkDeadline(assignment.getDeadline().toString());
-            //falta agregar el dia de creación, color y puntos
+            controller.setOnClick(()->{
+                UserViewController.setCurrentAssignment(assignment);
+                try{
 
+                    UserViewController.setCurrentAssignment(assignment);
+                    //aqui
+                    loadAssignmentData();
+                    mainController.setloadCenter("/views/new-interface/user-homework-view.fxml");
+                } catch (Exception e) {
+                    AlertHandler.showAlert(
+                            Alert.AlertType.ERROR,
+                            "Error",
+                            "Resource not found",
+                            e.getMessage()
+                    );
+                }
+            });
             AssignmentContainer.getChildren().add(taskView);
-
         } catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    private void updateAssignmentView(Assignment assignment) {
+    public void loadAssignmentData() {
+        if (assignment != null) {
+            titleTF.setText(assignment.getTitle());
+            descriptionTF.setText(assignment.getDescription());
 
+            LocalDateTime deadline = assignment.getDeadline();
+            datePicker.setValue(deadline.toLocalDate());
+            spinnerHour.getValueFactory().setValue(deadline.getHour());
+            spinnerMinute.getValueFactory().setValue(deadline.getMinute());
+        }
     }
 
 

@@ -95,6 +95,10 @@ public class MainApplication extends Application {
         Membership membership = new Membership(user, group, Role.OWNER);
         Service.add(membership);
         Membership membership2 = new Membership(user2, group, Role.MEMBER);
+        Service.add(membership2);
+        Group group1 = new Group("Álgebra Lineal", "Grupo creado con el objetivo de ser utilizado para probar la función JOIN");
+        Service.add(group1);
+        Service.add(admin);
     }
 
     public static void main(String[] args) {

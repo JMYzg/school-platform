@@ -38,16 +38,21 @@ public class UserDataViewController {
             country;
     @FXML public AnchorPane groupIcon;
     @FXML public VBox vboxGroups;
+    @FXML public ImageView profilePicture;
+
     private UserViewController mainController;
-
-
     public void setMainController(UserViewController mainController) {
-
         this.mainController = mainController;
     }
 
-    public void initialize() {
 
+    public void initialize() {
+        generateGroupStack();
+        loadUserData();
+//        generateGroupStack();
+    }
+
+    public void generateGroupStack() {
         List<Group> userGroups = Service.find(LoginService.getCurrentUser().getId(), User.class)
                 .getMemberships().stream()
                 .map(Membership::getGroup)
@@ -61,10 +66,8 @@ public class UserDataViewController {
                 controller.setGroup(group);
 
                 controller.setOnClick(() -> {
-                    UserViewController.currentGroup = group;
+                    UserViewController.setCurrentGroup(group);
                     try {
-
-                       //aqui esta el error
                         mainController.loadCenter("views/new-interface/user-group-borderPane-view.fxml");
                     } catch (IOException e) {
                         AlertHandler.showAlert(
@@ -82,5 +85,21 @@ public class UserDataViewController {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void loadUserData() {
+        profilePicture.setImage(LoginService.getCurrentUser().getProfilePictureImage());
+        lastName.setText(LoginService.getCurrentUser().getLastName());
+        name.setText(LoginService.getCurrentUser().getName());
+        id.setText(Integer.toString(LoginService.getCurrentUser().getId()));
+        gender.setText(LoginService.getCurrentUser().getGender().toString());
+        telephone.setText(LoginService.getCurrentUser().getPhone());
+        email.setText(LoginService.getCurrentUser().getEmail());
+        street.setText(LoginService.getCurrentUser().getAddress().getStreet());
+        colony.setText(LoginService.getCurrentUser().getAddress().getColony());
+        city.setText(LoginService.getCurrentUser().getAddress().getCity());
+        state.setText(LoginService.getCurrentUser().getAddress().getState());
+        country.setText(LoginService.getCurrentUser().getAddress().getCountry());
+        pc.setText(LoginService.getCurrentUser().getAddress().getPostalCode());
     }
 }
