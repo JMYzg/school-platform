@@ -23,11 +23,11 @@
             <TableView fx:id="table" prefHeight="532.0" prefWidth="606.0" style="-fx-background-color: f6f6f6; -fx-background-radius: 5;">
                <columns>
                   <TableColumn minWidth="0.0" prefWidth="38.0" />
-                  <TableColumn fx:id="idTableColumn" prefWidth="90.0" text="ID" />
-                  <TableColumn fx:id="lastNameTableColumn" prefWidth="107.0" text="Last name" />
-                  <TableColumn fx:id="nameTableColumn" prefWidth="117.0" text="Name" />
-                  <TableColumn fx:id="emailTableColumn" minWidth="0.0" prefWidth="171.0" text="Email" />
-                  <TableColumn fx:id="roleTabbleColumn" prefWidth="79.0" text="Role" />
+                  <TableColumn fx:id="id" prefWidth="90.0" text="ID" />
+                  <TableColumn fx:id="lastName" prefWidth="107.0" text="Last name" />
+                  <TableColumn fx:id="name" prefWidth="117.0" text="Name" />
+                  <TableColumn fx:id="email" minWidth="0.0" prefWidth="171.0" text="Email" />
+                  <TableColumn fx:id="role" prefWidth="79.0" text="Role" />
                </columns>
             </TableView>
          </AnchorPane>

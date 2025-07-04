@@ -24,14 +24,18 @@ import java.util.List;
 
 public class UserNew_EditAssignmentController {
 
-    @FXML TextField titleTF;
-    @FXML TextArea descriptionTF;
-    @FXML DatePicker datePicker;
-
-    @FXML Spinner<Integer> spinnerHour;
-    @FXML Spinner<Integer>  spinnerMinute;
-
-    @FXML public Button cleanButton, cancelButton, acceptButton;
+    @FXML
+    TextField titleTF;
+    @FXML
+    TextArea descriptionTF;
+    @FXML
+    DatePicker datePicker;
+    @FXML
+    Spinner<Integer> spinnerHour;
+    @FXML
+    Spinner<Integer> spinnerMinute;
+    @FXML
+    public Button cleanButton, cancelButton, acceptButton;
 
 
     private Assignment assignment;
@@ -86,11 +90,15 @@ public class UserNew_EditAssignmentController {
                     "Please enter all the fields correctly"
             );
         } else {
-
-            LocalDateTime dueDateTime = LocalDateTime.of(date, LocalTime.of(hour,minute));
+            LocalDateTime dueDateTime = LocalDateTime.of(date, LocalTime.of(hour, minute));
             if (assignment == null) {
                 //If the assign is new
-                assignment = new Assignment(title,description,dueDateTime, group);
+                assignment = new Assignment(
+                        title,
+                        description,
+                        dueDateTime,
+                        group
+                );
                 addAssignmentView(assignment); //Cuando es nuevo lo añade, pero  debemos hacer que cuando no es nuevo lo actualice
                 Service.add(assignment);
 
@@ -107,6 +115,13 @@ public class UserNew_EditAssignmentController {
 //                //Origen del problema
 //                updateAssignmentView(assignment);
 //            }
+            AlertHandler.showAlert(
+                    Alert.AlertType.INFORMATION,
+                    "Create assignment",
+                    "Successfully created assignment",
+                    "The assignment was successfully created"
+            );
+
             Stage stage = (Stage) acceptButton.getScene().getWindow();
             stage.close();
         }

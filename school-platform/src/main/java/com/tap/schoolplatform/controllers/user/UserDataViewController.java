@@ -9,7 +9,6 @@ import com.tap.schoolplatform.services.auth.LoginService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -39,6 +38,7 @@ public class UserDataViewController {
             country;
     @FXML public AnchorPane groupIcon;
     @FXML public VBox vboxGroups;
+    @FXML public ImageView profilePicture;
 
     private UserViewController mainController;
     public void setMainController(UserViewController mainController) {
@@ -47,6 +47,8 @@ public class UserDataViewController {
 
 
     public void initialize() {
+        generateGroupStack();
+        loadUserData();
         generateGroupStack();
     }
 
@@ -85,4 +87,19 @@ public class UserDataViewController {
         }
     }
 
+    private void loadUserData() {
+        profilePicture.setImage(LoginService.getCurrentUser().getProfilePictureImage());
+        lastName.setText(LoginService.getCurrentUser().getLastName());
+        name.setText(LoginService.getCurrentUser().getName());
+        id.setText(Integer.toString(LoginService.getCurrentUser().getId()));
+        gender.setText(LoginService.getCurrentUser().getGender().toString());
+        telephone.setText(LoginService.getCurrentUser().getPhone());
+        email.setText(LoginService.getCurrentUser().getEmail());
+        street.setText(LoginService.getCurrentUser().getAddress().getStreet());
+        colony.setText(LoginService.getCurrentUser().getAddress().getColony());
+        city.setText(LoginService.getCurrentUser().getAddress().getCity());
+        state.setText(LoginService.getCurrentUser().getAddress().getState());
+        country.setText(LoginService.getCurrentUser().getAddress().getCountry());
+        pc.setText(LoginService.getCurrentUser().getAddress().getPostalCode());
+    }
 }
