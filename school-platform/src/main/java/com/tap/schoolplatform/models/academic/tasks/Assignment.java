@@ -1,7 +1,9 @@
 package com.tap.schoolplatform.models.academic.tasks;
 
+import com.tap.schoolplatform.controllers.user.subs.UserButtonAssignmentController;
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.academic.tasks.enums.Status;
+import com.tap.schoolplatform.models.users.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -10,6 +12,15 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "assignments")
 public class Assignment {
+
+    private transient UserButtonAssignmentController buttonController;
+
+    public void setButtonController(UserButtonAssignmentController buttonController) {
+        this.buttonController = buttonController;
+    }
+    public UserButtonAssignmentController getButtonController() {
+        return buttonController;
+    }
 
     public static final double MAX_SCORE = 10;
     public static final double MIN_SCORE = 0;

@@ -10,7 +10,6 @@ import com.tap.schoolplatform.services.Service;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -20,7 +19,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 
 public class UserNew_EditAssignmentController {
     @FXML TextField titleTF;
@@ -49,11 +47,18 @@ public class UserNew_EditAssignmentController {
     public void setGroup(Group group) {
         this.group = group;
     }
+
+
+
     public void setAssignmentContainer(VBox AssignmentContainer) {
         this.AssignmentContainer = AssignmentContainer;
     }
+
+
     @FXML
     public void initialize() {
+
+        loadAssignmentData();
         spinnerConfiguration(spinnerHour, 23);
         spinnerConfiguration(spinnerMinute, 59);
         acceptButton.setOnAction(event ->
@@ -88,47 +93,68 @@ public class UserNew_EditAssignmentController {
                 );
                 //Asegurarme que se agreguen al grupo actual
                 UserViewController.CURRENT_GROUP.getAssignments().add(assignment);
-                addAssignmentView(assignment); //Cuando es nuevo lo añade, pero  debemos hacer que cuando no es nuevo lo actualice
+                //aqui estaba
                 Service.add(assignment);
-
-                if (userListAssignmentsController != null) {
-                    userListAssignmentsController.generateAssignmentStack();
-                }
 
                 if (assignmentCreatedListener != null) {
                     assignmentCreatedListener.onAssignmentCreated(assignment);
                 }
-                userListAssignmentsController.generateAssignmentStack();
+
+                if (userListAssignmentsController != null) {
+                    userListAssignmentsController.generateAssignmentStack();
+                }
             }
             else{
                 //If you are just editing
+                UserViewController.getCurrentAssignment().setTitle(title);
+                UserViewController.getCurrentAssignment().setDescription(description);
+                UserViewController.getCurrentAssignment().setDeadline(dueDateTime);
 
+                UserButtonAssignmentController btnController = UserViewController.getCurrentAssignment().getButtonController();
+                if (btnController != null) {
+                    btnController.setHomeworkTitle(title);
+                }
+
+                AlertHandler.showAlert(
+                        Alert.AlertType.INFORMATION,
+                        "Assignment updated",
+                        "the assignment has been updated successfully",
+                        "Changes were saved"
+                );
             }
+
+            if (AssignmentContainer != null) {
+                addAssignmentView(assignment); //Cuando es nuevo lo añade, pero  debemos hacer que cuando no es nuevo lo actualice
+            }
+
+            Stage stage = (Stage) acceptButton.getScene().getWindow();
             AlertHandler.showAlert(
                     Alert.AlertType.INFORMATION,
                     "Create assignment",
                     "Successfully created assignment",
                     "The assignment was successfully created"
             );
-            Stage stage = (Stage) acceptButton.getScene().getWindow();
             stage.close();
         }
     }
+
     private void addAssignmentView(Assignment assignment) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/new-interface/user-homework-container.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/new-interface/button-assignment.fxml"));
             Parent taskView = loader.load();
+
             UserButtonAssignmentController controller = loader.getController();
+            assignment.setButtonController(controller);
             controller.setAssigment(assignment);
             controller.setHomeworkTitle(assignment.getTitle());
+            controller.setAssigmentContainer(AssignmentContainer);
+
             controller.setOnClick(()->{
                 UserViewController.setCurrentAssignment(assignment);
+                assignment.setButtonController(controller);
                 try{
-
-                    UserViewController.setCurrentAssignment(assignment);
-                    //aqui
-                    loadAssignmentData();
                     mainController.setloadCenter("/views/new-interface/user-homework-view.fxml");
+                    mainController.setUserListAssignmentsController(userListAssignmentsController);
                 } catch (Exception e) {
                     AlertHandler.showAlert(
                             Alert.AlertType.ERROR,
@@ -145,11 +171,12 @@ public class UserNew_EditAssignmentController {
     }
 
     public void loadAssignmentData() {
-        if (assignment != null) {
-            titleTF.setText(assignment.getTitle());
-            descriptionTF.setText(assignment.getDescription());
+        Assignment current = UserViewController.getCurrentAssignment();
+        if (current != null) {
+            titleTF.setText(current.getTitle());
+            descriptionTF.setText(current.getDescription());
 
-            LocalDateTime deadline = assignment.getDeadline();
+            LocalDateTime deadline = current.getDeadline();
             datePicker.setValue(deadline.toLocalDate());
             spinnerHour.getValueFactory().setValue(deadline.getHour());
             spinnerMinute.getValueFactory().setValue(deadline.getMinute());

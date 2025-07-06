@@ -47,7 +47,7 @@
          <Insets left="10.0" />
       </padding>
       <Label text="Deadline: " />
-      <Label fx:id="deadlineLabel" text="09/04/25" />
+      <Label fx:id="deadlineLabel" prefHeight="17.0" prefWidth="54.0" text="09/04/25" />
       <Label text="at" />
       <Label fx:id="hourLabel" text="00:00 PM" />
    </HBox>

@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
@@ -18,6 +19,12 @@ public class UserGroupBorderPaneViewController {
 
     @FXML public Button membersButton, assignmentsButton;
     @FXML private BorderPane groupBorderPaneContainer;
+
+    private VBox groupVBox;
+
+    public void setAssignmentsContainer(VBox assignmentsContainer) {
+        this.groupVBox = assignmentsContainer;
+    }
 
     private UserAssignmentController userAssignmentController;
 
@@ -31,6 +38,10 @@ public class UserGroupBorderPaneViewController {
 
     public void setUserListAssignmentsController(UserListAssignmentsController userListAssignmentsController) {
         this.userListAssignmentsController = userListAssignmentsController;
+    }
+
+    public UserListAssignmentsController getUserListAssignmentsController() {
+        return userListAssignmentsController;
     }
 
     @FXML
@@ -65,30 +76,12 @@ public class UserGroupBorderPaneViewController {
     }
     @FXML
     public void loadMembers(ActionEvent actionEvent) {
-//        try {
-//            setloadCenter("/views/new-interface/user-list-view.fxml");
-//        } catch (IOException e) {
-//            AlertHandler.showAlert(
-//                    Alert.AlertType.ERROR,
-//                    "Error",
-//                    "Resource not found",
-//                    e.getMessage()
-//            );
-//        }
+
     }
 
     @FXML
     public void loadAssignments(ActionEvent actionEvent) {
-//        try {
-//            setloadCenter("/views/new-interface/user-homework-list-view.fxml");
-//        } catch (IOException e) {
-//            AlertHandler.showAlert(
-//                    Alert.AlertType.ERROR,
-//                    "Error",
-//                    "Resource not found",
-//                    e.getMessage()
-//            );
-//        }
+
     }
 
     public void setloadCenter(String fxmlPath) throws IOException {
@@ -109,9 +102,7 @@ public class UserGroupBorderPaneViewController {
 //            userAssignmentController.setUserListAssignmentsController(userListAssignmentsController);
             userAssignmentController.setBorderPaneController(this);
             this.userAssignmentController = userAssignmentController;
-
         }
         groupBorderPaneContainer.setCenter(view);
     }
-
 }

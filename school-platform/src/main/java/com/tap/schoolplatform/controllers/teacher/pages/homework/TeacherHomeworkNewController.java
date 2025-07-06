@@ -81,10 +81,7 @@
 //                assignment.setTitle(title);
 //                assignment.setDescription(description);
 //                assignment.setDeadline(dueDateTime);
-//                //Origen del problema
 //                updateAssignmentView(assignment);
-//                //
-//                //Hace falta setUnit en Task
 //            }
 //
 //        }
