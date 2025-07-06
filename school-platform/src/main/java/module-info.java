@@ -10,6 +10,7 @@ module com.tap.schoolplatform {
     requires java.sql;
     requires java.desktop;
     requires javafx.swing;
+    requires mysql.connector.j;
 
     opens com.tap.schoolplatform to javafx.fxml;
     exports com.tap.schoolplatform;
