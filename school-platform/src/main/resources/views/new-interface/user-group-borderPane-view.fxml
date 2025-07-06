@@ -24,7 +24,7 @@
             <ImageView fitHeight="119.0" fitWidth="131.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                <Image url="@../../images/logo-School-Platform.png" />
             </ImageView>
-            <Label id="titleOptions" prefHeight="27.0" prefWidth="177.0" text="Options" />
+            <Label id="titleOptions" fx:id="groupName" prefHeight="27.0" prefWidth="177.0" text="Options" />
             <Separator prefWidth="200.0">
                <padding>
                   <Insets left="15.0" right="15.0" />

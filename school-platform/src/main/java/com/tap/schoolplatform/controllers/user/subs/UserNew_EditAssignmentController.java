@@ -21,45 +21,69 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
+
+import static com.tap.schoolplatform.controllers.user.UserViewController.CURRENT_ASSIGNMENT;
 
 public class UserNew_EditAssignmentController {
-    @FXML TextField titleTF;
-    @FXML TextArea descriptionTF;
-    @FXML DatePicker datePicker;
-    @FXML Spinner<Integer> spinnerHour;
-    @FXML Spinner<Integer> spinnerMinute;
-    @FXML public Button cleanButton, cancelButton, acceptButton;
+    @FXML
+    TextField titleTF;
+    @FXML
+    TextArea descriptionTF;
+    @FXML
+    DatePicker datePicker;
+    @FXML
+    Spinner<Integer> spinnerHour;
+    @FXML
+    Spinner<Integer> spinnerMinute;
+    @FXML
+    public Button cleanButton, cancelButton, acceptButton;
 
     private Assignment assignment;
     private Group group;
     private VBox AssignmentContainer;
+    private UserViewController userViewController;
     private AssignmentCreatedListener assignmentCreatedListener;
     private UserListAssignmentsController userListAssignmentsController;
     public UserGroupBorderPaneViewController mainController;
 
+    public void setUserViewController(UserViewController userViewController) {
+        this.userViewController = userViewController;
+    }
+
     public void setUserListAssignmentsController(UserListAssignmentsController userListAssignmentsController) {
         this.userListAssignmentsController = userListAssignmentsController;
     }
+
     public void setMainController(UserGroupBorderPaneViewController mainController) {
         this.mainController = mainController;
     }
+
     public void setAssignmentCreatedListener(AssignmentCreatedListener Listener) {
         this.assignmentCreatedListener = Listener;
     }
+
     public void setGroup(Group group) {
         this.group = group;
     }
+
     public void setAssignmentContainer(VBox AssignmentContainer) {
         this.AssignmentContainer = AssignmentContainer;
     }
+
     @FXML
     public void initialize() {
         spinnerConfiguration(spinnerHour, 23);
         spinnerConfiguration(spinnerMinute, 59);
+
+        if (CURRENT_ASSIGNMENT != null) {
+            setAssignmentData();
+        }
+
         acceptButton.setOnAction(event ->
                 //pendiente agregar alerta de confirmación
                 handleCreateAssignment()
-                );
+        );
     }
 
     public void handleCreateAssignment() {
@@ -99,10 +123,9 @@ public class UserNew_EditAssignmentController {
                     assignmentCreatedListener.onAssignmentCreated(assignment);
                 }
                 userListAssignmentsController.generateAssignmentStack();
-            }
-            else{
-                //If you are just editing
-
+            } else {
+//                CURRENT_ASSIGNMENT = assignment;
+                Service.update(assignment);
             }
             AlertHandler.showAlert(
                     Alert.AlertType.INFORMATION,
@@ -114,6 +137,7 @@ public class UserNew_EditAssignmentController {
             stage.close();
         }
     }
+
     private void addAssignmentView(Assignment assignment) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/new-interface/user-homework-container.fxml"));
@@ -121,10 +145,9 @@ public class UserNew_EditAssignmentController {
             UserButtonAssignmentController controller = loader.getController();
             controller.setAssigment(assignment);
             controller.setHomeworkTitle(assignment.getTitle());
-            controller.setOnClick(()->{
+            controller.setOnClick(() -> {
                 UserViewController.setCurrentAssignment(assignment);
-                try{
-
+                try {
                     UserViewController.setCurrentAssignment(assignment);
                     //aqui
                     loadAssignmentData();
@@ -139,7 +162,7 @@ public class UserNew_EditAssignmentController {
                 }
             });
             AssignmentContainer.getChildren().add(taskView);
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -158,16 +181,36 @@ public class UserNew_EditAssignmentController {
 
 
     public void clearAll(ActionEvent actionEvent) {
-
+        Optional<ButtonType> result = AlertHandler.showAlert(
+                Alert.AlertType.CONFIRMATION,
+                "Please confirm",
+                "Clearing all fields",
+                "Are you sure you want to clear all the fields?"
+        );
+        if (result.get() == ButtonType.OK) {
+            titleTF.clear();
+            descriptionTF.clear();
+            datePicker.setValue(null);
+        }
     }
 
     public void cancelHomework(ActionEvent actionEvent) {
+        Optional<ButtonType> result = AlertHandler.showAlert(
+                Alert.AlertType.CONFIRMATION,
+                "Please confirm",
+                "Cancelling creating homework",
+                "Are you sure you want to cancel this operation?"
+        );
+        if (result.get() == ButtonType.OK) {
+            Stage stage = (Stage) cancelButton.getScene().getWindow();
+            stage.close();
+        }
     }
 
     public void createHomework(ActionEvent actionEvent) {
     }
 
-        private void spinnerConfiguration(Spinner<Integer> spinner, int max) {
+    private void spinnerConfiguration(Spinner<Integer> spinner, int max) {
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, max);
         valueFactory.setValue(0);
 
@@ -182,5 +225,13 @@ public class UserNew_EditAssignmentController {
             }
         });
         spinner.setValueFactory(valueFactory);
+    }
+
+    private void setAssignmentData() {
+        titleTF.setText(CURRENT_ASSIGNMENT.getTitle() == null ? "" : CURRENT_ASSIGNMENT.getTitle());
+        descriptionTF.setText(CURRENT_ASSIGNMENT.getDescription());
+        datePicker.setValue(CURRENT_ASSIGNMENT.getDeadline().toLocalDate());
+        spinnerHour.getValueFactory().setValue(CURRENT_ASSIGNMENT.getDeadline().getHour() % 24);
+        spinnerMinute.getValueFactory().setValue(CURRENT_ASSIGNMENT.getDeadline().getMinute());
     }
 }

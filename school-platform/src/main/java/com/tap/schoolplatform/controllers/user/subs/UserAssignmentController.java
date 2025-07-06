@@ -10,22 +10,40 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 import java.io.IOException;
 
 public class UserAssignmentController {
     public Button gradeButton;
-    @FXML Button exitButton1, attachButton, editButton, submmitButton;
-    @FXML Label homeworkTitleLabel, deadlineLabel, hourLabel;
+    public TextFlow instructions;
+    @FXML
+    Button
+            exitButton,
+            attachButton,
+            editButton,
+            submmitButton;
+    @FXML
+    Label
+            homeworkTitleLabel,
+            deadlineLabel,
+            hourLabel;
+
+    private UserViewController userViewController;
 
     private UserGroupBorderPaneViewController userGroupBorderPaneViewController;
+
     public void setBorderPaneController(UserGroupBorderPaneViewController userGroupBorderPaneViewController) {
         this.userGroupBorderPaneViewController = userGroupBorderPaneViewController;
     }
+
     @FXML
     public void initialize() {
+        setAssigmentData();
+
         //cuando presiono este botón y regreso a la lista de tareas desaparecen los botones de tareas
-        exitButton1.setOnAction(e -> {
+        exitButton.setOnAction(e -> {
             try {
                 userGroupBorderPaneViewController.setloadCenter("/views/new-interface/user-homework-list-view.fxml");
             } catch (IOException ex) {
@@ -37,17 +55,24 @@ public class UserAssignmentController {
         });
     }
 
+    private void setAssigmentData() {
+        homeworkTitleLabel.setText(UserViewController.getCurrentAssignment().getTitle());
+        deadlineLabel.setText(UserViewController.getCurrentAssignment().getDeadline().toString());
+        instructions.getChildren().add(new Text(UserViewController.getCurrentAssignment().getDescription()));
+    }
+
     public void closeSubmitHomework(ActionEvent actionEvent) {
     }
 
 
-    public void submitHomework(ActionEvent actionEvent) {
+    public void submitHomework(ActionEvent actionEvent) throws IOException {
+        UserViewController.loadNewView(actionEvent, "/views/new-interface/user-homework-grade.fxml", "");
     }
 
     public void attachFiles(ActionEvent actionEvent) {
     }
 
     public void editButtonHandler(ActionEvent actionEvent) throws IOException {
-        UserViewController.loadNewView(actionEvent,"/views/new-interface/user-homework-edit_new.fxml","");
+        UserViewController.loadNewView(actionEvent, "/views/new-interface/user-homework-edit_new.fxml", "");
     }
 }

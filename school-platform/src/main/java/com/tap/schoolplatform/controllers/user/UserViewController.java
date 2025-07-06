@@ -5,6 +5,7 @@ import com.tap.schoolplatform.controllers.alerts.AlertHandler;
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
 import com.tap.schoolplatform.models.users.User;
+import com.tap.schoolplatform.services.auth.LoginService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,12 +21,20 @@ import java.util.Optional;
 
 public class UserViewController extends ViewController {
 
-    @FXML private Label  adminNameLabel;
-    @FXML private Button logoutButton;
-    @FXML private Button createButton;
-    @FXML private Button joinButton;
-    @FXML private Button backButton;
-    @FXML private BorderPane mainBorderPane;
+    @FXML
+    private Label
+            adminNameLabel,
+            name;
+    @FXML
+    private Button logoutButton;
+    @FXML
+    private Button createButton;
+    @FXML
+    private Button joinButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private BorderPane mainBorderPane;
 
     static public Group CURRENT_GROUP;
     static public Assignment CURRENT_ASSIGNMENT;
@@ -35,23 +44,34 @@ public class UserViewController extends ViewController {
     public static Group getCurrentGroup() {
         return CURRENT_GROUP;
     }
-    public static void setCurrentGroup(Group group) {CURRENT_GROUP = group;}
-    public static void clearCurrentGroup() {CURRENT_GROUP = null;}
+
+    public static void setCurrentGroup(Group group) {
+        CURRENT_GROUP = group;
+    }
+
+    public static void clearCurrentGroup() {
+        CURRENT_GROUP = null;
+    }
 
     public static Assignment getCurrentAssignment() {
         return CURRENT_ASSIGNMENT;
     }
-    public static void setCurrentAssignment(Assignment assignment) {CURRENT_ASSIGNMENT = assignment;}
+
+    public static void setCurrentAssignment(Assignment assignment) {
+        CURRENT_ASSIGNMENT = assignment;
+    }
+
     public static void clearCurrentaAssignment() {
         CURRENT_ASSIGNMENT = null;
     }
-
 
 
     @FXML
     public void initialize() throws IOException {
         // Cargar user-data-view.fxml en el centro al iniciar
         loadCenter("views/new-interface/user-data-view.fxml");
+
+        name.setText("Welcome " + LoginService.getCurrentUser().toString() + "!");
 
         backButton.setVisible(false); // Por ahora no se usa
 
@@ -73,19 +93,19 @@ public class UserViewController extends ViewController {
         });
     }
 
-   public void loadCenter(String fxmlPath) throws IOException {
-            FXMLLoader loader = new FXMLLoader(UserViewController.class.getClassLoader().getResource(fxmlPath));
-            Parent view = loader.load();
-            Object controller = loader.getController();
+    public void loadCenter(String fxmlPath) throws IOException {
+        FXMLLoader loader = new FXMLLoader(UserViewController.class.getClassLoader().getResource(fxmlPath));
+        Parent view = loader.load();
+        Object controller = loader.getController();
 
-            if (controller instanceof UserDataViewController userDataViewController) {
-                userDataViewController.setMainController(this);
-                this.userDataViewController = userDataViewController;
-            }
-            mainBorderPane.setCenter(view);
+        if (controller instanceof UserDataViewController userDataViewController) {
+            userDataViewController.setMainController(this);
+            this.userDataViewController = userDataViewController;
+        }
+        mainBorderPane.setCenter(view);
     }
 
-    private void openCreateGroupView(String fxmlPath, String title){
+    private void openCreateGroupView(String fxmlPath, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(fxmlPath));
             Parent root = loader.load();
@@ -110,6 +130,8 @@ public class UserViewController extends ViewController {
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(new Scene(root));
+            UserJoinViewController controller = loader.getController();
+            controller.setMainController(userDataViewController);
             stage.initModality(Modality.APPLICATION_MODAL); // bloquea la ventana principal hasta que se cierre
             stage.show();
         } catch (IOException e) {

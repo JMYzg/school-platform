@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class UserButtonAssignmentController extends ViewController {
     @FXML public Button assignmentButton;
+
     @FXML public Label
             homeworkTitle,
             homeworkDeadline,
@@ -18,6 +19,7 @@ public class UserButtonAssignmentController extends ViewController {
             creationDate;
 
     private Assignment assignment;
+
     private Runnable OnClick;
 
     @FXML

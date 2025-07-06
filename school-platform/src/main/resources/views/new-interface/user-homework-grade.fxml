@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="642.0" style="-fx-background-color: f6f6f6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.user.subs.UserGradeAssgnmentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="642.0" style="-fx-background-color: f6f6f6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.user.subs.UserGradeAssignmentController">
     <stylesheets>
         <URL value="@../../styles/main.css" />
         <URL value="@../../styles/scrollPane.css" />
@@ -27,14 +27,14 @@
         <Separator prefHeight="23.0" prefWidth="477.0" />
         <ScrollPane prefHeight="270.0" prefWidth="445.0" style="-fx-background-radius: 5;">
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="620.0" prefWidth="585.0" style="-fx-background-radius: 5;">
-                <TableView prefHeight="620.0" prefWidth="584.0" style="-fx-background-color: white; -fx-background-radius: 5;">
+                <TableView fx:id="tableView" prefHeight="620.0" prefWidth="584.0" style="-fx-background-color: white; -fx-background-radius: 5;">
                     <columns>
-                        <TableColumn prefWidth="89.0" text="ID" />
-                        <TableColumn prefWidth="116.0" text="Last name" />
-                        <TableColumn minWidth="7.0" prefWidth="101.0" text="Name" />
-                        <TableColumn prefWidth="97.0" text="Status" />
-                        <TableColumn prefWidth="105.0" text="Archives" />
-                        <TableColumn text="Points">
+                        <TableColumn fx:id="id" prefWidth="89.0" text="ID" />
+                        <TableColumn fx:id="lastName" prefWidth="116.0" text="Last name" />
+                        <TableColumn fx:id="name" minWidth="7.0" prefWidth="101.0" text="Name" />
+                        <TableColumn fx:id="status" prefWidth="97.0" text="Status" />
+                        <TableColumn fx:id="file" prefWidth="105.0" text="Files" />
+                        <TableColumn fx:id="points" text="Points">
                             <graphic>
                                 <Label text="/10" />
                             </graphic>
@@ -49,8 +49,8 @@
                     <Insets right="370.0" />
                 </HBox.margin>
             </Button>
-            <Button id="btnN" mnemonicParsing="false" prefHeight="25.0" prefWidth="66.0" text="Cancel" />
-            <Button id="btnM" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Accept" />
+            <Button id="btnN" fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelGrading" prefHeight="25.0" prefWidth="66.0" text="Cancel" />
+            <Button id="btnM" fx:id="acceptButton" mnemonicParsing="false" onAction="#acceptGrading" prefHeight="25.0" prefWidth="75.0" text="Accept" />
         </HBox>
     </VBox>
 </AnchorPane>

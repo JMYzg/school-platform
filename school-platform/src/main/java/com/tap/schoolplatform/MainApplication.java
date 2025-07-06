@@ -9,12 +9,18 @@ import com.tap.schoolplatform.models.users.shared.Address;
 import com.tap.schoolplatform.models.users.shared.Membership;
 import com.tap.schoolplatform.services.Service;
 import javafx.application.Application;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class MainApplication extends Application {
 
@@ -28,7 +34,8 @@ public class MainApplication extends Application {
         stage.setResizable(false);
         stage.show();
     }
-    public static void dataInjection() {
+
+    public static void dataInjection() throws IOException {
         User admin = new User(
                 "Brisa",
                 "Bautista",
@@ -47,7 +54,6 @@ public class MainApplication extends Application {
                 Gender.FEMALE,
                 Type.ADMIN
         );
-
         User user = new User(
                 "Jeremy",
                 "Zarate",
@@ -66,6 +72,7 @@ public class MainApplication extends Application {
                 Gender.MALE,
                 Type.USER
         );
+        user.setProfilePicture(defaultProfilePicture());
         User user2 = new User(
                 "Gary",
                 "Juarez",
@@ -84,8 +91,10 @@ public class MainApplication extends Application {
                 Gender.MALE,
                 Type.USER
         );
+        user2.setProfilePicture(defaultProfilePicture());
 
         Group group = new Group("Programación", "Este grupo se enfoca en la creación de un programa CRUD con varios miembros");
+        group.setColor("#000000");
         Service.add(group);
         Service.add(admin);
         System.out.println("Usuario añadido: " + admin.getEmail());
@@ -97,12 +106,21 @@ public class MainApplication extends Application {
         Membership membership2 = new Membership(user2, group, Role.MEMBER);
         Service.add(membership2);
         Group group1 = new Group("Álgebra Lineal", "Grupo creado con el objetivo de ser utilizado para probar la función JOIN");
+        group1.setColor("#00008B");
         Service.add(group1);
         Service.add(admin);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         dataInjection();
         launch();
+    }
+
+    public static byte[] defaultProfilePicture() throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        Image image = new Image(Objects.requireNonNull(MainApplication.class.getResourceAsStream("/images/DefaultProfilePicture.png")));
+//        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+//        ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
 }
