@@ -63,11 +63,26 @@ public class UserAssignmentController {
 
     @FXML
     public void initialize() {
+        if (isMember()) {
+            editButton.setVisible(false);
+            gradeButton.setVisible(false);
+            deleteButton.setVisible(false);
+            submmitButton.setVisible(true);
+//            submmitButton.setText("Submit");
+            submmitButton.setDisable(false);
+        } else {
+            editButton.setVisible(true);
+            gradeButton.setVisible(true);
+            deleteButton.setVisible(true);
+            submmitButton.setVisible(false);
+            submmitButton.setDisable(true);
+        }
 //        setAssigmentData();
         setup();
         //cuando presiono este botón y regreso a la lista de tareas desaparecen los botones de tareas
         exitButton.setOnAction(e -> {
             try {
+                UserViewController.setCurrentAssignment(null);
                 mainController.setLoadCenter("/views/new-interface/user-homework-list-view.fxml");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
@@ -144,7 +159,50 @@ public class UserAssignmentController {
 
     public void submitHomework(ActionEvent actionEvent) {
         if (submmitButton.getText().equals("Submit")) {
-            Service.add(submission);
+            if (submission == null) {
+                AlertHandler.showAlert(
+                        Alert.AlertType.ERROR,
+                        "Error",
+                        "No file attached",
+                        "Please attach a file to submit this assignment."
+                );
+            } else {
+                Optional<ButtonType> response = AlertHandler.showAlert(
+                        Alert.AlertType.CONFIRMATION,
+                        "Please confirm",
+                        "Submitting assignment",
+                        "Are you sure you want to submit this assignment?"
+                );
+                if (response.isPresent() && response.get() == ButtonType.OK) {
+                    Service.add(submission);
+                    submmitButton.setDisable(false);
+                    submmitButton.setText("Unsubmit");
+                    AlertHandler.showAlert(
+                            Alert.AlertType.INFORMATION,
+                            "Success",
+                            "Assignment submitted",
+                            "The assignment has been submitted successfully."
+                    );
+                }
+            }
+        } else if (submmitButton.getText().equals("Unsubmit")) {
+            Optional<ButtonType> response = AlertHandler.showAlert(
+                    Alert.AlertType.CONFIRMATION,
+                    "Please confirm",
+                    "Unsubmitting assignment",
+                    "Are you sure you want to unsubmit this assignment?"
+            );
+            if (response.isPresent() && response.get() == ButtonType.OK) {
+                Service.delete(submission);
+                submmitButton.setDisable(false);
+                submmitButton.setText("Submit");
+            }
+            AlertHandler.showAlert(
+                    Alert.AlertType.INFORMATION,
+                    "Success",
+                    "Assignment unsubmitted",
+                    "The assignment has been unsubmitted successfully."
+            );
         } else {
             try {
                 UserViewController.loadNewView(actionEvent, "/views/new-interface/user-homework-grade.fxml", "");
@@ -203,6 +261,7 @@ public class UserAssignmentController {
             submmitButton.setVisible(true);
             submmitButton.setText("Grade");
             submmitButton.setDisable(false);
+            attachButton.setVisible(false);
         }
     }
 
@@ -235,6 +294,16 @@ public class UserAssignmentController {
             e.printStackTrace();
         }
     }
+
+    public boolean isMember() {
+        Membership currentGroupMembership = LoginService.getCurrentUser().getMemberships().stream()
+                .filter(mem -> mem.getGroup().equals(UserViewController.getCurrentGroup()))
+                .findFirst()
+                .orElse(null);
+
+        return currentGroupMembership != null && (currentGroupMembership.getRole() == Role.MEMBER || currentGroupMembership.getRole() == Role.MEMBER);
+    }
+
 }
 
 //    public void editButtonHandler(ActionEvent actionEvent) throws IOException {

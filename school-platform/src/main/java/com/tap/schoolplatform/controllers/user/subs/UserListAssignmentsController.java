@@ -5,6 +5,9 @@ import com.tap.schoolplatform.controllers.user.UserGroupBorderPaneViewController
 import com.tap.schoolplatform.controllers.user.UserViewController;
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
+import com.tap.schoolplatform.models.users.enums.Role;
+import com.tap.schoolplatform.models.users.shared.Membership;
+import com.tap.schoolplatform.services.auth.LoginService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,6 +39,18 @@ public class UserListAssignmentsController {
     }
 
     public void initialize() {
+
+        Membership membership = UserViewController.CURRENT_GROUP.getMemberships()
+                .stream()
+                .filter(mem -> mem.getUser().equals(LoginService.getCurrentUser())).findFirst()
+                .orElse(null);
+        assert membership != null;
+        Role role = membership.getRole();
+
+        if (role == Role.MEMBER) {
+            addHomeworkButton.setDisable(true);
+        }
+
         generateAssignmentStack();
         addHomeworkButton.setOnAction(event ->
                 openCreateAssignView("views/new-interface/user-homework-edit_new.fxml", "Create a Assignment"));

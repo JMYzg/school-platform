@@ -9,7 +9,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.TextFlow?>
 
 <BorderPane fx:id="groupBorderPaneContainer" prefHeight="501.0" prefWidth="917.0" style="-fx-background-color: dedede;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.user.UserGroupBorderPaneViewController">
    <left>
@@ -32,6 +34,13 @@
             </Separator>
             <Button id="btnOptions" fx:id="membersButton" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#loadMembers" prefHeight="31.0" prefWidth="193.0" text="Members" />
             <Button id="btnOptions" fx:id="assignmentsButton" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#loadAssignments" prefHeight="31.0" prefWidth="193.0" text="Assignments" />
+            <TextFlow fx:id="groupDescription" prefHeight="170.0" prefWidth="203.0" textAlignment="JUSTIFY" />
+            <HBox>
+               <children>
+                  <Label prefHeight="18.0" prefWidth="26.0" text="ID:" />
+                  <Label fx:id="groupID" prefHeight="18.0" prefWidth="183.0" text="ID" />
+               </children>
+            </HBox>
          </VBox>
       </AnchorPane>
    </left>

@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.TextFlow?>
 
-<VBox prefHeight="488.0" prefWidth="629.0" style="-fx-background-color: f6f6f6; -fx-background-radius: 5;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.user.subs.UserAssignmentController">
+<VBox prefHeight="488.0" prefWidth="629.0" style="-fx-background-color: f6f6f6; -fx-background-radius: 5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.user.subs.UserAssignmentController">
    <padding>
       <Insets left="10.0" top="10.0" />
    </padding>
@@ -28,7 +34,7 @@
       <Button id="btnN" fx:id="editButton" mnemonicParsing="false" onAction="#editButtonHandler" prefHeight="30.0" prefWidth="81.0" text="Edit" />
       <StackPane prefHeight="34.0" prefWidth="87.0">
          <Button id="btnH" fx:id="gradeButton" mnemonicParsing="false" onAction="#submitHomework" prefHeight="30.0" prefWidth="80.0" text="Grade" />
-         <Button id="btnH" fx:id="submmitButton" mnemonicParsing="false" onAction="#submitHomework" prefHeight="30.0" prefWidth="80.0" text="Submmit" visible="false" />
+         <Button id="btnH" fx:id="submmitButton" mnemonicParsing="false" onAction="#submitHomework" prefHeight="30.0" prefWidth="80.0" text="Submit" visible="false" />
       </StackPane>
       <Button id="btnN" fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteAssignment" prefHeight="30.0" prefWidth="81.0" text="Delete" />
    </HBox>
@@ -42,9 +48,9 @@
          <Insets left="10.0" />
       </padding>
       <Label text="Deadline: " />
-      <Label fx:id="deadlineLabel" prefHeight="20.0" prefWidth="67.0" text="09/04/25" />
-      <Label text="at" />
-      <Label fx:id="hourLabel" prefHeight="18.0" prefWidth="89.0" text="00:00 PM" />
+      <Label fx:id="deadlineLabel" prefHeight="4.0" prefWidth="105.0" text="09/04/25" />
+      <Label prefHeight="0.0" prefWidth="12.0" text="at" />
+      <Label fx:id="hourLabel" prefHeight="0.0" prefWidth="139.0" text="00:00 PM" />
    </HBox>
    <Label id="txtbold" prefHeight="17.0" prefWidth="489.0" text="Instructions:                                                                                                      10 Points">
       <padding>
