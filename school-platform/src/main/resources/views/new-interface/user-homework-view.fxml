@@ -17,16 +17,20 @@
       <URL value="@../../styles/main.css" />
    </stylesheets>
    <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="590.0" spacing="10.0">
-      <Button fx:id="exitButton1" mnemonicParsing="false" onAction="#closeSubmitHomework">
+      <Button fx:id="exitButton" mnemonicParsing="false" onAction="#closeSubmitHomework">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                <Image url="@../../images/arrowL.png" />
             </ImageView>
          </graphic>
       </Button>
-      <Label id="titleOptions" fx:id="homeworkTitleLabel" prefHeight="25.0" prefWidth="369.0" text="1.3 Example Title Homework" />
+      <Label id="titleOptions" fx:id="homeworkTitleLabel" prefHeight="29.0" prefWidth="284.0" text="1.3 Example Title Homework" />
       <Button id="btnN" fx:id="editButton" mnemonicParsing="false" onAction="#editButtonHandler" prefHeight="30.0" prefWidth="81.0" text="Edit" />
-      <Button id="btnH" fx:id="submmitButton" mnemonicParsing="false" onAction="#submitHomework" prefHeight="30.0" prefWidth="80.0" text="Submmit" />
+      <StackPane prefHeight="34.0" prefWidth="87.0">
+         <Button id="btnH" fx:id="gradeButton" mnemonicParsing="false" onAction="#submitHomework" prefHeight="30.0" prefWidth="80.0" text="Grade" />
+         <Button id="btnH" fx:id="submmitButton" mnemonicParsing="false" onAction="#submitHomework" prefHeight="30.0" prefWidth="80.0" text="Submmit" visible="false" />
+      </StackPane>
+      <Button id="btnN" fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteAssignment" prefHeight="30.0" prefWidth="81.0" text="Delete" />
    </HBox>
    <Separator prefHeight="17.0" prefWidth="570.0">
       <padding>
@@ -38,9 +42,9 @@
          <Insets left="10.0" />
       </padding>
       <Label text="Deadline: " />
-      <Label fx:id="deadlineLabel" text="09/04/25" />
+      <Label fx:id="deadlineLabel" prefHeight="20.0" prefWidth="67.0" text="09/04/25" />
       <Label text="at" />
-      <Label fx:id="hourLabel" text="00:00 PM" />
+      <Label fx:id="hourLabel" prefHeight="18.0" prefWidth="89.0" text="00:00 PM" />
    </HBox>
    <Label id="txtbold" prefHeight="17.0" prefWidth="489.0" text="Instructions:                                                                                                      10 Points">
       <padding>

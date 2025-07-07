@@ -30,16 +30,22 @@ public abstract class ViewController {
     }
 
     //pendiente de usar
-    public static void loadNewView(ActionEvent event, String view, String title) throws IOException {
+    public static <T> T loadNewView(ActionEvent event, String view, String title) throws IOException {
         Stage ownerStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Stage primaryStage = new Stage();
         primaryStage.initModality(Modality.WINDOW_MODAL);
         primaryStage.initOwner(ownerStage);
-        Parent root = FXMLLoader.load(Objects.requireNonNull(ViewController.class.getResource(view)));
+
+        FXMLLoader loader = new FXMLLoader(ViewController.class.getResource(view));
+        Parent root = loader.load();
+        T controller = loader.getController(); //El controlador que puedes configurar
+
         primaryStage.setTitle(title);
         primaryStage.setScene(new Scene(root));
-        primaryStage.show();
         primaryStage.setResizable(false);
+        primaryStage.show();
+
+        return controller;
     }
 
 }

@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -13,16 +14,24 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Formatter;
+import java.time.format.DateTimeFormatter;
 
 public class UserButtonAssignmentController extends ViewController {
     @FXML public Button assignmentButton;
+
     @FXML public Label
             homeworkTitle,
             homeworkDeadline,
             points,
             creationDate;
     private Assignment assignment;
+
     private Runnable OnClick;
+    private VBox container;
+
+    public void setAssigmentContainer (VBox container) {
+        this.container = container;
+    }
 
     @FXML
     public void initialize() {
@@ -30,8 +39,10 @@ public class UserButtonAssignmentController extends ViewController {
 
     public void setAssigment(Assignment assignment) {
         this.assignment = assignment;
-        homeworkTitle.setText(assignment.getTitle());
-        homeworkDeadline.setText(assignment.getDeadline().toString());
+//        homeworkTitle.setText(assignment.getTitle());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        homeworkDeadline.setText(assignment.getDeadline().format(formatter));
+        creationDate.setText(assignment.getCreationDate().format(formatter));
 
         assignmentButton.setOnAction(event -> {
             if(OnClick != null) OnClick.run();
@@ -39,17 +50,13 @@ public class UserButtonAssignmentController extends ViewController {
         //agregar resto
         //creationDate.setText(assignment.getCreationDate().toString());
     }
-
     public void setHomeworkTitle(String title) {
         homeworkTitle.setText(title);
     }
-
     public void setOnClick(Runnable onClick) {
         this.OnClick = onClick;
     }
-
     public Assignment getAssignment() {
         return assignment;
     }
-
 }

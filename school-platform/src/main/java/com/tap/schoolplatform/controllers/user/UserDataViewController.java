@@ -41,13 +41,14 @@ public class UserDataViewController {
     @FXML public ImageView profilePicture;
 
     private UserViewController mainController;
-    public void setMainController(UserViewController mainController) {
-        this.mainController = mainController;
-    }
 
     public void initialize() {
         generateGroupStack();
         loadUserData();
+    }
+
+    public void setMainController(UserViewController mainController) {
+        this.mainController = mainController;
     }
 
     public void generateGroupStack() {

@@ -14,17 +14,23 @@ public class UserButtonGroupController {
     private Group group;
     private Runnable onClick;
 
+    public void initialize() {
+    }
+
     public void setGroup(Group group) {
         this.group = group;
         groupName.setText(group.getName());
+        colorGroup.setStyle("-fx-background-color: " + group.getColor());
 
         groupButton.setOnAction(e -> {
             if (onClick != null) onClick.run();
         });
     }
+
     public void setOnClick(Runnable onClick) {
         this.onClick = onClick;
     }
+
     public Group getGroup() {
         return group;
     }

@@ -10,34 +10,53 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
 public class UserGroupBorderPaneViewController {
 
-    @FXML public Button membersButton, assignmentsButton;
-    @FXML private BorderPane groupBorderPaneContainer;
+    @FXML
+    public Button membersButton, assignmentsButton;
+
+    @FXML
+    public Label groupName;
+
+    @FXML
+    private BorderPane groupBorderPaneContainer;
+
+    private VBox groupVBox;
+
+    public void setAssignmentsContainer(VBox assignmentsContainer) {
+        this.groupVBox = assignmentsContainer;
+    }
 
     private UserAssignmentController userAssignmentController;
 
     private UserNew_EditAssignmentController userNew_EditAssignmentController;
 
+    private UserListAssignmentsController userListAssignmentsController;
+
     public void setCreateEditAssignmentController(UserNew_EditAssignmentController userNew_EditAssignmentController) {
         this.userNew_EditAssignmentController = userNew_EditAssignmentController;
     }
 
-    private UserListAssignmentsController userListAssignmentsController;
 
     public void setUserListAssignmentsController(UserListAssignmentsController userListAssignmentsController) {
         this.userListAssignmentsController = userListAssignmentsController;
     }
 
+    public UserListAssignmentsController getUserListAssignmentsController() {
+        return userListAssignmentsController;
+    }
+
     @FXML
     public void initialize() {
-
+        groupName.setText(UserViewController.getCurrentGroup().getName());
         try {
-            setloadCenter("/views/new-interface/user-list-view.fxml");
+            setLoadCenter("/views/new-interface/user-list-view.fxml");
         } catch (IOException e) {
             AlertHandler.showAlert(
                     Alert.AlertType.ERROR,
@@ -48,7 +67,7 @@ public class UserGroupBorderPaneViewController {
         }
         membersButton.setOnAction(event -> {
             try {
-                setloadCenter("/views/new-interface/user-list-view.fxml");
+                setLoadCenter("/views/new-interface/user-list-view.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -56,42 +75,25 @@ public class UserGroupBorderPaneViewController {
 
         assignmentsButton.setOnAction(event -> {
             try {
-                setloadCenter("/views/new-interface/user-homework-list-view.fxml");
+                setLoadCenter("/views/new-interface/user-homework-list-view.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
 
     }
+
     @FXML
     public void loadMembers(ActionEvent actionEvent) {
-//        try {
-//            setloadCenter("/views/new-interface/user-list-view.fxml");
-//        } catch (IOException e) {
-//            AlertHandler.showAlert(
-//                    Alert.AlertType.ERROR,
-//                    "Error",
-//                    "Resource not found",
-//                    e.getMessage()
-//            );
-//        }
+
     }
 
     @FXML
     public void loadAssignments(ActionEvent actionEvent) {
-//        try {
-//            setloadCenter("/views/new-interface/user-homework-list-view.fxml");
-//        } catch (IOException e) {
-//            AlertHandler.showAlert(
-//                    Alert.AlertType.ERROR,
-//                    "Error",
-//                    "Resource not found",
-//                    e.getMessage()
-//            );
-//        }
+
     }
 
-    public void setloadCenter(String fxmlPath) throws IOException {
+    public void setLoadCenter(String fxmlPath) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(UserGroupBorderPaneViewController.class.getResource(fxmlPath));
         Parent view = fxmlLoader.load();
         Object controller = fxmlLoader.getController();
@@ -101,17 +103,15 @@ public class UserGroupBorderPaneViewController {
             userListAssignmentsController.setMainController(this);
             this.userListAssignmentsController = userListAssignmentsController;
 
-        } else if (controller instanceof UserNew_EditAssignmentController userNew_EditAssignmentControlle) {
-            userNew_EditAssignmentControlle.setMainController(this);
-            userNew_EditAssignmentControlle.setUserListAssignmentsController(userListAssignmentsController);
-        }
-        else if (controller instanceof UserAssignmentController userAssignmentController) {
+        } else if (controller instanceof UserNew_EditAssignmentController userNew_EditAssignmentController) {
+            userNew_EditAssignmentController.setMainController(this);
+            userNew_EditAssignmentController.setUserListAssignmentsController(userListAssignmentsController);
+//            userNew_EditAssignmentController.setUserViewController(userViewController);
+        } else if (controller instanceof UserAssignmentController userAssignmentController) {
 //            userAssignmentController.setUserListAssignmentsController(userListAssignmentsController);
             userAssignmentController.setBorderPaneController(this);
             this.userAssignmentController = userAssignmentController;
-
         }
         groupBorderPaneContainer.setCenter(view);
     }
-
 }

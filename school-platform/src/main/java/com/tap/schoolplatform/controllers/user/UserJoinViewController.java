@@ -3,7 +3,6 @@ package com.tap.schoolplatform.controllers.user;
 import com.tap.schoolplatform.controllers.alerts.AlertHandler;
 import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.users.enums.Role;
-import com.tap.schoolplatform.models.users.enums.Type;
 import com.tap.schoolplatform.models.users.shared.Membership;
 import com.tap.schoolplatform.services.Service;
 import com.tap.schoolplatform.services.auth.LoginService;
@@ -14,9 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.hibernate.validator.internal.util.logging.Log;
 
-import java.lang.reflect.Member;
 import java.util.Optional;
 
 public class UserJoinViewController extends UserViewController {
@@ -29,9 +26,10 @@ public class UserJoinViewController extends UserViewController {
             joinButton,
             cancelButton;
 
+    private UserDataViewController mainController;
+
     @FXML
     public void initialize() {
-
     }
 
     @FXML
@@ -62,17 +60,18 @@ public class UserJoinViewController extends UserViewController {
                                 "Please try again"
                         );
                     } else {
-                    Group group = Service.find(groupId, Group.class);
-                    Membership membership = new Membership(LoginService.getCurrentUser(), group, Role.MEMBER);
-                    Service.add(membership);
-                    AlertHandler.showAlert(
-                            Alert.AlertType.INFORMATION,
-                            "Successfully joined group",
-                            "You have successfully joined the group",
-                            "Please reload your current groups to see " + group.getName() + " in your list of groups"
-                    );
-                    Stage stage = (Stage) joinButton.getScene().getWindow();
-                    stage.close();
+                        Group group = Service.find(groupId, Group.class);
+                        Membership membership = new Membership(LoginService.getCurrentUser(), group, Role.MEMBER);
+                        Service.add(membership);
+                        mainController.generateGroupStack();
+                        AlertHandler.showAlert(
+                                Alert.AlertType.INFORMATION,
+                                "Successfully joined group",
+                                "You have successfully joined the group",
+                                "Please reload your current groups to see " + group.getName() + " in your list of groups"
+                        );
+                        Stage stage = (Stage) joinButton.getScene().getWindow();
+                        stage.close();
                     }
                 }
             }
@@ -115,6 +114,12 @@ public class UserJoinViewController extends UserViewController {
                 .stream()
                 .anyMatch(membership -> membership.getGroup()
                         .getId() == Integer.parseInt(idField.getText())
-                && membership.getRole() == Role.MEMBER);
+                        && membership.getRole() == Role.MEMBER);
     }
+
+    public void setMainController(UserDataViewController controller) {
+        this.mainController = controller;
+    }
+
+
 }
