@@ -8,6 +8,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Formatter;
 
 public class UserButtonAssignmentController extends ViewController {
     @FXML public Button assignmentButton;
@@ -16,7 +21,6 @@ public class UserButtonAssignmentController extends ViewController {
             homeworkDeadline,
             points,
             creationDate;
-
     private Assignment assignment;
     private Runnable OnClick;
 
