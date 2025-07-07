@@ -73,7 +73,7 @@
                   </Label>
                </children>
             </HBox>
-            <TextFlow fx:id="instructions" prefHeight="241.0" prefWidth="565.0">
+            <TextFlow fx:id="textFlow" prefHeight="241.0" prefWidth="565.0">
                <VBox.margin>
                   <Insets left="3.0" right="200.0" />
                </VBox.margin>

@@ -6,15 +6,19 @@ import com.tap.schoolplatform.models.academic.Group;
 import com.tap.schoolplatform.models.academic.tasks.Assignment;
 import com.tap.schoolplatform.models.users.User;
 import com.tap.schoolplatform.services.auth.LoginService;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import java.io.IOException;
 import java.util.Optional;
 
@@ -102,7 +106,33 @@ public class UserViewController extends ViewController {
             userDataViewController.setMainController(this);
             this.userDataViewController = userDataViewController;
         }
-        mainBorderPane.setCenter(view);
+
+        Node OldView = mainBorderPane.getCenter();
+
+        if (OldView != null) {
+            FadeTransition fadeOut = new FadeTransition(Duration.millis(300), OldView);
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
+            fadeOut.setOnFinished(event -> {
+                view.setOpacity(0.0);
+                mainBorderPane.setCenter(view);
+
+                FadeTransition fadeIn = new FadeTransition(Duration.millis(300), view);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+            });
+            fadeOut.play();
+        } else {
+            view.setOpacity(0.0);
+            mainBorderPane.setCenter(view);
+            FadeTransition fadeIn = new FadeTransition(Duration.millis(300), view);
+            fadeIn.setFromValue(0.0);
+            fadeIn.setToValue(1.0);
+            fadeIn.play();
+        }
+
+
     }
 
     private void openCreateGroupView(String fxmlPath, String title) {
