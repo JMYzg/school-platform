@@ -277,7 +277,7 @@ public class AdminViewController extends ViewController {
         );
         File image = fileChooser.showOpenDialog(registerButton.getScene().getWindow());
         if (image != null) {
-            try (InputStream inputStream = new FileInputStream(image)) {
+            try (InputStream ignored = new FileInputStream(image)) {
                 String imagePath = image.toURI().toString();
                 Image pfp = new Image(imagePath);
                 imageView.setImage(pfp);
@@ -897,8 +897,6 @@ public class AdminViewController extends ViewController {
 
          imageView.setImage(user.getProfilePictureImage()); //User getProfilePicture method needed
     }
-
-
 
     private static class FormFiller {
         private final Map<TextField, String> textMap = new LinkedHashMap<>();

@@ -14,14 +14,19 @@ import javafx.stage.Stage;
 import java.util.Optional;
 
 import static com.tap.schoolplatform.controllers.admin.AdminViewController.injectCellValues;
+import static com.tap.schoolplatform.controllers.user.UserViewController.CURRENT_ASSIGNMENT;
 
 
 public class UserGradeAssignmentController {
 
     @FXML
+    private Label assignmentTitle;
+
+    @FXML
     private Button
             cancelButton,
             acceptButton;
+
     @FXML
     private TableView<User> tableView;
 
@@ -39,6 +44,7 @@ public class UserGradeAssignmentController {
     private final ObservableList<User> users = FXCollections.observableArrayList();
 
     public void initialize() {
+        assignmentTitle.setText(CURRENT_ASSIGNMENT.getTitle());
         setTable();
     }
 

@@ -9,6 +9,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Formatter;
+import java.time.format.DateTimeFormatter;
 
 public class UserButtonAssignmentController extends ViewController {
     @FXML public Button assignmentButton;
@@ -18,7 +24,6 @@ public class UserButtonAssignmentController extends ViewController {
             homeworkDeadline,
             points,
             creationDate;
-
     private Assignment assignment;
 
     private Runnable OnClick;
@@ -35,7 +40,9 @@ public class UserButtonAssignmentController extends ViewController {
     public void setAssigment(Assignment assignment) {
         this.assignment = assignment;
 //        homeworkTitle.setText(assignment.getTitle());
-        homeworkDeadline.setText(assignment.getDeadline().toString());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        homeworkDeadline.setText(assignment.getDeadline().format(formatter));
+        creationDate.setText(assignment.getCreationDate().format(formatter));
 
         assignmentButton.setOnAction(event -> {
             if(OnClick != null) OnClick.run();

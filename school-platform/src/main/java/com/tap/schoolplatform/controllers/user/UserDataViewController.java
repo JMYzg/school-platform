@@ -45,7 +45,6 @@ public class UserDataViewController {
     public void initialize() {
         generateGroupStack();
         loadUserData();
-//        generateGroupStack();
     }
 
     public void setMainController(UserViewController mainController) {

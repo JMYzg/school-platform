@@ -38,5 +38,4 @@ public class UserButtonGroupController {
     public void enterGroupView(ActionEvent actionEvent) {
         System.out.println("enterGroupView :D");
     }
-
 }

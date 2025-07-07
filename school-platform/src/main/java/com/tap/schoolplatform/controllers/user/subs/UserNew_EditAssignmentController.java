@@ -10,7 +10,6 @@ import com.tap.schoolplatform.services.Service;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -20,7 +19,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.Optional;
 
 import static com.tap.schoolplatform.controllers.user.UserViewController.CURRENT_ASSIGNMENT;
@@ -73,22 +71,31 @@ public class UserNew_EditAssignmentController {
 
     @FXML
     public void initialize() {
-
-        loadAssignmentData();
         spinnerConfiguration(spinnerHour, 23);
         spinnerConfiguration(spinnerMinute, 59);
+        datePicker.setEditable(false);
+        clearAssigmentData();
+        if (UserViewController.getCurrentAssignment() != null) {
+            loadAssignmentData();
+        }
 
-        if (CURRENT_ASSIGNMENT != null) {
+        if (userViewController.getCurrentAssignment() != null) {
             setAssignmentData();
         }
 
         acceptButton.setOnAction(event ->
                 //pendiente agregar alerta de confirmación
-                handleCreateAssignment()
+                {
+                    try {
+                        handleCreateAssignment();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
         );
     }
 
-    public void handleCreateAssignment() {
+    public void handleCreateAssignment() throws IOException {
         String title = titleTF.getText();
         String description = descriptionTF.getText();
         LocalDate date = datePicker.getValue();
@@ -104,7 +111,7 @@ public class UserNew_EditAssignmentController {
             );
         } else {
             LocalDateTime dueDateTime = LocalDateTime.of(date, LocalTime.of(hour, minute));
-            if (assignment == null) {
+            if (UserViewController.getCurrentAssignment() == null) {
                 //If the assign is new
                 assignment = new Assignment(
                         title,
@@ -124,8 +131,15 @@ public class UserNew_EditAssignmentController {
                 if (userListAssignmentsController != null) {
                     userListAssignmentsController.generateAssignmentStack();
                 }
-            }
-            else{
+
+                AlertHandler.showAlert(
+                        Alert.AlertType.INFORMATION,
+                        "Assignment created",
+                        "The assignment has been created successfully",
+                        "Changes were saved"
+                );
+                UserViewController.setCurrentAssignment(null);
+            } else {
 //                CURRENT_ASSIGNMENT = assignment;
 //                Service.update(assignment);
 
@@ -139,27 +153,24 @@ public class UserNew_EditAssignmentController {
                     btnController.setHomeworkTitle(title);
                 }
 
+                Service.update(UserViewController.getCurrentAssignment());
+                mainController.setLoadCenter("/views/new-interface/user-homework-list-view.fxml");
+
                 AlertHandler.showAlert(
                         Alert.AlertType.INFORMATION,
                         "Assignment updated",
-                        "the assignment has been updated successfully",
+                        "The assignment has been updated successfully",
                         "Changes were saved"
                 );
+                UserViewController.setCurrentAssignment(null);
             }
 
             if (AssignmentContainer != null) {
                 addAssignmentView(assignment); //Cuando es nuevo lo añade, pero  debemos hacer que cuando no es nuevo lo actualice
             }
-
-            AlertHandler.showAlert(
-                    Alert.AlertType.INFORMATION,
-                    "Create assignment",
-                    "Successfully created assignment",
-                    "The assignment was successfully created"
-            );
-            Stage stage = (Stage) acceptButton.getScene().getWindow();
-            stage.close();
         }
+        Stage stage = (Stage) acceptButton.getScene().getWindow();
+        stage.close();
     }
 
     private void addAssignmentView(Assignment assignment) {
@@ -173,14 +184,14 @@ public class UserNew_EditAssignmentController {
             controller.setHomeworkTitle(assignment.getTitle());
 //            controller.setAssigmentContainer(AssignmentContainer);
 
-            controller.setOnClick(()->{
+            controller.setOnClick(() -> {
                 UserViewController.setCurrentAssignment(assignment);
 //                assignment.setButtonController(controller);
                 try {
                     UserViewController.setCurrentAssignment(assignment);
                     //aqui
                     loadAssignmentData();
-                    mainController.setloadCenter("/views/new-interface/user-homework-view.fxml");
+                    mainController.setLoadCenter("/views/new-interface/user-homework-view.fxml");
 //                    mainController.setUserListAssignmentsController(userListAssignmentsController);
                 } catch (Exception e) {
                     AlertHandler.showAlert(
@@ -210,6 +221,13 @@ public class UserNew_EditAssignmentController {
         }
     }
 
+    public void clearAssigmentData() {
+        titleTF.clear();
+        descriptionTF.clear();
+        datePicker.setValue(null);
+        spinnerHour.getValueFactory().setValue(0);
+        spinnerMinute.getValueFactory().setValue(0);
+    }
 
     public void clearAll(ActionEvent actionEvent) {
         Optional<ButtonType> result = AlertHandler.showAlert(
@@ -229,10 +247,11 @@ public class UserNew_EditAssignmentController {
         Optional<ButtonType> result = AlertHandler.showAlert(
                 Alert.AlertType.CONFIRMATION,
                 "Please confirm",
-                "Cancelling creating homework",
+                "Cancelling modifying homework",
                 "Are you sure you want to cancel this operation?"
         );
         if (result.get() == ButtonType.OK) {
+            UserViewController.setCurrentAssignment(null);
             Stage stage = (Stage) cancelButton.getScene().getWindow();
             stage.close();
         }
