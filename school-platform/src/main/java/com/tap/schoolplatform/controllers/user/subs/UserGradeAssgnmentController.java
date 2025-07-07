@@ -19,7 +19,7 @@ public class UserGradeAssgnmentController {
     public TableColumn<Submission, String> nameColumn;
     public TableColumn<Submission, String> statusColumn;
     public TableColumn<Submission, Void> fileColumn;
-    public TableColumn<Double, Void> scoreColumn;
+    public TableColumn<Submission, Void> scoreColumn;
     public Button cancelButton;
     public Button acceptButton;
 
