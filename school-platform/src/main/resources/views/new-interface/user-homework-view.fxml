@@ -23,7 +23,7 @@
       <URL value="@../../styles/main.css" />
    </stylesheets>
    <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="590.0" spacing="10.0">
-      <Button fx:id="exitButton1" mnemonicParsing="false" onAction="#closeSubmitHomework">
+      <Button fx:id="exitButton" mnemonicParsing="false" onAction="#closeSubmitHomework">
          <graphic>
             <ImageView fitHeight="20.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                <Image url="@../../images/arrowL.png" />
@@ -60,7 +60,7 @@
       <VBox.margin>
          <Insets right="50.0" />
       </VBox.margin>
-      <TextFlow prefHeight="241.0" prefWidth="565.0" />
+      <TextFlow fx:id="instructions" prefHeight="241.0" prefWidth="565.0" />
    </ScrollPane>
    <Button fx:id="attachButton" mnemonicParsing="false" onAction="#attachFiles" prefHeight="35.0" prefWidth="606.0" style="-fx-text-fill: #709a98; -fx-background-color: dedede;" text="Attach" textFill="#639d9e">
       <graphic>

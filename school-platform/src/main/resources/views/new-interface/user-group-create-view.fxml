@@ -34,6 +34,6 @@
             <Insets left="300.0" />
          </HBox.margin>
       </Button>
-      <Button id="btnN" fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
+      <Button id="btnN" fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelCreation" text="Cancel" />
    </HBox>
 </VBox>

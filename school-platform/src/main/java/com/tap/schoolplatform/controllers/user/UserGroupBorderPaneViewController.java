@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
@@ -17,8 +18,14 @@ import java.io.IOException;
 
 public class UserGroupBorderPaneViewController {
 
-    @FXML public Button membersButton, assignmentsButton;
-    @FXML private BorderPane groupBorderPaneContainer;
+    @FXML
+    public Button membersButton, assignmentsButton;
+
+    @FXML
+    public Label groupName;
+
+    @FXML
+    private BorderPane groupBorderPaneContainer;
 
     private VBox groupVBox;
 
@@ -30,11 +37,12 @@ public class UserGroupBorderPaneViewController {
 
     private UserNew_EditAssignmentController userNew_EditAssignmentController;
 
+    private UserListAssignmentsController userListAssignmentsController;
+
     public void setCreateEditAssignmentController(UserNew_EditAssignmentController userNew_EditAssignmentController) {
         this.userNew_EditAssignmentController = userNew_EditAssignmentController;
     }
 
-    private UserListAssignmentsController userListAssignmentsController;
 
     public void setUserListAssignmentsController(UserListAssignmentsController userListAssignmentsController) {
         this.userListAssignmentsController = userListAssignmentsController;
@@ -46,7 +54,7 @@ public class UserGroupBorderPaneViewController {
 
     @FXML
     public void initialize() {
-
+        groupName.setText(UserViewController.getCurrentGroup().getName());
         try {
             setloadCenter("/views/new-interface/user-list-view.fxml");
         } catch (IOException e) {
@@ -74,6 +82,7 @@ public class UserGroupBorderPaneViewController {
         });
 
     }
+
     @FXML
     public void loadMembers(ActionEvent actionEvent) {
 
@@ -94,11 +103,11 @@ public class UserGroupBorderPaneViewController {
             userListAssignmentsController.setMainController(this);
             this.userListAssignmentsController = userListAssignmentsController;
 
-        } else if (controller instanceof UserNew_EditAssignmentController userNew_EditAssignmentControlle) {
-            userNew_EditAssignmentControlle.setMainController(this);
-            userNew_EditAssignmentControlle.setUserListAssignmentsController(userListAssignmentsController);
-        }
-        else if (controller instanceof UserAssignmentController userAssignmentController) {
+        } else if (controller instanceof UserNew_EditAssignmentController userNew_EditAssignmentController) {
+            userNew_EditAssignmentController.setMainController(this);
+            userNew_EditAssignmentController.setUserListAssignmentsController(userListAssignmentsController);
+//            userNew_EditAssignmentController.setUserViewController(userViewController);
+        } else if (controller instanceof UserAssignmentController userAssignmentController) {
 //            userAssignmentController.setUserListAssignmentsController(userListAssignmentsController);
             userAssignmentController.setBorderPaneController(this);
             this.userAssignmentController = userAssignmentController;
