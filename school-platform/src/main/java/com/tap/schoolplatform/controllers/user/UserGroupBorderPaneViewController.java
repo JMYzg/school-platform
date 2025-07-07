@@ -56,7 +56,7 @@ public class UserGroupBorderPaneViewController {
     public void initialize() {
         groupName.setText(UserViewController.getCurrentGroup().getName());
         try {
-            setloadCenter("/views/new-interface/user-list-view.fxml");
+            setLoadCenter("/views/new-interface/user-list-view.fxml");
         } catch (IOException e) {
             AlertHandler.showAlert(
                     Alert.AlertType.ERROR,
@@ -67,7 +67,7 @@ public class UserGroupBorderPaneViewController {
         }
         membersButton.setOnAction(event -> {
             try {
-                setloadCenter("/views/new-interface/user-list-view.fxml");
+                setLoadCenter("/views/new-interface/user-list-view.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -75,7 +75,7 @@ public class UserGroupBorderPaneViewController {
 
         assignmentsButton.setOnAction(event -> {
             try {
-                setloadCenter("/views/new-interface/user-homework-list-view.fxml");
+                setLoadCenter("/views/new-interface/user-homework-list-view.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -93,7 +93,7 @@ public class UserGroupBorderPaneViewController {
 
     }
 
-    public void setloadCenter(String fxmlPath) throws IOException {
+    public void setLoadCenter(String fxmlPath) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(UserGroupBorderPaneViewController.class.getResource(fxmlPath));
         Parent view = fxmlLoader.load();
         Object controller = fxmlLoader.getController();

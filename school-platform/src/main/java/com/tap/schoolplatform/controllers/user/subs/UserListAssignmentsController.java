@@ -20,8 +20,10 @@ import java.util.List;
 
 public class UserListAssignmentsController {
 
-    @FXML Button addHomeworkButton;
-    @FXML VBox homeworkViewsContainer;
+    @FXML
+    Button addHomeworkButton;
+    @FXML
+    VBox homeworkViewsContainer;
 
     public VBox getHomeworkViewsContainer() {
         return homeworkViewsContainer;
@@ -32,46 +34,47 @@ public class UserListAssignmentsController {
     public void setMainController(UserGroupBorderPaneViewController mainController) {
         this.mainController = mainController;
     }
+
     public void initialize() {
         generateAssignmentStack();
         addHomeworkButton.setOnAction(event ->
                 openCreateAssignView("views/new-interface/user-homework-edit_new.fxml", "Create a Assignment"));
     }
+
     public void generateAssignmentStack() {
         homeworkViewsContainer.getChildren().clear();
         Group currentGroup = UserViewController.getCurrentGroup();
-            List<Assignment> assignments = currentGroup.getAssignments();
-            for (Assignment assignment : assignments) {
-                try{
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/new-interface/button-assignment.fxml"));
-                    Parent button = loader.load();
-                    UserButtonAssignmentController controller = loader.getController();
-                    controller.setAssigment(assignment);
-                    controller.setHomeworkTitle(assignment.getTitle());
+        List<Assignment> assignments = currentGroup.getAssignments();
+        for (Assignment assignment : assignments) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/new-interface/button-assignment.fxml"));
+                Parent button = loader.load();
+                UserButtonAssignmentController controller = loader.getController();
+                controller.setAssigment(assignment);
+                controller.setHomeworkTitle(assignment.getTitle());
 
-                    controller.setOnClick(() -> {
-                        UserViewController.setCurrentAssignment(assignment);
-                        assignment.setButtonController(controller);
-                        try{
-                            //esto debe estar para que funcione ver la tarea
-                            mainController.setloadCenter("/views/new-interface/user-homework-view.fxml");
+                controller.setOnClick(() -> {
+                    UserViewController.setCurrentAssignment(assignment);
+                    assignment.setButtonController(controller);
+                    try {
+                        //esto debe estar para que funcione ver la tarea
+                        mainController.setLoadCenter("/views/new-interface/user-homework-view.fxml");
 //                            mainController.setUserListAssignmentsController(this);
 
-                        } catch (Exception e) {
-                            AlertHandler.showAlert(
-                                    Alert.AlertType.ERROR,
-                                    "Error",
-                                    "Resource not found",
-                                    e.getMessage()
-                            );
-                        }
-                    });
-
-                    homeworkViewsContainer.getChildren().add(button);
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
+                    } catch (Exception e) {
+                        AlertHandler.showAlert(
+                                Alert.AlertType.ERROR,
+                                "Error",
+                                "Resource not found",
+                                e.getMessage()
+                        );
+                    }
+                });
+                homeworkViewsContainer.getChildren().add(button);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }
 
     }
 
@@ -103,6 +106,7 @@ public class UserListAssignmentsController {
             e.printStackTrace();
         }
     }
+
     public void addAssigmentToVBox(Assignment assignment) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("/views/new-interface/button-assignment.fxml"));
@@ -113,8 +117,7 @@ public class UserListAssignmentsController {
             controller.setHomeworkTitle(assignment.getTitle());
 
             homeworkViewsContainer.getChildren().add(assignmentNode);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
         }
     }
