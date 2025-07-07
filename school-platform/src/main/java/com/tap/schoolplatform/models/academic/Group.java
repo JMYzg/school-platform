@@ -23,7 +23,7 @@ public class Group {
     private String name;
 
     @NotBlank
-    @Size(max = 100)
+    @Size(max = 300)
     private String description;
 
     @OneToMany(

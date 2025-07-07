@@ -42,9 +42,10 @@ public class Submission {
 
     @NotNull
     @Lob
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] content;
 
-    @NotBlank
+//    @NotBlank
     private String feedback;
 
     public Submission() {
