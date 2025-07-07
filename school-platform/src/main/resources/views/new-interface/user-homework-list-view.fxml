@@ -9,15 +9,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="558.0" prefWidth="642.0" style="-fx-background-color: dedede;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.user.subs.UserListAssignmentsController">
+<AnchorPane prefHeight="480.0" prefWidth="642.0" style="-fx-background-color: dedede;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tap.schoolplatform.controllers.user.subs.UserListAssignmentsController">
    <stylesheets>
       <URL value="@../../styles/main.css" />
       <URL value="@../../styles/scrollPane.css" />
       <URL value="@../../styles/buttons.css" />
    </stylesheets>
-   <VBox prefHeight="556.0" prefWidth="642.0" spacing="10.0">
+   <VBox prefHeight="480.0" prefWidth="642.0" spacing="10.0">
       <padding>
-         <Insets left="10.0" right="10.0" top="5.0" />
+         <Insets left="10.0" right="10.0" />
       </padding>
       <Button id="btnM" fx:id="addHomeworkButton" mnemonicParsing="false" onAction="#addHomework" prefHeight="29.0" prefWidth="629.0" stylesheets="@../../styles/main.css" text="Add Homework">
          <graphic>
@@ -26,8 +26,8 @@
             </ImageView>
          </graphic>
       </Button>
-      <ScrollPane prefHeight="498.0" prefWidth="622.0">
-         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="499.0" prefWidth="603.0">
+      <ScrollPane prefHeight="441.0" prefWidth="622.0">
+         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="460.0" prefWidth="603.0">
             <VBox fx:id="homeworkViewsContainer" layoutX="14.0" prefHeight="900.0" prefWidth="599.0" spacing="10.0" />
          </AnchorPane>
       </ScrollPane>

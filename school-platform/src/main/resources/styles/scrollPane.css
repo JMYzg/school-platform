@@ -17,7 +17,7 @@
 /* Track style (bar background) */
 .scroll-bar:vertical .track,
 .scroll-bar:horizontal .track {
-    -fx-background-color: #f0f0f0; /* Track color */
+    -fx-background-color: #dedede; /* Track color */
     -fx-border-color: transparent;
 }
 
