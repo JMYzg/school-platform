@@ -71,6 +71,14 @@ public class UserNew_EditAssignmentController {
 
     @FXML
     public void initialize() {
+        datePicker.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+
+                LocalDate today = LocalDate.now();
+                setDisable(empty || item.isBefore(today));
+            }
+        });
         spinnerConfiguration(spinnerHour, 23);
         spinnerConfiguration(spinnerMinute, 59);
         datePicker.setEditable(false);
@@ -88,6 +96,7 @@ public class UserNew_EditAssignmentController {
                 {
                     try {
                         handleCreateAssignment();
+                        UserViewController.setCurrentAssignment(null);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -240,6 +249,8 @@ public class UserNew_EditAssignmentController {
             titleTF.clear();
             descriptionTF.clear();
             datePicker.setValue(null);
+            spinnerHour.getValueFactory().setValue(0);
+            spinnerMinute.getValueFactory().setValue(0);
         }
     }
 

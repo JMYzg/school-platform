@@ -93,7 +93,7 @@ public class MainApplication extends Application {
         );
         user2.setProfilePicture(defaultProfilePicture());
 
-        Group group = new Group("Programación", "Este grupo se enfoca en la creación de un programa CRUD con varios miembros");
+        Group group = new Group("Advanced Programming Topics", "This group is for advanced programming topics. It is created to test the functionality of the application. It is not intended to be used for any other purpose.");
         group.setColor("#000000");
         Service.add(group);
         Service.add(admin);
@@ -105,7 +105,7 @@ public class MainApplication extends Application {
         Service.add(membership);
         Membership membership2 = new Membership(user2, group, Role.MEMBER);
         Service.add(membership2);
-        Group group1 = new Group("Álgebra Lineal", "Grupo creado con el objetivo de ser utilizado para probar la función JOIN");
+        Group group1 = new Group("Linear Algebra", "This groups was created to test the functionality of the JOIN function. It is not intended to be used for any other purpose.");
         group1.setColor("#00008B");
         Service.add(group1);
         Service.add(admin);

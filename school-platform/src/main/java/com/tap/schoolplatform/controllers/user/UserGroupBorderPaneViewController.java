@@ -13,16 +13,23 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 import java.io.IOException;
 
 public class UserGroupBorderPaneViewController {
 
     @FXML
-    public Button membersButton, assignmentsButton;
+    private Button membersButton, assignmentsButton;
 
     @FXML
-    public Label groupName;
+    private Label
+            groupName,
+            groupID;
+
+    @FXML
+    private TextFlow groupDescription;
 
     @FXML
     private BorderPane groupBorderPaneContainer;
@@ -55,6 +62,8 @@ public class UserGroupBorderPaneViewController {
     @FXML
     public void initialize() {
         groupName.setText(UserViewController.getCurrentGroup().getName());
+        groupDescription.getChildren().add(new Text(UserViewController.getCurrentGroup().getDescription()));
+        groupID.setText(Integer.toString(UserViewController.getCurrentGroup().getId()));
         try {
             setLoadCenter("/views/new-interface/user-list-view.fxml");
         } catch (IOException e) {
